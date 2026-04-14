@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MISCREANT | Interactive Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent: #00f3ff;
+            --accent-sec: #ff0055;
+            --font-main: 'Rajdhani', sans-serif;
+            --cursor-size: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            width: 100vw;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* FILM GRAIN OVERLAY */
+        body::after {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9000; opacity: 0.4;
+        }
+
+        /* --- 2. CUSTOM CURSOR & EYE --- */
+        #cursor {
+            position: fixed; top: 0; left: 0;
+            width: var(--cursor-size); height: var(--cursor-size);
+            border: 2px solid var(--accent); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        #cursor.hovered {
+            width: 50px; height: 50px;
+            background: rgba(0, 243, 255, 0.1); border-color: transparent;
+        }
+
+        .eye-container {
+            position: fixed; top: 20px; left: 20px;
+            width: 50px; height: 50px; z-index: 1000;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--accent);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .eye-ball {
+            width: 25px; height: 25px; background: #fff; border-radius: 50%;
+            position: relative; box-shadow: 0 0 10px var(--accent);
+        }
+        .eye-pupil {
+            width: 8px; height: 8px; background: #000; border-radius: 50%;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+
+        /* --- 3. BACKGROUND --- */
+        canvas#particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.6;
+        }
+
+        /* --- 4. NAVIGATION --- */
+        .side-nav {
+            position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 20px; z-index: 1000;
+        }
+        .nav-dot {
+            width: 10px; height: 10px; background: rgba(255,255,255,0.2);
+            border-radius: 50%; transition: 0.3s; position: relative;
+        }
+        .nav-dot:hover, .nav-dot.active { background: var(--accent); transform: scale(1.3); }
+        .nav-dot::before {
+            content: attr(data-label); position: absolute; right: 25px; top: 50%;
+            transform: translateY(-50%); background: var(--accent); color: #000;
+            padding: 4px 10px; font-size: 0.8rem; border-radius: 4px;
+            opacity: 0; pointer-events: none; transition: 0.3s;
+            white-space: nowrap; font-weight: bold;
+        }
+        .nav-dot:hover::before { opacity: 1; right: 30px; }
+
+        /* --- 5. LAYOUT & SECTIONS --- */
+        section {
+            min-height: 80vh; padding: 80px 10%;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-transform: uppercase; margin-bottom: 2rem;
+            background: linear-gradient(90deg, #fff, var(--text-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        #home { align-items: center; text-align: center; min-height: 100vh; }
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.9; margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.4); will-change: transform; 
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.5rem); color: var(--accent); letter-spacing: 5px;
+        }
+
+        /* GLITCH EFFECT (FIXED) */
+        .glitch-wrapper {
+            display: inline-block;
+        }
+        .glitch-text { 
+            position: relative; 
+            color: var(--text-color);
+            display: inline-block; /* Essential for span glitching */
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .glitch-text::before {
+            left: 2px; text-shadow: -1px 0 #ff0055; clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            left: -2px; text-shadow: -1px 0 #00f3ff; clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 30px, 0); } 20% { clip: rect(80px, 9999px, 100px, 0); }
+            40% { clip: rect(10px, 9999px, 140px, 0); } 60% { clip: rect(50px, 9999px, 60px, 0); }
+            80% { clip: rect(20px, 9999px, 100px, 0); } 100% { clip: rect(90px, 9999px, 120px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(100px, 9999px, 10px, 0); } 20% { clip: rect(20px, 9999px, 100px, 0); }
+            40% { clip: rect(130px, 9999px, 40px, 0); } 60% { clip: rect(10px, 9999px, 20px, 0); }
+            80% { clip: rect(60px, 9999px, 90px, 0); } 100% { clip: rect(30px, 9999px, 120px, 0); }
+        }
+
+        /* GRIDS & CARDS */
+        .game-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; width: 100%;
+        }
+        .game-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; padding: 20px; transition: transform 0.1s;
+        }
+        .game-img {
+            width: 100%; height: 200px; background: #222; margin-bottom: 1rem; overflow: hidden;
+        }
+        .img-placeholder {
+            width: 100%; height: 100%; background-size: cover; transition: transform 0.5s ease;
+        }
+        .game-card:hover .img-placeholder { transform: scale(1.1); }
+        .game-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .game-card p { color: #aaa; font-size: 0.9rem; }
+
+        /* MARQUEE */
+        .marquee-container {
+            background: var(--accent); color: #000; padding: 15px 0; width: 100%;
+            overflow: hidden; position: relative; transform: rotate(-2deg);
+            margin: 4rem 0; border-top: 2px solid #fff; border-bottom: 2px solid #fff;
+        }
+        .marquee-content {
+            display: flex; white-space: nowrap; animation: scrolling 20s linear infinite;
+        }
+        .marquee-content span {
+            font-size: 1.5rem; font-weight: 900; text-transform: uppercase; padding-right: 50px;
+        }
+        @keyframes scrolling { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* TECH STACK */
+        .tech-grid { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; justify-content: center; }
+        .tech-item {
+            padding: 1rem 2rem; border: 1px solid #333; color: #888;
+            font-weight: bold; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s;
+        }
+        .tech-item:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 15px rgba(0,243,255,0.1); }
+
+        /* NEWS */
+        .news-item { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-bottom: 2rem; transition: 0.3s; }
+        .news-item:hover { padding-left: 2rem; border-left-color: var(--accent-sec); }
+        .news-date { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.5rem; display: block; }
+        .news-item h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
+
+        /* TEAM & FORM */
+        .badge { display: inline-block; padding: 5px 10px; background: var(--accent); color: #000; font-weight: bold; font-size: 0.8rem; margin-bottom: 10px; text-transform: uppercase; border-radius: 2px; }
+        .team-grid { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+        .team-member { flex: 1; min-width: 200px; text-align: center; }
+        .avatar { width: 150px; height: 150px; border-radius: 50%; background: #333; margin: 0 auto 1.5rem; border: 2px solid var(--accent); position: relative; overflow: hidden; }
+        .avatar::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle, transparent, #000); }
+        
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; max-width: 600px; width: 100%; }
+        input, textarea { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 1rem; color: #fff; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--accent); }
+        button { padding: 1rem 3rem; background: var(--accent); border: none; color: #000; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; margin-top: 1rem; }
+        button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+
+        footer { padding: 50px 10%; border-top: 1px solid #333; text-align: center; color: #666; font-size: 0.9rem; }
+        .fade-section { opacity: 0; transform: translateY(50px); transition: opacity 1s ease, transform 1s ease; }
+        .fade-section.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .side-nav, .eye-container { display: none; }
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div class="eye-container"><div class="eye-ball"><div class="eye-pupil"></div></div></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <nav class="side-nav">
+        <a href="#home" class="nav-dot active" data-label="HOME"></a>
+        <a href="#running" class="nav-dot" data-label="LIVE OPS"></a>
+        <a href="#created" class="nav-dot" data-label="LIBRARY"></a>
+        <a href="#arsenal" class="nav-dot" data-label="TECH"></a>
+        <a href="#upcoming" class="nav-dot" data-label="NEXT GEN"></a>
+        <a href="#news" class="nav-dot" data-label="LOGS"></a>
+        <a href="#team" class="nav-dot" data-label="SQUAD"></a>
+        <a href="#contact" class="nav-dot" data-label="LINK"></a>
+    </nav>
+
+    <section id="home">
+        <div class="fade-section visible">
+            <h1 class="hero-title" id="parallax-text">
+                <span class="glitch-text" data-text="THE">THE</span><br>
+                <span class="glitch-text" data-text="MISCREANT">MISCREANT</span>
+                <span class="glitch-text" data-text="STUDIO">STUDIO</span>
+            </h1>
+            <p class="hero-sub">DIGITAL CHAOS SIMULATOR</p>
+        </div>
+    </section>
+
+    <section id="running">
+        <div class="fade-section">
+            <span class="badge" style="background: #00ff00;">Live Service</span>
+            <h2>Running Operations</h2>
+            <div class="game-grid">
+                <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(45deg, #111, #0f0);"></div></div>
+                    <h3>Endless Runner</h3>
+                    <p>Current Concept Development</p>
+                </div>
+                <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(45deg, #111, #00f);"></div></div>
+                    <h3>Deep Void</h3>
+                    <p>MMORPG Expansion Pack: "Nebula Rising" is live.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>// BREAK THE RULES // CREATE CHAOS // FORGE NEW WORLDS // NO RESPAWNS //</span>
+            <span>// BREAK THE RULES // CREATE CHAOS // FORGE NEW WORLDS // NO RESPAWNS //</span>
+            <span>// BREAK THE RULES // CREATE CHAOS // FORGE NEW WORLDS // NO RESPAWNS //</span>
+            <span>// BREAK THE RULES // CREATE CHAOS // FORGE NEW WORLDS // NO RESPAWNS //</span>
+        </div>
+    </div>
+
+    <section id="created">
+        <div class="fade-section">
+            <span class="badge">Legacy</span>
+            <h2>Game Library</h2>
+            <div class="game-grid">
+                <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(135deg, #333, #555);"></div></div>
+                    <h3>Rusty Titans</h3>
+                    <p>Mech Brawler. 2024 GOTY Nominee.</p>
+                </div>
+                <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(135deg, #500, #200);"></div></div>
+                    <h3>Blood Drift</h3>
+                    <p>High octane horror racing.</p>
+                </div>
+                <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(135deg, #4b0082, #000);"></div></div>
+                    <h3>Neon Katana</h3>
+                    <p>Rhythm action slasher.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="arsenal">
+        <div class="fade-section">
+            <span class="badge" style="background: #fff; color: #000;">Architecture</span>
+            <h2>The Arsenal</h2>
+            <p style="color: #888; margin-bottom: 2rem; max-width: 600px;">We build on the bleeding edge. Our studio utilizes industry-standard technology to forge new worlds.</p>
+            <div class="tech-grid">
+                <div class="tech-item hover-trigger">Unreal Engine 5</div>
+                <div class="tech-item hover-trigger">Unity 6</div>
+                <div class="tech-item hover-trigger">Blender</div>
+                <div class="tech-item hover-trigger">Houdini FX</div>
+                <div class="tech-item hover-trigger">Wwise Audio</div>
+                <div class="tech-item hover-trigger">C++ / C#</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="upcoming">
+        <div class="fade-section">
+            <span class="badge" style="background: var(--accent-sec); color: white;">Classified</span>
+            <h2>In Development</h2>
+            <div class="game-grid">
+                <div class="game-card hover-trigger" style="border-color: var(--accent-sec);">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(to bottom, #000, var(--accent-sec));"></div></div>
+                    <h3 style="color: var(--accent-sec);">PROJECT: ECHO</h3>
+                    <p>Survival Horror using UE5. Coming 2027.</p>
+                </div>
+                 <div class="game-card hover-trigger">
+                    <div class="game-img"><div class="img-placeholder" style="background: linear-gradient(to bottom, #222, #444);"></div></div>
+                    <h3>Codename: ZERO</h3>
+                    <p>Top-down tactical espionage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news">
+        <div class="fade-section">
+            <h2>Transmission Log</h2>
+            <div style="max-width: 800px;">
+                <div class="news-item hover-trigger">
+                    <span class="news-date">MARCH 12, 2026</span>
+                    <h3>Project ECHO enters Alpha Stage</h3>
+                    <p style="color: #999;">Closed testing begins next month for our highest tier backers.</p>
+                </div>
+                <div class="news-item hover-trigger">
+                    <span class="news-date">FEBRUARY 10, 2026</span>
+                    <h3>Endless Runner </h3>
+                    <p style="color: #999;">New maps, weapon balancing, and the "Nightmare" operator skin.</p>
+                </div>
+                <div class="news-item hover-trigger">
+                    <span class="news-date">JANUARY 15, 2026</span>
+                    <h3>We are hiring: Senior VFX Artist</h3>
+                    <p style="color: #999;">Join the squad. Remote positions available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="fade-section">
+            <h2>The Miscreants</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="avatar" style="background: linear-gradient(#444, #000);"></div>
+                    <h3>Alex "Root"</h3>
+                    <p>Lead Dev</p>
+                </div>
+                <div class="team-member">
+                    <div class="avatar" style="background: linear-gradient(#444, #111);"></div>
+                    <h3>Sarah "Glitch"</h3>
+                    <p>Art Director</p>
+                </div>
+                <div class="team-member">
+                    <div class="avatar" style="background: linear-gradient(#444, #222);"></div>
+                    <h3>Vex</h3>
+                    <p>Sound Design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="fade-section">
+            <h2>Initiate Contact</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="CODENAME" required>
+                <input type="email" placeholder="FREQUENCY (EMAIL)" required>
+                <textarea rows="5" placeholder="TRANSMISSION DATA" required></textarea>
+                <button type="submit">SEND</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 THE MISCREANT STUDIO. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        /* CURSOR LOGIC */
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        /* EYE TRACKER LOGIC */
+        const eyePupil = document.querySelector('.eye-pupil');
+        const eyeContainer = document.querySelector('.eye-container');
+        document.addEventListener('mousemove', (e) => {
+            const rect = eyeContainer.getBoundingClientRect();
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+            const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+            const distance = Math.min(10, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 10);
+            const pupilX = Math.cos(angle) * distance;
+            const pupilY = Math.sin(angle) * distance;
+            eyePupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
+        });
+
+        /* AUTONOMOUS PARTICLE SYSTEM (Optimized) */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+        let mouse = { x: null, y: null, radius: 200 }; 
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.density = (Math.random() * 20) + 1;
+                this.color = Math.random() > 0.8 ? '#00f3ff' : '#222';
+                this.vx = (Math.random() - 0.5) * 1; 
+                this.vy = (Math.random() - 0.5) * 1; 
+            }
+            draw() {
+                ctx.fillStyle = this.color; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x < 0) this.x = canvas.width;
+                if(this.x > canvas.width) this.x = 0;
+                if(this.y < 0) this.y = canvas.height;
+                if(this.y > canvas.height) this.y = 0;
+
+                let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius) {
+                    let force = (mouse.radius - distance) / mouse.radius;
+                    this.x -= (dx/distance) * force * this.density * 5;
+                    this.y -= (dy/distance) * force * this.density * 5;
+                }
+            }
+        }
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 200; i++) particlesArray.push(new Particle());
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].draw(); particlesArray[i].update(); }
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles(); animateParticles();
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); });
+
+        /* SCROLL REVEAL & PARALLAX */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const id = entry.target.parentElement.id;
+                    document.querySelectorAll('.nav-dot').forEach(dot => {
+                        dot.classList.remove('active');
+                        if(dot.getAttribute('href') === '#' + id) dot.classList.add('active');
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-section').forEach(section => observer.observe(section));
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const title = document.getElementById('parallax-text');
+            if(scrollY < window.innerHeight) {
+                title.style.transform = `translateY(${scrollY * 0.4}px) scale(${1 + scrollY * 0.0005})`;
+                title.style.opacity = 1 - (scrollY / 500);
+            }
+        });
+
+        /* TILT CARDS */
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const rotateX = ((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * -5;
+                const rotateY = ((e.clientX - rect.left - rect.width/2) / (rect.width/2)) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
+            });
+        });
+    </script>
+</body>
+</html>
