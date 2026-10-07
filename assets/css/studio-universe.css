@@ -10,24 +10,63 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 8vh, 100px);
-  background: var(--bg-primary, #050508);
+  padding: clamp(90px, 12vh, 140px) 0 clamp(70px, 10vh, 110px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-top: 1px solid rgba(139, 92, 246, 0.16);
+  box-sizing: border-box;
+  background: 
+    /* 1. Fine Dot-Matrix Points (Light shade grill dots) */
+    radial-gradient(circle at 1px 1px, rgba(192, 132, 252, 0.16) 1.2px, transparent 1.6px),
+    /* 2. Fine Horizontal Grill Lines */
+    linear-gradient(rgba(139, 92, 246, 0.045) 1px, transparent 1px),
+    /* 3. Fine Vertical Grill Lines */
+    linear-gradient(90deg, rgba(139, 92, 246, 0.045) 1px, transparent 1px),
+    /* 4. Left Corner Ambient Spotlight */
+    radial-gradient(circle at 12% 20%, rgba(139, 92, 246, 0.18) 0%, rgba(6, 182, 212, 0.06) 32%, transparent 60%),
+    /* 5. Right Corner Ambient Spotlight */
+    radial-gradient(circle at 88% 20%, rgba(192, 132, 252, 0.16) 0%, rgba(139, 92, 246, 0.05) 32%, transparent 60%),
+    /* 6. Base Deep Studio Gradient (Matching Running Operations & The Arsenal) */
+    linear-gradient(180deg, 
+      #05030e 0%, 
+      rgba(8, 6, 22, 0.98) 25%, 
+      rgba(10, 8, 28, 0.99) 60%, 
+      #05030e 100%);
+  background-size: 
+    48px 48px,
+    48px 48px,
+    48px 48px,
+    100% 100%,
+    100% 100%,
+    100% 100%;
 }
 
+/* Ambient Radial Glow Spots in Background */
 .studio-content-section::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(192, 132, 252, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(192, 132, 252, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1300px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.06) 45%, transparent 70%);
   pointer-events: none;
-  opacity: 0.6;
+  z-index: 0;
+}
+
+.studio-content-section::after {
+  content: '';
+  position: absolute;
+  bottom: 8%;
+  right: 8%;
+  width: 850px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(192, 132, 252, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .studio-section-header {
