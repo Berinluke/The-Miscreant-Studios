@@ -76,21 +76,7 @@
 }
 
 .studio-section-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #38bdf8;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 4px 12px;
-  border-radius: 9999px;
-  width: fit-content;
+  display: none !important;
 }
 
 .studio-section-title {
