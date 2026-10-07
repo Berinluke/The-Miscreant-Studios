@@ -88,7 +88,7 @@ html.lenis, html.lenis body {
   justify-content: space-between;
   align-items: center;
   padding-top: clamp(28px, 4.5vh, 48px);
-  padding-bottom: clamp(24px, 4vh, 40px);
+  padding-bottom: clamp(28px, 4.5vh, 48px);
   box-sizing: border-box;
 }
 
@@ -335,15 +335,9 @@ html.lenis, html.lenis body {
   flex-grow: 1;
 }
 
-/* Bottom Navigation Controls */
+/* Bottom Navigation Controls (Disabled) */
 .carousel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 25;
+  display: none !important;
 }
 
 .carousel-nav-btn {
