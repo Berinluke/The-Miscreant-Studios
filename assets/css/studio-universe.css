@@ -78,7 +78,7 @@
    -------------------------------------------------------------------------- */
 .about-bento-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   position: relative;
   z-index: 2;
@@ -96,6 +96,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .about-bento-card:hover {
@@ -105,19 +106,19 @@
 }
 
 .about-card-manifesto {
-  grid-column: span 7;
+  grid-column: span 1;
 }
 
 .about-card-metrics {
-  grid-column: span 5;
+  grid-column: span 1;
 }
 
 .about-card-pillars {
-  grid-column: span 6;
+  grid-column: span 1;
 }
 
 .about-card-timeline {
-  grid-column: span 6;
+  grid-column: span 1;
 }
 
 .bento-card-badge {
@@ -496,17 +497,17 @@
    -------------------------------------------------------------------------- */
 .team-grid-layout {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
   position: relative;
   z-index: 2;
 }
 
 .team-card {
-  background: rgba(14, 11, 28, 0.72);
-  border: 1px solid rgba(192, 132, 252, 0.2);
+  background: rgba(14, 11, 28, 0.75);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 20px;
-  padding: 24px;
+  padding: 28px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
@@ -514,41 +515,27 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .team-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(192, 132, 252, 0.55);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 28px rgba(139, 92, 246, 0.25);
-}
-
-/* Featured CEO Card is Larger */
-.team-card-lead {
-  grid-column: span 6;
-  background: linear-gradient(135deg, rgba(20, 15, 42, 0.85) 0%, rgba(14, 11, 28, 0.75) 100%);
-  border-color: rgba(192, 132, 252, 0.4);
-}
-
-.team-card-regular {
-  grid-column: span 3;
+  transform: translateY(-5px);
+  border-color: rgba(192, 132, 252, 0.6);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85), 0 0 30px rgba(139, 92, 246, 0.28);
 }
 
 .team-avatar-box {
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 200px;
   border-radius: 14px;
   overflow: hidden;
-  margin-bottom: 20px;
-  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 22px;
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.team-card-lead .team-avatar-box {
-  height: 220px;
 }
 
 .team-avatar-graphic {
@@ -561,26 +548,20 @@
 }
 
 .avatar-initials-crest {
-  width: 72px;
-  height: 72px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
   background: linear-gradient(135deg, #8b5cf6 0%, #38bdf8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-title, 'Space Grotesk', sans-serif);
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #ffffff;
-  box-shadow: 0 0 24px rgba(139, 92, 246, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.team-card-lead .avatar-initials-crest {
-  width: 88px;
-  height: 88px;
-  font-size: 2.2rem;
-  box-shadow: 0 0 35px rgba(192, 132, 252, 0.75);
+  box-shadow: 0 0 28px rgba(139, 92, 246, 0.65);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
 }
 
 .team-status-indicator {
@@ -1792,4 +1773,85 @@
   display: flex;
   justify-content: flex-end;
 }
+
+/* --------------------------------------------------------------------------
+   GLOBAL SCROLL MARGINS & LUXURY SMOOTH TRANSITIONS
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 85px;
+}
+
+.studio-content-section,
+.showcase-section,
+.arsenal-section {
+  scroll-margin-top: 85px;
+}
+
+/* Scroll Entrance Reveals */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .about-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .universe-games-grid {
+    grid-template-columns: 1fr;
+  }
+  .team-grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .culture-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .culture-war-room-banner {
+    grid-template-columns: 1fr;
+  }
+  .careers-perks-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .contact-command-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .culture-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  .careers-perks-row {
+    grid-template-columns: 1fr;
+  }
+  .transmission-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .career-job-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .contact-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 

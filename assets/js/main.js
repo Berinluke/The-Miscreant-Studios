@@ -90,28 +90,28 @@ function initLenisSmoothScroll() {
     }, { passive: true });
   }
 
-  // Smooth click scrolling for anchor links coordinated with screen snapper
+  // Smooth click scrolling for anchor links coordinated with floating island navbar offset
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
       if (!targetId || targetId === '#') return;
 
-      const secName = targetId.replace('#', '');
-      const secIdx = ['hero', 'showcase', 'arsenal'].indexOf(secName);
-
-      if (secIdx !== -1 && typeof window.goToScreen === 'function') {
-        e.preventDefault();
-        window.goToScreen(secIdx);
-        return;
-      }
-
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
         if (lenis) {
-          lenis.scrollTo(targetEl, { offset: 0, duration: 1.1 });
+          lenis.scrollTo(targetEl, { 
+            offset: -85, 
+            duration: 1.25, 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) 
+          });
         } else {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
+          const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - 85;
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        }
+
+        if (window.cyberAudio && typeof window.cyberAudio.playClick === 'function') {
+          window.cyberAudio.playClick();
         }
       }
     });
@@ -159,8 +159,12 @@ function initGlitchScramble() {
    3. SMOOTH SCROLL REVEAL (IntersectionObserver)
    ========================================================================== */
 function initScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal-on-scroll');
-  if (!revealElements.length) return;
+  const targets = document.querySelectorAll(
+    '.reveal-on-scroll, .studio-section-header, .about-bento-card, .universe-game-card, .team-card, .culture-pillar-card, .career-job-card, .contact-hub-card, .contact-terminal-form-card'
+  );
+  if (!targets.length) return;
+
+  targets.forEach(el => el.classList.add('reveal-on-scroll'));
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -170,10 +174,10 @@ function initScrollReveal() {
     });
   }, {
     threshold: 0.08,
-    rootMargin: '0px 0px -30px 0px'
+    rootMargin: '0px 0px -40px 0px'
   });
 
-  revealElements.forEach(el => observer.observe(el));
+  targets.forEach(el => observer.observe(el));
 }
 
 /* ==========================================================================
@@ -880,15 +884,16 @@ function initFullscreenScreenSnapping() {
 
     if (window.lenisInstance) {
       window.lenisInstance.scrollTo(targetSec, {
-        offset: 0,
-        duration: 0.9,
+        offset: -85,
+        duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: onComplete,
         lock: false
       });
       setTimeout(onComplete, 950);
     } else {
-      targetSec.scrollIntoView({ behavior: 'smooth' });
+      const targetPos = targetSec.getBoundingClientRect().top + window.pageYOffset - 85;
+      window.scrollTo({ top: targetPos, behavior: 'smooth' });
       setTimeout(onComplete, 850);
     }
   }
