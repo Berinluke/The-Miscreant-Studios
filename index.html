@@ -18,16 +18,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Modular CSS Architecture -->
-  <link rel="stylesheet" href="assets/css/main.css?v=2">
+  <link rel="stylesheet" href="assets/css/main.css?v=3">
   <link rel="stylesheet" href="assets/css/cyberpunk.css?v=6">
   <link rel="stylesheet" href="assets/css/glitch.css">
-  <link rel="stylesheet" href="assets/css/cursor.css">
+  <link rel="stylesheet" href="assets/css/cursor.css?v=3">
   <link rel="stylesheet" href="assets/css/games-showcase.css?v=2">
   <link rel="stylesheet" href="assets/css/arsenal.css?v=3">
   <link rel="stylesheet" href="assets/css/studio-universe.css?v=7">
-  <link rel="stylesheet" href="assets/css/responsive.css?v=2">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=3">
 </head>
 <body>
+
+  <!-- Masterpiece Ambient Overlays: Film Grain Noise & Smooth Cursor Spotlight -->
+  <div class="film-grain-overlay" aria-hidden="true"></div>
+  <div class="ambient-spotlight-cursor" aria-hidden="true"></div>
 
   <!-- Neon Top Scroll Progress Bar -->
   <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
@@ -50,6 +54,14 @@
     </div>
 
     <div class="island-action-group">
+      <!-- Tactile Audio Cockpit Toggle -->
+      <button class="island-audio-toggle" id="islandAudioToggle" aria-label="Toggle Studio Audio" aria-pressed="false">
+        <div class="audio-eq-bars" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="audio-toggle-label">SOUND: OFF</span>
+      </button>
+
       <button class="island-cmd-trigger" id="cmdPaletteTrigger" aria-label="Open Command Palette (Ctrl+K)">
         <span class="cmd-icon">⌘</span>
         <span class="cmd-label">K</span>
@@ -68,7 +80,7 @@
         
         <!-- Left Column: Company Name in Uppercase (Layered Underneath Controller Glow) -->
         <div class="hero-content">
-          <h1 class="hero-title">
+          <h1 class="hero-title skew-on-scroll">
             THE <span class="text-gradient-purple glitch-text" data-text="MISCREANT" data-scramble="MISCREANT">MISCREANT</span> STUDIOS
           </h1>
 
@@ -96,10 +108,38 @@
     </a>
   </main>
 
+  <!-- Continuous Running Studio Telemetry Marquee Rail -->
+  <div class="studio-marquee-rail" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-item"><span class="pulse-dot"></span> <span class="highlight-accent">CHENNAI HQ:</span> ACTIVE PROTOCOL</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">ENGINE:</span> UNREAL ENGINE 5.5.4</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">TICK RATE:</span> 128HZ BARE-METAL SIMULATION</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">STATUS:</span> ZERO-LATENCY GLOBAL CLUSTER</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">TITLES LIVE:</span> DEEP VOID • PROJECT OMEGA • PROJECT VELOCITY</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="pulse-dot"></span> <span class="highlight-accent">CHENNAI HQ:</span> ACTIVE PROTOCOL</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">ENGINE:</span> UNREAL ENGINE 5.5.4</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">TICK RATE:</span> 128HZ BARE-METAL SIMULATION</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">STATUS:</span> ZERO-LATENCY GLOBAL CLUSTER</div>
+      <span class="marquee-separator">✦</span>
+      <div class="marquee-item"><span class="highlight-accent">TITLES LIVE:</span> DEEP VOID • PROJECT OMEGA • PROJECT VELOCITY</div>
+      <span class="marquee-separator">✦</span>
+    </div>
+  </div>
+
   <!-- ==========================================================================
        MACOS GLASSMORPHIC ECOSYSTEM: LIVE SERVICES & CONCEPT LABS
        ========================================================================== -->
   <section id="showcase" class="showcase-section ghost-screen">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">02</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -309,6 +349,8 @@
        THE ARSENAL & SYSTEM ARCHITECTURE
        ========================================================================== -->
   <section id="arsenal" class="arsenal-section ghost-screen">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">03</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -605,6 +647,8 @@
        04 — ABOUT THE STUDIO (BENTO ARCHITECTURE & PHILOSOPHY)
        ========================================================================== -->
   <section id="about" class="studio-content-section about-section" aria-label="About The Miscreant Studios">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">04</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -760,6 +804,8 @@
        05 — OUR GAMES / GAME UNIVERSE (THE MISCREANT UNIVERSE)
        ========================================================================== -->
   <section id="universe" class="studio-content-section universe-section" aria-label="The Miscreant Universe">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">05</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -912,6 +958,8 @@
        06 — THE TEAM (THE PEOPLE BEHIND THE CHAOS)
        ========================================================================== -->
   <section id="team" class="studio-content-section team-section" aria-label="The Miscreant Team">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">06</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -1042,6 +1090,8 @@
        07 — STUDIO CULTURE (MANIFESTO & VALUES)
        ========================================================================== -->
   <section id="culture" class="studio-content-section culture-section" aria-label="Studio Culture">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">07</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -1152,6 +1202,8 @@
        08 — NEWS / TRANSMISSIONS (CYBER INTEL TERMINAL)
        ========================================================================== -->
   <section id="transmissions" class="studio-content-section transmissions-section" aria-label="News and Transmissions">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">08</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -1254,6 +1306,8 @@
        09 — CAREERS (JOIN THE CHAOS)
        ========================================================================== -->
   <section id="careers" class="studio-content-section careers-section" aria-label="Careers at The Miscreant Studios">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">09</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -1388,6 +1442,8 @@
        10 — CONTACT / TRANSMISSION (ESTABLISH CONNECTION)
        ========================================================================== -->
   <section id="contact" class="studio-content-section contact-section" aria-label="Contact The Miscreant Studios">
+    <!-- Giant Ghost Outline Numeral -->
+    <div class="ghost-giant-numeral" aria-hidden="true">10</div>
     <!-- Cyberpunk Corner Telemetry HUD -->
     <div class="cyber-hud-layer" aria-hidden="true">
       <div class="hud-corner hud-top-left">
@@ -1674,11 +1730,11 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Application Engine Scripts -->
-  <script src="assets/js/audio.js"></script>
-  <script src="assets/js/cursor.js"></script>
+  <script src="assets/js/audio.js?v=2"></script>
+  <script src="assets/js/cursor.js?v=2"></script>
   <script src="assets/js/three-scene.js?v=2"></script>
   <script src="assets/js/glitch.js"></script>
-  <script src="assets/js/main.js?v=11"></script>
+  <script src="assets/js/main.js?v=12"></script>
   <script src="assets/js/studio-sections.js?v=4"></script>
 
 </body>

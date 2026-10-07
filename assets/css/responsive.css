@@ -110,4 +110,21 @@
   .hero-visual-stage {
     min-height: 300px;
   }
+
+  /* Audio toggle compact mode on mobile */
+  .island-audio-toggle {
+    padding: 5px 8px;
+  }
+  .island-audio-toggle .audio-toggle-label {
+    display: none;
+  }
+
+  /* Ghost numerals scale gracefully on small screens */
+  .ghost-giant-numeral {
+    font-size: clamp(80px, 20vw, 140px);
+    top: 20px;
+    right: 16px;
+    opacity: 0.035;
+  }
 }
+

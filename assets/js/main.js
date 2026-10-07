@@ -48,6 +48,14 @@ function initLenisSmoothScroll() {
     requestAnimationFrame(raf);
   }
 
+  // Velocity Skew & Parallax State
+  let lastScrollY = 0;
+  let skewDecayTimer = null;
+  const skewTargets = document.querySelectorAll(
+    '.skew-on-scroll, .showcase-title, .arsenal-title, .studio-section-title, .hero-title'
+  );
+  const ghostNumerals = document.querySelectorAll('.ghost-giant-numeral');
+
   // Unified Scroll Listener for Parallax & Progress
   function handleScrollUpdate(scrollY) {
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -77,6 +85,30 @@ function initLenisSmoothScroll() {
       scrollIndicator.style.opacity = Math.max(0, 1 - scrollY / 120);
       scrollIndicator.style.pointerEvents = scrollY > 120 ? 'none' : 'auto';
     }
+
+    // 3. Kinetic Velocity Typography Skew (Lando Norris Editorial Effect)
+    const deltaY = scrollY - lastScrollY;
+    lastScrollY = scrollY;
+    const velocity = Math.max(-2.5, Math.min(2.5, deltaY * 0.05));
+
+    if (Math.abs(deltaY) > 0.6) {
+      skewTargets.forEach(el => {
+        el.style.transform = `skewX(${velocity}deg)`;
+      });
+
+      clearTimeout(skewDecayTimer);
+      skewDecayTimer = setTimeout(() => {
+        skewTargets.forEach(el => {
+          el.style.transform = 'skewX(0deg)';
+        });
+      }, 80);
+    }
+
+    // 4. Parallax Drift for Giant Ghost Numerals
+    ghostNumerals.forEach((numeral, idx) => {
+      const dir = idx % 2 === 0 ? 0.06 : -0.05;
+      numeral.style.transform = `translate3d(0, ${scrollY * dir}px, 0)`;
+    });
   }
 
   if (lenis) {
@@ -156,7 +188,7 @@ function initGlitchScramble() {
 }
 
 /* ==========================================================================
-   3. SMOOTH SCROLL REVEAL (IntersectionObserver)
+   3. SMOOTH SCROLL REVEAL & SECTION TITLE MATRIX DECRYPT SCRAMBLE
    ========================================================================== */
 function initScrollReveal() {
   const targets = document.querySelectorAll(
@@ -166,10 +198,45 @@ function initScrollReveal() {
 
   targets.forEach(el => el.classList.add('reveal-on-scroll'));
 
+  let lastAudioTransition = 0;
+  const scrambleChars = '!<>-_/[]{}—=+*^?#01';
+
+  function decryptElementText(el) {
+    if (el.dataset.scrambled === 'done') return;
+    el.dataset.scrambled = 'done';
+    const original = el.innerText;
+    let iteration = 0;
+    const timer = setInterval(() => {
+      el.innerText = original.split('').map((letter, i) => {
+        if (i < iteration) return original[i];
+        if (letter === ' ') return ' ';
+        return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+      }).join('');
+      if (iteration >= original.length) {
+        clearInterval(timer);
+        el.innerText = original;
+      }
+      iteration += 1;
+    }, 25);
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
+
+        // Cyberpunk text decrypt effect on section titles
+        const sectionTitle = entry.target.querySelector('h2, .showcase-title, .arsenal-title, .studio-section-title');
+        if (sectionTitle) decryptElementText(sectionTitle);
+
+        // Tactile chapter switch sound sweep (debounced to avoid audio spam)
+        const now = Date.now();
+        if (now - lastAudioTransition > 1400) {
+          lastAudioTransition = now;
+          if (window.cyberAudio && typeof window.cyberAudio.playSectionTransition === 'function') {
+            window.cyberAudio.playSectionTransition();
+          }
+        }
       }
     });
   }, {
@@ -478,6 +545,23 @@ function initGamesCarousel() {
       prevSlide();
     }
   });
+
+  // Mouse wheel and trackpad scrub gesture
+  let wheelLock = false;
+  carouselWrapper.addEventListener('wheel', (e) => {
+    if (wheelLock) return;
+    if (Math.abs(e.deltaX) > 20 || Math.abs(e.deltaY) > 35) {
+      wheelLock = true;
+      if (e.deltaX > 20 || e.deltaY > 35) {
+        if (window.cyberAudio) window.cyberAudio.playHover();
+        nextSlide();
+      } else {
+        if (window.cyberAudio) window.cyberAudio.playHover();
+        prevSlide();
+      }
+      setTimeout(() => { wheelLock = false; }, 320);
+    }
+  }, { passive: true });
 
   // Touch Swipe for mobile/tablets
   let touchStartX = 0;

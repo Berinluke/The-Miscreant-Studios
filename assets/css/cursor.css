@@ -107,11 +107,61 @@ body:hover .cyber-cursor-coords {
   opacity: 1;
 }
 
+/* Masterpiece Luxury Context Action Label ([ VIEW ], [ DRAG ], [ LAUNCH ]) */
+.cyber-cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10002;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  padding: 4px 10px;
+  background: rgba(7, 5, 18, 0.88);
+  border: 1px solid rgba(6, 182, 212, 0.6);
+  border-radius: 9999px;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.35);
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.cyber-cursor-label.label-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cyber-cursor-label.label-launch {
+  border-color: rgba(168, 85, 247, 0.8);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.45);
+}
+
+.cyber-cursor-label.label-drag {
+  border-color: rgba(245, 158, 11, 0.8);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.45);
+}
+
+/* Magnetic snap indicator for ring */
+.cyber-cursor-ring.cursor-magnetic {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.5);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
 /* Mobile & Touch Fallback */
 @media (hover: none) or (pointer: coarse) {
   .cyber-cursor-dot,
   .cyber-cursor-ring,
-  .cyber-cursor-coords {
+  .cyber-cursor-coords,
+  .cyber-cursor-label {
     display: none !important;
   }
 }
+
