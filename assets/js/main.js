@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAudioInteractions();
   initGamesCarousel();
   initArsenalShowcase();
+  initFullscreenScreenSnapping();
 });
 
 /* ==========================================================================
@@ -37,6 +38,8 @@ function initLenisSmoothScroll() {
       touchMultiplier: 1.5,
       infinite: false,
     });
+
+    window.lenisInstance = lenis;
 
     function raf(time) {
       lenis.raf(time);
@@ -756,3 +759,178 @@ function initArsenalShowcase() {
   updateCards();
   startAutoplay();
 }
+
+/* ==========================================================================
+   10. FULLSCREEN SCREEN-SNAP & GHOSTING TRANSITION CONTROLLER
+   ========================================================================== */
+function initFullscreenScreenSnapping() {
+  const sectionIds = ['hero', 'showcase', 'arsenal'];
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  if (sections.length < 2) return;
+
+  let currentIndex = 0;
+  let isTransitioning = false;
+  let lastScrollTime = 0;
+  const SCROLL_COOLDOWN = 850; // ms
+
+  // Create & mount the cyber screen navigator dock
+  const navLabels = ['01 HERO', '02 OPERATIONS', '03 ARSENAL'];
+  let navDock = document.querySelector('.cyber-screen-navigator');
+  if (!navDock) {
+    navDock = document.createElement('nav');
+    navDock.className = 'cyber-screen-navigator';
+    navDock.setAttribute('aria-label', 'Screen Navigation HUD');
+    
+    sections.forEach((sec, idx) => {
+      const btn = document.createElement('button');
+      btn.className = `screen-nav-dot ${idx === 0 ? 'active' : ''}`;
+      btn.setAttribute('data-index', idx);
+      btn.setAttribute('aria-label', `Navigate to ${navLabels[idx] || 'Section'}`);
+      btn.innerHTML = `
+        <span class="screen-dot-indicator"></span>
+        <span class="screen-dot-label">${navLabels[idx] || `0${idx + 1}`}</span>
+      `;
+      btn.addEventListener('click', () => {
+        goToScreen(idx);
+      });
+      navDock.appendChild(btn);
+    });
+    document.body.appendChild(navDock);
+  }
+
+  const navDots = navDock.querySelectorAll('.screen-nav-dot');
+
+  function updateActiveNav(idx) {
+    navDots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === idx);
+    });
+  }
+
+  function goToScreen(targetIndex) {
+    if (targetIndex < 0 || targetIndex >= sections.length) return;
+    if (targetIndex === currentIndex && !isTransitioning) return;
+    if (isTransitioning) return;
+
+    isTransitioning = true;
+    const departingIndex = currentIndex;
+    const departingSec = sections[departingIndex];
+    const targetSec = sections[targetIndex];
+
+    currentIndex = targetIndex;
+    updateActiveNav(targetIndex);
+
+    // Audio cue on screen transition
+    if (window.cyberAudio && typeof window.cyberAudio.playHover === 'function') {
+      window.cyberAudio.playHover();
+    }
+
+    // Apply Ghosting Animation Effect
+    if (departingSec) {
+      departingSec.classList.remove('ghost-in');
+      departingSec.classList.add('ghost-out');
+    }
+    if (targetSec) {
+      targetSec.classList.remove('ghost-out');
+      targetSec.classList.add('ghost-in');
+    }
+
+    const onComplete = () => {
+      setTimeout(() => {
+        if (departingSec) departingSec.classList.remove('ghost-out');
+        if (targetSec) targetSec.classList.remove('ghost-in');
+        isTransitioning = false;
+      }, 250);
+    };
+
+    if (window.lenisInstance) {
+      window.lenisInstance.scrollTo(targetSec, {
+        duration: 0.95,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        onComplete: onComplete
+      });
+    } else {
+      targetSec.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(onComplete, 850);
+    }
+  }
+
+  // Intercept desktop mouse wheel for screen-by-screen snapping
+  window.addEventListener('wheel', (e) => {
+    if (window.innerWidth <= 992) return; // Allow natural scrolling on smaller devices
+
+    const now = Date.now();
+    if (isTransitioning || now - lastScrollTime < SCROLL_COOLDOWN) {
+      e.preventDefault();
+      return;
+    }
+
+    if (Math.abs(e.deltaY) > 22) {
+      e.preventDefault();
+      lastScrollTime = now;
+      if (e.deltaY > 0) {
+        if (currentIndex < sections.length - 1) {
+          goToScreen(currentIndex + 1);
+        }
+      } else {
+        if (currentIndex > 0) {
+          goToScreen(currentIndex - 1);
+        }
+      }
+    }
+  }, { passive: false });
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'PageDown'].includes(e.code) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      if (currentIndex < sections.length - 1) {
+        e.preventDefault();
+        goToScreen(currentIndex + 1);
+      }
+    } else if (['ArrowUp', 'PageUp'].includes(e.code) && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      if (currentIndex > 0) {
+        e.preventDefault();
+        goToScreen(currentIndex - 1);
+      }
+    }
+  });
+
+  // Touch swipe gesture navigation for tablets
+  let touchStartY = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (window.innerWidth <= 768) return; // Allow natural mobile scrolling
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartY - touchEndY;
+    const now = Date.now();
+
+    if (Math.abs(diff) > 50 && !isTransitioning && now - lastScrollTime >= SCROLL_COOLDOWN) {
+      lastScrollTime = now;
+      if (diff > 0 && currentIndex < sections.length - 1) {
+        goToScreen(currentIndex + 1);
+      } else if (diff < 0 && currentIndex > 0) {
+        goToScreen(currentIndex - 1);
+      }
+    }
+  }, { passive: true });
+
+  // Sync index on scroll position (e.g. from nav anchors or hash)
+  window.addEventListener('scroll', () => {
+    if (isTransitioning) return;
+    const scrollPos = window.scrollY + window.innerHeight / 2;
+    sections.forEach((sec, idx) => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        if (currentIndex !== idx) {
+          currentIndex = idx;
+          updateActiveNav(idx);
+        }
+      }
+    });
+  }, { passive: true });
+}
+
