@@ -488,228 +488,271 @@ function initGamesCarousel() {
 }
 
 /* ==========================================================================
-   9. ARSENAL 2026 CYBERPUNK SLIDE DECK & SPOTLIGHT INTERACTION ENGINE
+   9. ARSENAL 3D FOCUS CAROUSEL (Matching Running Operations Cover-Flow)
    ========================================================================== */
 function initArsenalShowcase() {
-  const viewport = document.getElementById('arsenalViewport');
-  const track = document.getElementById('arsenalTrack');
+  const carouselWrapper = document.getElementById('arsenalCarousel');
+  const track = document.getElementById('arsenalCarouselTrack');
   const prevBtn = document.getElementById('arsenalPrevBtn');
   const nextBtn = document.getElementById('arsenalNextBtn');
-  const currentIndexEl = document.getElementById('arsenalCurrentIndex');
-  const totalIndexEl = document.getElementById('arsenalTotalIndex');
-  const progressFill = document.getElementById('arsenalProgressFill');
-  const filterBtns = document.querySelectorAll('.arsenal-filter-btn');
-  const btnSlideView = document.getElementById('btnSlideView');
-  const btnGridView = document.getElementById('btnGridView');
-  const cards = track ? Array.from(track.querySelectorAll('.tech-card')) : [];
+  const dotsContainer = document.getElementById('arsenalDots');
+  const filterPills = document.querySelectorAll('.arsenal-dock-pill');
 
-  if (!viewport || !track || cards.length === 0) return;
+  if (!carouselWrapper || !track) return;
+
+  const allCards = Array.from(track.querySelectorAll('.arsenal-card'));
+  if (allCards.length === 0) return;
 
   let activeFilter = 'all';
+  let filteredCards = [...allCards];
   let currentIndex = 0;
-  let isGridMode = false;
+  let autoplayTimer = null;
+  let isHovered = false;
 
-  // 1. Interactive Card Spotlight Following Pointer
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--spotlight-x', `${x}px`);
-      card.style.setProperty('--spotlight-y', `${y}px`);
-    });
-
-    card.addEventListener('mouseenter', () => {
-      if (window.cyberAudio && window.cyberAudio.playHover) {
-        window.cyberAudio.playHover();
-      }
-    });
-  });
-
-  // 2. Get Filtered Visible Cards
-  function getVisibleCards() {
-    return cards.filter(card => {
-      if (activeFilter === 'all') return true;
-      return card.getAttribute('data-category') === activeFilter;
+  // Build pagination dots
+  function buildDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    filteredCards.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = `arsenal-dot ${i === currentIndex ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `Navigate to arsenal slide ${i + 1}`);
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+      dot.addEventListener('click', () => {
+        if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+        goToSlide(i);
+      });
+      dotsContainer.appendChild(dot);
     });
   }
 
-  // 3. Maximum Slide Index
-  function getMaxIndex() {
-    const visibleCards = getVisibleCards();
-    const visibleCount = visibleCards.length;
-    const windowWidth = window.innerWidth;
-    let cardsPerView = 3;
-    if (windowWidth <= 768) {
-      cardsPerView = 1;
-    } else if (windowWidth <= 1200) {
-      cardsPerView = 2;
-    }
-    return Math.max(0, visibleCount - cardsPerView);
+  function getDots() {
+    return dotsContainer ? Array.from(dotsContainer.querySelectorAll('.arsenal-dot')) : [];
   }
 
-  // 4. Update Slider Track Position & Telemetry
-  function updateSlider() {
-    const visibleCards = getVisibleCards();
-    const totalVisible = visibleCards.length;
+  function updateCards() {
+    const total = filteredCards.length;
+    if (total === 0) return;
 
-    if (totalIndexEl) {
-      totalIndexEl.textContent = String(totalVisible).padStart(2, '0');
-    }
+    const isMobile = window.innerWidth <= 768;
 
-    if (isGridMode) {
-      track.style.transform = 'none';
-      if (progressFill) progressFill.style.width = '100%';
-      return;
-    }
-
-    const maxIndex = getMaxIndex();
-    if (currentIndex > maxIndex) {
-      currentIndex = maxIndex;
-    }
-    if (currentIndex < 0) {
-      currentIndex = 0;
-    }
-
-    if (currentIndexEl) {
-      currentIndexEl.textContent = String(currentIndex + 1).padStart(2, '0');
-    }
-
-    // Calculate translation
-    if (visibleCards.length > 0) {
-      const firstCard = visibleCards[0];
-      const cardRect = firstCard.getBoundingClientRect();
-      const cardWidth = cardRect.width;
-      const gap = 28;
-      const offset = currentIndex * (cardWidth + gap);
-      track.style.transform = `translateX(-${offset}px)`;
-    }
-
-    // Update Progress Bar
-    if (progressFill) {
-      const progressPercent = maxIndex === 0 ? 100 : ((currentIndex + 1) / (maxIndex + 1)) * 100;
-      progressFill.style.width = `${progressPercent}%`;
-    }
-
-    // Button states
-    if (prevBtn) {
-      prevBtn.style.opacity = currentIndex === 0 ? '0.4' : '1';
-      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-    }
-    if (nextBtn) {
-      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.4' : '1';
-      nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
-    }
-  }
-
-  // 5. Filter Category Handling
-  function applyFilter(filter) {
-    activeFilter = filter;
-    currentIndex = 0;
-
-    cards.forEach(card => {
-      const cat = card.getAttribute('data-category');
-      if (filter === 'all' || cat === filter) {
-        card.style.display = 'flex';
-        card.style.opacity = '1';
-      } else {
+    allCards.forEach(card => {
+      // Hide cards not in active filter
+      if (!filteredCards.includes(card)) {
         card.style.display = 'none';
         card.style.opacity = '0';
+        card.style.pointerEvents = 'none';
+        card.classList.remove('active-card');
+        return;
+      }
+      card.style.display = 'flex';
+    });
+
+    filteredCards.forEach((card, i) => {
+      let diff = (i - currentIndex) % total;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+
+      card.classList.remove('active-card');
+
+      if (diff === 0) {
+        // Active Center Focus Card (Elevated & Highlighted)
+        card.classList.add('active-card');
+        card.style.transform = 'translateX(0%) translateZ(0px) scale(1)';
+        card.style.opacity = '1';
+        card.style.zIndex = '12';
+        card.style.filter = 'none';
+        card.style.pointerEvents = 'auto';
+        card.style.cursor = 'default';
+      } else if (diff === 1) {
+        // Right Card (Next)
+        const offset = isMobile ? 'calc(105% + 8px)' : 'calc(100% + 36px)';
+        const scale = isMobile ? '0.82' : '0.88';
+        const opacity = isMobile ? '0.2' : '0.58';
+        card.style.transform = `translateX(${offset}) translateZ(-70px) scale(${scale})`;
+        card.style.opacity = opacity;
+        card.style.zIndex = '6';
+        card.style.filter = 'brightness(0.65)';
+        card.style.pointerEvents = 'auto';
+        card.style.cursor = 'pointer';
+      } else if (diff === -1) {
+        // Left Card (Previous)
+        const offset = isMobile ? 'calc(-105% - 8px)' : 'calc(-100% - 36px)';
+        const scale = isMobile ? '0.82' : '0.88';
+        const opacity = isMobile ? '0.2' : '0.58';
+        card.style.transform = `translateX(${offset}) translateZ(-70px) scale(${scale})`;
+        card.style.opacity = opacity;
+        card.style.zIndex = '6';
+        card.style.filter = 'brightness(0.65)';
+        card.style.pointerEvents = 'auto';
+        card.style.cursor = 'pointer';
+      } else {
+        // Rear Hidden Depth Cards
+        card.style.transform = 'translateX(0%) translateZ(-250px) scale(0.68)';
+        card.style.opacity = '0';
+        card.style.zIndex = '1';
+        card.style.filter = 'none';
+        card.style.pointerEvents = 'none';
+        card.style.cursor = 'default';
       }
     });
 
-    filterBtns.forEach(btn => {
-      const isTarget = btn.getAttribute('data-filter') === filter;
-      btn.classList.toggle('active', isTarget);
-      btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+    // Update dots
+    const dots = getDots();
+    dots.forEach((dot, idx) => {
+      const isActive = idx === currentIndex;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
-
-    updateSlider();
   }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (window.cyberAudio && window.cyberAudio.playClick) {
-        window.cyberAudio.playClick();
+  function goToSlide(index) {
+    const total = filteredCards.length;
+    if (total === 0) return;
+    currentIndex = (index + total) % total;
+    updateCards();
+    resetAutoplay();
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  // Click adjacent cards to slide to center
+  allCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a') || e.target.closest('button')) return;
+      const cardIndex = filteredCards.indexOf(card);
+      if (cardIndex !== -1 && cardIndex !== currentIndex) {
+        if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+        goToSlide(cardIndex);
       }
-      const filter = btn.getAttribute('data-filter');
-      applyFilter(filter);
     });
   });
 
-  // 6. Navigation Buttons
+  // Category filter dock pills
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+      const filter = pill.getAttribute('data-filter');
+      activeFilter = filter;
+
+      filterPills.forEach(p => {
+        const isMatch = p === pill;
+        p.classList.toggle('active', isMatch);
+        p.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+
+      if (filter === 'all') {
+        filteredCards = [...allCards];
+      } else {
+        filteredCards = allCards.filter(c => c.getAttribute('data-category') === filter);
+      }
+
+      currentIndex = 0;
+      buildDots();
+      updateCards();
+      resetAutoplay();
+    });
+  });
+
+  // Circular navigation buttons
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
-      if (window.cyberAudio && window.cyberAudio.playClick) {
-        window.cyberAudio.playClick();
-      }
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
-      }
+      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+      prevSlide();
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
-      if (window.cyberAudio && window.cyberAudio.playClick) {
-        window.cyberAudio.playClick();
-      }
-      if (currentIndex < getMaxIndex()) {
-        currentIndex++;
-        updateSlider();
-      }
+      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+      nextSlide();
     });
   }
 
-  // 7. View Mode Switcher
-  if (btnSlideView && btnGridView) {
-    btnSlideView.addEventListener('click', () => {
-      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
-      isGridMode = false;
-      viewport.classList.remove('is-grid-mode');
-      btnSlideView.classList.add('active');
-      btnGridView.classList.remove('active');
-      if (prevBtn) prevBtn.style.display = 'inline-flex';
-      if (nextBtn) nextBtn.style.display = 'inline-flex';
-      updateSlider();
-    });
+  // Keyboard navigation when near arsenal
+  window.addEventListener('keydown', (e) => {
+    const rect = carouselWrapper.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!inView) return;
 
-    btnGridView.addEventListener('click', () => {
-      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
-      isGridMode = true;
-      viewport.classList.add('is-grid-mode');
-      btnGridView.classList.add('active');
-      btnSlideView.classList.remove('active');
-      updateSlider();
-    });
-  }
-
-  // 8. Mobile Touch Swipe
-  let touchStartX = 0;
-  viewport.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
-
-  viewport.addEventListener('touchend', (e) => {
-    if (isGridMode) return;
-    const touchEndX = e.changedTouches[0].screenX;
-    const diff = touchEndX - touchStartX;
-    if (Math.abs(diff) > 45) {
-      if (diff < 0 && currentIndex < getMaxIndex()) {
-        currentIndex++;
-        updateSlider();
-      } else if (diff > 0 && currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
-      }
+    if (e.key === 'ArrowRight') {
+      nextSlide();
+    } else if (e.key === 'ArrowLeft') {
+      prevSlide();
     }
-  }, { passive: true });
-
-  window.addEventListener('resize', () => {
-    updateSlider();
   });
 
-  // Initialize
-  updateSlider();
+  // Mobile Touch Swipe
+  let touchStartX = 0;
+  let touchEndX = 0;
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    pauseAutoplay();
+  }, { passive: true });
+
+  track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 40) {
+      if (diff < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    resumeAutoplay();
+  }, { passive: true });
+
+  // Autoplay functionality
+  function startAutoplay() {
+    if (autoplayTimer) clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(() => {
+      if (!isHovered) {
+        nextSlide();
+      }
+    }, 4200);
+  }
+
+  function pauseAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function resumeAutoplay() {
+    startAutoplay();
+  }
+
+  function resetAutoplay() {
+    pauseAutoplay();
+    resumeAutoplay();
+  }
+
+  // Pause on hover
+  carouselWrapper.addEventListener('mouseenter', () => {
+    isHovered = true;
+    pauseAutoplay();
+  });
+
+  carouselWrapper.addEventListener('mouseleave', () => {
+    isHovered = false;
+    resumeAutoplay();
+  });
+
+  window.addEventListener('resize', () => {
+    updateCards();
+  });
+
+  // Initial build
+  buildDots();
+  updateCards();
+  startAutoplay();
 }
