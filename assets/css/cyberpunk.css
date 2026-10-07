@@ -226,3 +226,76 @@
     display: none;
   }
 }
+
+/* ==========================================================================
+   CYBERPUNK CORNER TELEMETRY HUD (Pure CSS Studio Brackets)
+   ========================================================================== */
+.cyber-hud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.hud-corner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: rgba(192, 132, 252, 0.45);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.hud-bracket {
+  font-size: 0.95rem;
+  line-height: 1;
+  color: rgba(192, 132, 252, 0.65);
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+
+.hud-tag {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+}
+
+.hud-sub {
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 0.58rem;
+}
+
+.hud-top-left {
+  top: clamp(22px, 3.8vh, 38px);
+  left: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-top-right {
+  top: clamp(22px, 3.8vh, 38px);
+  right: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-bottom-left {
+  bottom: clamp(20px, 3.2vh, 32px);
+  left: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-bottom-right {
+  bottom: clamp(20px, 3.2vh, 32px);
+  right: clamp(24px, 3.5vw, 52px);
+}
+
+@media (max-width: 992px) {
+  .hud-sub {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cyber-hud-layer {
+    display: none;
+  }
+}

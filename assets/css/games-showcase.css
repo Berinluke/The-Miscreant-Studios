@@ -67,13 +67,17 @@ html.lenis, html.lenis body {
   justify-content: space-between;
   align-items: center;
   background: 
-    /* Pure CSS Cyber Grid Layer (No external image) */
-    linear-gradient(rgba(139, 92, 246, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.035) 1px, transparent 1px),
-    /* Corner Ambient Spotlights: Left & Right Top corners */
-    radial-gradient(circle at 12% 22%, rgba(139, 92, 246, 0.16) 0%, rgba(6, 182, 212, 0.05) 32%, transparent 60%),
-    radial-gradient(circle at 88% 22%, rgba(192, 132, 252, 0.14) 0%, rgba(139, 92, 246, 0.04) 32%, transparent 60%),
-    /* Base Deep Studio Gradient */
+    /* 1. Fine Dot-Matrix Points (Light shade grill dots) */
+    radial-gradient(circle at 1px 1px, rgba(192, 132, 252, 0.16) 1.2px, transparent 1.6px),
+    /* 2. Fine Horizontal Grill Lines */
+    linear-gradient(rgba(139, 92, 246, 0.045) 1px, transparent 1px),
+    /* 3. Fine Vertical Grill Lines */
+    linear-gradient(90deg, rgba(139, 92, 246, 0.045) 1px, transparent 1px),
+    /* 4. Left Corner Ambient Spotlight */
+    radial-gradient(circle at 12% 20%, rgba(139, 92, 246, 0.18) 0%, rgba(6, 182, 212, 0.06) 32%, transparent 60%),
+    /* 5. Right Corner Ambient Spotlight */
+    radial-gradient(circle at 88% 20%, rgba(192, 132, 252, 0.16) 0%, rgba(139, 92, 246, 0.05) 32%, transparent 60%),
+    /* 6. Base Deep Studio Gradient */
     linear-gradient(180deg, 
       transparent 0%, 
       rgba(7, 5, 18, 0.6) 10%, 
@@ -81,6 +85,7 @@ html.lenis, html.lenis body {
       rgba(6, 4, 16, 0.99) 50%, 
       #060410 100%);
   background-size: 
+    48px 48px,
     48px 48px,
     48px 48px,
     100% 100%,
