@@ -835,20 +835,26 @@ function initFullscreenScreenSnapping() {
       targetSec.classList.add('ghost-in');
     }
 
+    let completed = false;
     const onComplete = () => {
+      if (completed) return;
+      completed = true;
       setTimeout(() => {
         if (departingSec) departingSec.classList.remove('ghost-out');
         if (targetSec) targetSec.classList.remove('ghost-in');
         isTransitioning = false;
-      }, 250);
+        syncActiveScreen();
+      }, 200);
     };
 
     if (window.lenisInstance) {
       window.lenisInstance.scrollTo(targetSec, {
-        duration: 0.95,
+        duration: 0.9,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: onComplete
       });
+      // Safety timeout: unlock transition state even if Lenis event drops
+      setTimeout(onComplete, 1000);
     } else {
       targetSec.scrollIntoView({ behavior: 'smooth' });
       setTimeout(onComplete, 850);
@@ -917,19 +923,27 @@ function initFullscreenScreenSnapping() {
     }
   }, { passive: true });
 
-  // Sync index on scroll position (viewport midpoint detection)
+  // Sync index on scroll position (dominant visible screen detection)
   function syncActiveScreen() {
     if (isTransitioning) return;
-    const midPoint = window.innerHeight / 2;
-    for (let idx = 0; idx < sections.length; idx++) {
-      const rect = sections[idx].getBoundingClientRect();
-      if (rect.top <= midPoint && rect.bottom >= midPoint) {
-        if (currentIndex !== idx) {
-          currentIndex = idx;
-          updateActiveNav(idx);
-        }
-        break;
+    let maxVisibleHeight = -1;
+    let bestIdx = currentIndex;
+
+    sections.forEach((sec, idx) => {
+      const rect = sec.getBoundingClientRect();
+      const visibleTop = Math.max(0, rect.top);
+      const visibleBottom = Math.min(window.innerHeight, rect.bottom);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+      if (visibleHeight > maxVisibleHeight) {
+        maxVisibleHeight = visibleHeight;
+        bestIdx = idx;
       }
+    });
+
+    if (maxVisibleHeight > 80 && currentIndex !== bestIdx) {
+      currentIndex = bestIdx;
+      updateActiveNav(bestIdx);
     }
   }
 
@@ -937,5 +951,8 @@ function initFullscreenScreenSnapping() {
   if (window.lenisInstance) {
     window.lenisInstance.on('scroll', syncActiveScreen);
   }
+
+  // Initial sync check
+  syncActiveScreen();
 }
 
