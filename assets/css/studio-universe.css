@@ -326,35 +326,7 @@
    05 — THE MISCREANT UNIVERSE (EXPANDED GAME PORTFOLIO)
    -------------------------------------------------------------------------- */
 .universe-filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 36px;
-  position: relative;
-  z-index: 2;
-}
-
-.universe-filter-btn {
-  background: rgba(14, 11, 28, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  padding: 8px 18px;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.universe-filter-btn:hover,
-.universe-filter-btn.active {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(56, 189, 248, 0.3) 100%);
-  border-color: rgba(192, 132, 252, 0.6);
-  color: #ffffff;
-  box-shadow: 0 0 16px rgba(192, 132, 252, 0.3);
+  display: none !important;
 }
 
 .universe-games-grid {
@@ -860,27 +832,7 @@
 .term-dot-green { background: #22c55e; }
 
 .terminal-filters {
-  display: flex;
-  gap: 8px;
-}
-
-.term-filter-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.68rem;
-  padding: 4px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.term-filter-btn:hover,
-.term-filter-btn.active {
-  background: rgba(192, 132, 252, 0.15);
-  border-color: rgba(192, 132, 252, 0.45);
-  color: #ffffff;
+  display: none !important;
 }
 
 .transmissions-list {
