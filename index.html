@@ -24,13 +24,39 @@
   <link rel="stylesheet" href="assets/css/cursor.css">
   <link rel="stylesheet" href="assets/css/games-showcase.css?v=2">
   <link rel="stylesheet" href="assets/css/arsenal.css?v=3">
-  <link rel="stylesheet" href="assets/css/studio-universe.css?v=1">
+  <link rel="stylesheet" href="assets/css/studio-universe.css?v=2">
   <link rel="stylesheet" href="assets/css/responsive.css?v=2">
 </head>
 <body>
 
   <!-- Neon Top Scroll Progress Bar -->
   <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Floating Island Studio Navbar (2026 Sleek Island) -->
+  <nav class="floating-island-navbar" aria-label="Main Studio Navigation">
+    <a href="#hero" class="island-brand-tag" aria-label="The Miscreant Studios Home">
+      <span class="island-brand-accent">✦</span>
+      <span class="island-brand-text">THE MISCREANT</span>
+    </a>
+
+    <div class="island-nav-links">
+      <a href="#showcase" class="island-nav-link">OPERATIONS</a>
+      <a href="#arsenal" class="island-nav-link">ARSENAL</a>
+      <a href="#about" class="island-nav-link">ABOUT</a>
+      <a href="#universe" class="island-nav-link">UNIVERSE</a>
+      <a href="#team" class="island-nav-link">TEAM</a>
+      <a href="#careers" class="island-nav-link">CAREERS</a>
+      <a href="#contact" class="island-nav-link">CONTACT</a>
+    </div>
+
+    <div class="island-action-group">
+      <button class="island-cmd-trigger" id="cmdPaletteTrigger" aria-label="Open Command Palette (Ctrl+K)">
+        <span class="cmd-icon">⌘</span>
+        <span class="cmd-label">K</span>
+      </button>
+      <a href="#contact" class="island-cta-btn">UPLINK →</a>
+    </div>
+  </nav>
 
   <!-- Interactive 3D WebGL Canvas (Soft Floating Embers) -->
   <canvas id="webgl-canvas"></canvas>
@@ -1491,6 +1517,112 @@
     </div>
   </footer>
 
+  <!-- ==========================================================================
+       ⌘K CYBER COMMAND PALETTE MODAL
+       ========================================================================== -->
+  <div class="cyber-command-palette-backdrop" id="commandPalette" aria-hidden="true">
+    <div class="command-palette-window" role="dialog" aria-modal="true" aria-label="Studio Command Bar">
+      <div class="command-search-header">
+        <span class="cmd-search-icon">🔍</span>
+        <input type="text" class="command-search-input" id="cmdSearchInput" placeholder="Type a command or jump to section... (e.g. Deep Void, Careers, Team)" autocomplete="off">
+        <kbd class="cmd-esc-badge" id="cmdCloseBtn">ESC</kbd>
+      </div>
+
+      <div class="command-results-list" id="cmdResultsList">
+        <div class="cmd-category-title">QUICK JUMP</div>
+        <a href="#hero" class="cmd-item" data-title="Hero Landing Page Stage">
+          <span class="cmd-item-icon">⚡</span>
+          <span class="cmd-item-label">01 // Hero Stage</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#showcase" class="cmd-item" data-title="Operations Live Games Carousel">
+          <span class="cmd-item-icon">🎮</span>
+          <span class="cmd-item-label">02 // Operations (Running Operations)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#arsenal" class="cmd-item" data-title="The Arsenal Technology UE5 Unity C++">
+          <span class="cmd-item-icon">⚙️</span>
+          <span class="cmd-item-label">03 // The Arsenal (Tech Stack & SIMD)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#about" class="cmd-item" data-title="About The Studio Manifesto Pillars Timeline">
+          <span class="cmd-item-icon">🏛️</span>
+          <span class="cmd-item-label">04 // About Studio (Manifesto & Pillars)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#universe" class="cmd-item" data-title="The Miscreant Universe Games Deep Void Project Omega">
+          <span class="cmd-item-icon">🌌</span>
+          <span class="cmd-item-label">05 // The Miscreant Universe (Game Franchises)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#team" class="cmd-item" data-title="The Team Leadership Architects Enbaraj">
+          <span class="cmd-item-icon">👥</span>
+          <span class="cmd-item-label">06 // The Team (Core Architects)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#culture" class="cmd-item" data-title="Studio Culture Create Experiment Break Rebuild">
+          <span class="cmd-item-icon">🧠</span>
+          <span class="cmd-item-label">07 // Culture (Create, Experiment, Break, Rebuild)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#transmissions" class="cmd-item" data-title="News Transmissions Dev Diary Patch Notes">
+          <span class="cmd-item-icon">📡</span>
+          <span class="cmd-item-label">08 // Transmissions (Intel Stream & Devlogs)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#careers" class="cmd-item" data-title="Careers Jobs Hiring Open Positions">
+          <span class="cmd-item-icon">🚀</span>
+          <span class="cmd-item-label">09 // Careers (5 Open Positions)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+        <a href="#contact" class="cmd-item" data-title="Contact Dispatch Chennai Uplink Message">
+          <span class="cmd-item-icon">🛰️</span>
+          <span class="cmd-item-label">10 // Establish Connection (Chennai Dispatch)</span>
+          <span class="cmd-item-shortcut">Jump</span>
+        </a>
+      </div>
+
+      <div class="command-palette-footer">
+        <span>Cycle: <kbd>↑</kbd> <kbd>↓</kbd></span>
+        <span>Select: <kbd>↵</kbd></span>
+        <span>Dismiss: <kbd>ESC</kbd></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TACTICAL CLASSIFIED DOSSIER MODAL
+       ========================================================================== -->
+  <div class="cyber-dossier-modal-backdrop" id="dossierModal" aria-hidden="true">
+    <div class="dossier-modal-card" role="dialog" aria-modal="true" aria-label="Game Dossier">
+      <div class="dossier-modal-header">
+        <div class="dossier-header-tag">
+          <span class="pulse-live-dot"></span>
+          <span>THE MISCREANT STUDIOS // CLASSIFIED DOSSIER</span>
+        </div>
+        <button class="dossier-close-btn" id="dossierCloseBtn" aria-label="Close Dossier">✕</button>
+      </div>
+      <div class="dossier-modal-body">
+        <h3 class="dossier-project-title" id="dossierTitle">PROJECT DOSSIER</h3>
+        <div class="dossier-status-pill" id="dossierStatus">STATUS: ACTIVE PROTOCOL</div>
+        <p class="dossier-description-text" id="dossierDesc">Dossier telemetry details...</p>
+        <div class="dossier-spec-grid">
+          <div class="dossier-spec-cell">
+            <span class="spec-cell-lbl">COMBAT ARCHITECTURE</span>
+            <span class="spec-cell-val" id="dossierCombat">128Hz Bare-Metal</span>
+          </div>
+          <div class="dossier-spec-cell">
+            <span class="spec-cell-lbl">GRAPHICS ENGINE</span>
+            <span class="spec-cell-val" id="dossierEngine">UE5.5 Lumen & Nanite</span>
+          </div>
+        </div>
+      </div>
+      <div class="dossier-modal-footer">
+        <button class="btn-universe-action btn-primary-glow" id="dossierAcknowledgeBtn">ACKNOWLEDGE TRANSMISSION</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Three.js & Lenis Smooth Scroll Library CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
@@ -1501,7 +1633,7 @@
   <script src="assets/js/three-scene.js"></script>
   <script src="assets/js/glitch.js"></script>
   <script src="assets/js/main.js?v=9"></script>
-  <script src="assets/js/studio-sections.js?v=1"></script>
+  <script src="assets/js/studio-sections.js?v=2"></script>
 
 </body>
 </html>
