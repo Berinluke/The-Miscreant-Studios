@@ -829,14 +829,37 @@ function initFullscreenScreenSnapping() {
   let lastScrollTime = 0;
   const SCROLL_COOLDOWN = 850; // ms
 
-  // Remove any legacy cyber screen navigator dock if present
-  const existingNavDock = document.querySelector('.cyber-screen-navigator');
-  if (existingNavDock) {
-    existingNavDock.remove();
+  // Create & mount the cyber screen navigator dock
+  const navLabels = ['01 HERO', '02 OPERATIONS', '03 ARSENAL'];
+  let navDock = document.querySelector('.cyber-screen-navigator');
+  if (!navDock) {
+    navDock = document.createElement('nav');
+    navDock.className = 'cyber-screen-navigator';
+    navDock.setAttribute('aria-label', 'Screen Navigation HUD');
+    
+    sections.forEach((sec, idx) => {
+      const btn = document.createElement('button');
+      btn.className = `screen-nav-dot ${idx === 0 ? 'active' : ''}`;
+      btn.setAttribute('data-index', idx);
+      btn.setAttribute('aria-label', `Navigate to ${navLabels[idx] || 'Section'}`);
+      btn.innerHTML = `
+        <span class="screen-dot-indicator"></span>
+        <span class="screen-dot-label">${navLabels[idx] || `0${idx + 1}`}</span>
+      `;
+      btn.addEventListener('click', () => {
+        goToScreen(idx);
+      });
+      navDock.appendChild(btn);
+    });
+    document.body.appendChild(navDock);
   }
 
+  const navDots = navDock.querySelectorAll('.screen-nav-dot');
+
   function updateActiveNav(idx) {
-    // Navigator dock removed per design preference
+    navDots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === idx);
+    });
   }
 
   function goToScreen(targetIndex) {
