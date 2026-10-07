@@ -300,7 +300,7 @@ function initStudioClock() {
     const hours = String(now.getUTCHours()).padStart(2, '0');
     const minutes = String(now.getUTCMinutes()).padStart(2, '0');
     const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-    clockEl.innerText = `CLUSTER TIME: ${hours}:${minutes}:${seconds} UTC // MESH: ACTIVE`;
+    clockEl.innerText = `CLUSTER TIME: ${hours}:${minutes}:${seconds} UTC • MESH: ACTIVE`;
   }
 
   updateClock();

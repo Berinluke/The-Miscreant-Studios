@@ -174,19 +174,19 @@ function initDossierModal() {
     
     if (statusEl) {
       if (gameName.includes('VOID')) {
-        statusEl.textContent = 'STATUS: MMORPG LIVE CLUSTER // VOIDBREAKER 2.4';
+        statusEl.textContent = 'STATUS: MMORPG LIVE CLUSTER • VOIDBREAKER 2.4';
         if (combatEl) combatEl.textContent = '64-Player Distributed Server Mesh';
         if (engineEl) engineEl.textContent = 'UE5.5 Lumen & Nanite Micro-Polygons';
       } else if (gameName.includes('OMEGA')) {
-        statusEl.textContent = 'STATUS: CLOSED BETA WAVE 03 // 128HZ';
+        statusEl.textContent = 'STATUS: CLOSED BETA WAVE 03 • 128HZ';
         if (combatEl) combatEl.textContent = '128Hz Bare-Metal UDP & Kernel Anti-Cheat';
         if (engineEl) engineEl.textContent = 'Chaos Voxel Destruction Engine';
       } else if (gameName.includes('VELOCITY')) {
-        statusEl.textContent = 'STATUS: STEAM NEXT FEST DEMO // IN-DEV';
+        statusEl.textContent = 'STATUS: STEAM NEXT FEST DEMO • IN-DEV';
         if (combatEl) combatEl.textContent = 'Sub-Stepping Physics Solver (< 1ms)';
         if (engineEl) engineEl.textContent = 'Native WebGPU Shaders (120+ FPS)';
       } else {
-        statusEl.textContent = 'STATUS: CLASSIFIED // INTERNAL PROTOCOL';
+        statusEl.textContent = 'STATUS: CLASSIFIED • INTERNAL PROTOCOL';
         if (combatEl) combatEl.textContent = 'Zero-G Depressurization Hazards';
         if (engineEl) engineEl.textContent = 'Dynamic Volumetric Sound Occlusion';
       }
@@ -363,7 +363,7 @@ function initCareerInteractions() {
         contactSubject.value = 'careers';
         const msgField = document.getElementById('contact-message');
         if (msgField) {
-          msgField.value = `// APPLICATION FOR: ${roleName}\n// Portfolio Link:\n// Experience Summary:\n`;
+          msgField.value = `APPLICATION FOR: ${roleName}\nPortfolio Link:\nExperience Summary:\n`;
           msgField.focus();
         }
         
@@ -412,7 +412,7 @@ function initContactUplinkForm() {
     }, 800);
 
     setTimeout(() => {
-      submitBtn.innerHTML = `<span>✓ SIGNAL RECEIVED // 200 OK</span>`;
+      submitBtn.innerHTML = `<span>✓ SIGNAL RECEIVED • 200 OK</span>`;
       submitBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
       submitBtn.style.borderColor = '#34d399';
 
@@ -432,7 +432,7 @@ function initContactUplinkForm() {
         box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(52, 211, 153, 0.4);
       `;
       successToast.innerHTML = `
-        <div style="color: #34d399; font-weight: bold; margin-bottom: 4px;">[TRANSMISSION DISPATCHED // 200 OK]</div>
+        <div style="color: #34d399; font-weight: bold; margin-bottom: 4px;">[TRANSMISSION DISPATCHED • 200 OK]</div>
         <div>Agent: ${nameInput.value}</div>
         <div style="color: #94a3b8; font-size: 0.7rem; margin-top: 4px;">Signal ingested into Chennai HQ dispatch terminal.</div>
       `;
