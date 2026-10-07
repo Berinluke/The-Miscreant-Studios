@@ -157,30 +157,16 @@
   z-index: 1;
 }
 
-/* Distinct Tech Accents */
-.arsenal-card[data-tech="ue5"] {
-  --card-accent: #c084fc;
-  --card-glow: rgba(192, 132, 252, 0.4);
-}
-.arsenal-card[data-tech="unity"] {
-  --card-accent: #38bdf8;
-  --card-glow: rgba(56, 189, 248, 0.4);
-}
-.arsenal-card[data-tech="blender"] {
-  --card-accent: #fb923c;
-  --card-glow: rgba(251, 146, 60, 0.4);
-}
-.arsenal-card[data-tech="houdini"] {
-  --card-accent: #f43f5e;
-  --card-glow: rgba(244, 63, 94, 0.4);
-}
-.arsenal-card[data-tech="wwise"] {
-  --card-accent: #34d399;
-  --card-glow: rgba(52, 211, 153, 0.4);
-}
+/* Unified Cyberpunk Purple / Violet Brand Accent & Glow on All Cards */
+.arsenal-card,
+.arsenal-card[data-tech="ue5"],
+.arsenal-card[data-tech="unity"],
+.arsenal-card[data-tech="blender"],
+.arsenal-card[data-tech="houdini"],
+.arsenal-card[data-tech="wwise"],
 .arsenal-card[data-tech="cpp"] {
-  --card-accent: #a78bfa;
-  --card-glow: rgba(167, 139, 250, 0.4);
+  --card-accent: #c084fc;
+  --card-glow: rgba(192, 132, 252, 0.45);
 }
 
 /* Active Center Card Highlight (Elevated + Glowing Perimeter) */
