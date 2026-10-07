@@ -261,29 +261,9 @@
   z-index: 2;
 }
 
-/* Animated Vertical Laser Scanline */
+/* Scanner Scanline Disabled */
 .arsenal-scanline {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background: linear-gradient(180deg, 
-    transparent 0%, 
-    var(--card-glow) 50%, 
-    var(--card-accent) 90%, 
-    #ffffff 100%);
-  opacity: 0.35;
-  pointer-events: none;
-  z-index: 3;
-  animation: laserSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes laserSweep {
-  0% { top: -15%; opacity: 0; }
-  10% { opacity: 0.4; }
-  85% { opacity: 0.4; }
-  100% { top: 110%; opacity: 0; }
+  display: none !important;
 }
 
 
