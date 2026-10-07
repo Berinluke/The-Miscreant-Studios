@@ -27,6 +27,12 @@ class Cyber3DScene {
     this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.z = 200;
 
+    const heroEl = document.getElementById('hero');
+    const width = heroEl ? heroEl.clientWidth : window.innerWidth;
+    const height = heroEl ? heroEl.clientHeight : window.innerHeight;
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
     // 2. Renderer setup
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.container,
@@ -34,7 +40,7 @@ class Cyber3DScene {
       antialias: true,
       powerPreference: 'high-performance'
     });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // 3. Build Floating Embers strictly on the Left Half
@@ -191,13 +197,25 @@ class Cyber3DScene {
 
   onResize() {
     if (!this.camera || !this.renderer) return;
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const heroEl = document.getElementById('hero');
+    const width = heroEl ? heroEl.clientWidth : window.innerWidth;
+    const height = heroEl ? heroEl.clientHeight : window.innerHeight;
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(width, height);
   }
 
   animate() {
     requestAnimationFrame(() => this.animate());
+
+    // Only animate and render when hero landing page is visible in viewport!
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      const rect = heroEl.getBoundingClientRect();
+      if (rect.bottom <= 0) {
+        return; // Paused: user scrolled past landing page!
+      }
+    }
 
     // Gentle camera parallax
     this.mouseX += (this.targetX - this.mouseX) * 0.04;
