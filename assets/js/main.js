@@ -819,7 +819,18 @@ function initArsenalShowcase() {
    10. FULLSCREEN SCREEN-SNAP & GHOSTING TRANSITION CONTROLLER
    ========================================================================== */
 function initFullscreenScreenSnapping() {
-  const sectionIds = ['hero', 'showcase', 'arsenal'];
+  const sectionIds = [
+    'hero',
+    'showcase',
+    'arsenal',
+    'about',
+    'universe',
+    'team',
+    'culture',
+    'transmissions',
+    'careers',
+    'contact'
+  ];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   if (sections.length < 2) return;
@@ -857,37 +868,24 @@ function initFullscreenScreenSnapping() {
       window.cyberAudio.playHover();
     }
 
-    // Apply Ghosting Animation Effect
-    if (departingSec && departingSec !== targetSec) {
-      departingSec.classList.remove('ghost-in');
-      departingSec.classList.add('ghost-out');
-    }
-    if (targetSec) {
-      targetSec.classList.remove('ghost-out');
-      targetSec.classList.add('ghost-in');
-    }
-
     let completed = false;
     const onComplete = () => {
       if (completed) return;
       completed = true;
       setTimeout(() => {
-        if (departingSec) departingSec.classList.remove('ghost-out');
-        if (targetSec) targetSec.classList.remove('ghost-in');
         isTransitioning = false;
         syncActiveScreen();
-      }, 150);
+      }, 100);
     };
 
     if (window.lenisInstance) {
       window.lenisInstance.scrollTo(targetSec, {
         offset: 0,
-        duration: 0.85,
+        duration: 0.9,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: onComplete,
-        lock: true
+        lock: false
       });
-      // Safety timeout: unlock transition state even if Lenis event drops
       setTimeout(onComplete, 950);
     } else {
       targetSec.scrollIntoView({ behavior: 'smooth' });
@@ -897,45 +895,6 @@ function initFullscreenScreenSnapping() {
 
   // Expose to window for navbar links
   window.goToScreen = goToScreen;
-
-  // Intercept desktop mouse wheel & trackpad gestures for screen-by-screen snapping
-  let wheelAccumulator = 0;
-  let wheelDebounceTimer = null;
-  const WHEEL_THRESHOLD = 30; // Clean intentional flick threshold
-
-  window.addEventListener('wheel', (e) => {
-    if (window.innerWidth <= 992) return; // Allow natural scrolling on smaller mobile/tablet devices
-
-    // Prevent awkward fractional scroll positions between 100vh screens
-    e.preventDefault();
-
-    if (isTransitioning) return;
-
-    const now = Date.now();
-    if (now - lastScrollTime < 550) return;
-
-    // Accumulate wheel delta to cleanly distinguish tiny nudges from intentional swipes
-    wheelAccumulator += e.deltaY;
-
-    clearTimeout(wheelDebounceTimer);
-    wheelDebounceTimer = setTimeout(() => {
-      wheelAccumulator = 0;
-    }, 120);
-
-    if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
-      const direction = wheelAccumulator > 0 ? 1 : -1;
-      wheelAccumulator = 0;
-      clearTimeout(wheelDebounceTimer);
-
-      if (direction > 0 && currentIndex < sections.length - 1) {
-        lastScrollTime = now;
-        goToScreen(currentIndex + 1);
-      } else if (direction < 0 && currentIndex > 0) {
-        lastScrollTime = now;
-        goToScreen(currentIndex - 1);
-      }
-    }
-  }, { passive: false });
 
   // Keyboard navigation
   window.addEventListener('keydown', (e) => {
