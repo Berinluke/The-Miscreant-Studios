@@ -90,17 +90,26 @@ function initLenisSmoothScroll() {
     }, { passive: true });
   }
 
-  // Smooth click scrolling for anchor links
+  // Smooth click scrolling for anchor links coordinated with screen snapper
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
       if (!targetId || targetId === '#') return;
 
+      const secName = targetId.replace('#', '');
+      const secIdx = ['hero', 'showcase', 'arsenal'].indexOf(secName);
+
+      if (secIdx !== -1 && typeof window.goToScreen === 'function') {
+        e.preventDefault();
+        window.goToScreen(secIdx);
+        return;
+      }
+
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
         if (lenis) {
-          lenis.scrollTo(targetEl, { offset: -30, duration: 1.4 });
+          lenis.scrollTo(targetEl, { offset: 0, duration: 1.1 });
         } else {
           targetEl.scrollIntoView({ behavior: 'smooth' });
         }
@@ -826,7 +835,7 @@ function initFullscreenScreenSnapping() {
     }
 
     // Apply Ghosting Animation Effect
-    if (departingSec) {
+    if (departingSec && departingSec !== targetSec) {
       departingSec.classList.remove('ghost-in');
       departingSec.classList.add('ghost-out');
     }
@@ -844,44 +853,63 @@ function initFullscreenScreenSnapping() {
         if (targetSec) targetSec.classList.remove('ghost-in');
         isTransitioning = false;
         syncActiveScreen();
-      }, 200);
+      }, 150);
     };
 
     if (window.lenisInstance) {
       window.lenisInstance.scrollTo(targetSec, {
-        duration: 0.9,
+        offset: 0,
+        duration: 0.85,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        onComplete: onComplete
+        onComplete: onComplete,
+        lock: true
       });
       // Safety timeout: unlock transition state even if Lenis event drops
-      setTimeout(onComplete, 1000);
+      setTimeout(onComplete, 950);
     } else {
       targetSec.scrollIntoView({ behavior: 'smooth' });
       setTimeout(onComplete, 850);
     }
   }
 
-  // Intercept desktop mouse wheel for screen-by-screen snapping
+  // Expose to window for navbar links
+  window.goToScreen = goToScreen;
+
+  // Intercept desktop mouse wheel & trackpad gestures for screen-by-screen snapping
+  let wheelAccumulator = 0;
+  let wheelDebounceTimer = null;
+  const WHEEL_THRESHOLD = 30; // Clean intentional flick threshold
+
   window.addEventListener('wheel', (e) => {
-    if (window.innerWidth <= 992) return; // Allow natural scrolling on smaller devices
+    if (window.innerWidth <= 992) return; // Allow natural scrolling on smaller mobile/tablet devices
+
+    // Prevent awkward fractional scroll positions between 100vh screens
+    e.preventDefault();
+
+    if (isTransitioning) return;
 
     const now = Date.now();
-    if (isTransitioning || now - lastScrollTime < SCROLL_COOLDOWN) {
-      e.preventDefault();
-      return;
-    }
+    if (now - lastScrollTime < 550) return;
 
-    if (Math.abs(e.deltaY) > 22) {
-      e.preventDefault();
-      lastScrollTime = now;
-      if (e.deltaY > 0) {
-        if (currentIndex < sections.length - 1) {
-          goToScreen(currentIndex + 1);
-        }
-      } else {
-        if (currentIndex > 0) {
-          goToScreen(currentIndex - 1);
-        }
+    // Accumulate wheel delta to cleanly distinguish tiny nudges from intentional swipes
+    wheelAccumulator += e.deltaY;
+
+    clearTimeout(wheelDebounceTimer);
+    wheelDebounceTimer = setTimeout(() => {
+      wheelAccumulator = 0;
+    }, 120);
+
+    if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
+      const direction = wheelAccumulator > 0 ? 1 : -1;
+      wheelAccumulator = 0;
+      clearTimeout(wheelDebounceTimer);
+
+      if (direction > 0 && currentIndex < sections.length - 1) {
+        lastScrollTime = now;
+        goToScreen(currentIndex + 1);
+      } else if (direction < 0 && currentIndex > 0) {
+        lastScrollTime = now;
+        goToScreen(currentIndex - 1);
       }
     }
   }, { passive: false });
@@ -913,43 +941,52 @@ function initFullscreenScreenSnapping() {
     const diff = touchStartY - touchEndY;
     const now = Date.now();
 
-    if (Math.abs(diff) > 50 && !isTransitioning && now - lastScrollTime >= SCROLL_COOLDOWN) {
-      lastScrollTime = now;
+    if (Math.abs(diff) > 45 && !isTransitioning && now - lastScrollTime >= 550) {
       if (diff > 0 && currentIndex < sections.length - 1) {
+        lastScrollTime = now;
         goToScreen(currentIndex + 1);
       } else if (diff < 0 && currentIndex > 0) {
+        lastScrollTime = now;
         goToScreen(currentIndex - 1);
       }
     }
   }, { passive: true });
 
-  // Sync index on scroll position (dominant visible screen detection)
+  // Sync index on scroll position (dominant visible screen detection with rAF throttle)
+  let isSyncing = false;
   function syncActiveScreen() {
-    if (isTransitioning) return;
-    let maxVisibleHeight = -1;
-    let bestIdx = currentIndex;
+    if (isTransitioning || isSyncing) return;
+    isSyncing = true;
 
-    sections.forEach((sec, idx) => {
-      const rect = sec.getBoundingClientRect();
-      const visibleTop = Math.max(0, rect.top);
-      const visibleBottom = Math.min(window.innerHeight, rect.bottom);
-      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+    requestAnimationFrame(() => {
+      isSyncing = false;
+      let maxVisibleHeight = -1;
+      let bestIdx = currentIndex;
 
-      if (visibleHeight > maxVisibleHeight) {
-        maxVisibleHeight = visibleHeight;
-        bestIdx = idx;
+      sections.forEach((sec, idx) => {
+        const rect = sec.getBoundingClientRect();
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(window.innerHeight, rect.bottom);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+        if (visibleHeight > maxVisibleHeight) {
+          maxVisibleHeight = visibleHeight;
+          bestIdx = idx;
+        }
+      });
+
+      if (maxVisibleHeight > 100 && currentIndex !== bestIdx) {
+        currentIndex = bestIdx;
+        updateActiveNav(bestIdx);
       }
     });
-
-    if (maxVisibleHeight > 80 && currentIndex !== bestIdx) {
-      currentIndex = bestIdx;
-      updateActiveNav(bestIdx);
-    }
   }
 
-  window.addEventListener('scroll', syncActiveScreen, { passive: true });
+  // Single dedicated scroll event listener to avoid duplicate execution
   if (window.lenisInstance) {
     window.lenisInstance.on('scroll', syncActiveScreen);
+  } else {
+    window.addEventListener('scroll', syncActiveScreen, { passive: true });
   }
 
   // Initial sync check
