@@ -17,11 +17,25 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(180deg, 
-    #05030e 0%, 
-    rgba(8, 6, 22, 0.98) 25%, 
-    rgba(10, 8, 28, 0.99) 60%, 
-    #05030e 100%);
+  background: 
+    /* Pure CSS Cyber Grid Layer (No external image) */
+    linear-gradient(rgba(139, 92, 246, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.035) 1px, transparent 1px),
+    /* Corner Ambient Spotlights: Left & Right Top corners */
+    radial-gradient(circle at 12% 22%, rgba(139, 92, 246, 0.16) 0%, rgba(6, 182, 212, 0.05) 32%, transparent 60%),
+    radial-gradient(circle at 88% 22%, rgba(192, 132, 252, 0.14) 0%, rgba(139, 92, 246, 0.04) 32%, transparent 60%),
+    /* Base Deep Studio Gradient */
+    linear-gradient(180deg, 
+      #05030e 0%, 
+      rgba(8, 6, 22, 0.98) 25%, 
+      rgba(10, 8, 28, 0.99) 60%, 
+      #05030e 100%);
+  background-size: 
+    48px 48px,
+    48px 48px,
+    100% 100%,
+    100% 100%,
+    100% 100%;
   overflow: hidden;
   border-top: 1px solid rgba(139, 92, 246, 0.16);
   box-sizing: border-box;
