@@ -103,3 +103,194 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* ==========================================================================
+   MASTERPIECE EDITION: 2026 AWWWARDS-CALIBER AMBIENCE & STYLING
+   ========================================================================== */
+
+/* 1. Ultra-Fine Analog Film Grain Texture Overlay */
+.film-grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* 2. Global Ambient Cursor Spotlight */
+.ambient-spotlight-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    650px circle at var(--spot-x, 50vw) var(--spot-y, 50vh),
+    rgba(168, 85, 247, 0.07),
+    rgba(6, 182, 212, 0.03) 40%,
+    transparent 75%
+  );
+  transition: opacity 0.4s ease;
+  will-change: background;
+}
+
+/* 3. Giant Ghost Background Numerals (Editorial Parallax Trackers) */
+.ghost-giant-numeral {
+  position: absolute;
+  top: 40px;
+  right: clamp(20px, 5vw, 80px);
+  font-family: var(--font-mono);
+  font-size: clamp(120px, 16vw, 260px);
+  font-weight: 800;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  letter-spacing: -0.05em;
+}
+
+/* 4. Velocity-Based Kinetic Typography Skew Hook */
+.skew-on-scroll {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: center center;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 5. Continuous Running Studio Telemetry Marquee Rail */
+.studio-marquee-rail {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: rgba(10, 8, 20, 0.75);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 15;
+  display: flex;
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marqueeScroll 28s linear infinite;
+  gap: 36px;
+  will-change: transform;
+}
+
+.studio-marquee-rail:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.marquee-item .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  display: inline-block;
+}
+
+.marquee-item .highlight-accent {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.marquee-separator {
+  color: rgba(168, 85, 247, 0.5);
+  font-size: 10px;
+}
+
+/* 6. Navbar Audio Cockpit Equalizer Button */
+.island-audio-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 5px 12px;
+  height: 34px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.island-audio-toggle:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #ffffff;
+}
+
+.island-audio-toggle.audio-active {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.45);
+  color: #06b6d4;
+}
+
+.audio-eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  width: 14px;
+}
+
+.audio-eq-bars span {
+  display: block;
+  width: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  height: 3px;
+  transition: height 0.2s ease;
+}
+
+.island-audio-toggle.audio-active .audio-eq-bars span:nth-child(1) {
+  animation: eqBounce 0.7s ease-in-out infinite alternate;
+}
+.island-audio-toggle.audio-active .audio-eq-bars span:nth-child(2) {
+  animation: eqBounce 0.5s ease-in-out 0.15s infinite alternate;
+}
+.island-audio-toggle.audio-active .audio-eq-bars span:nth-child(3) {
+  animation: eqBounce 0.6s ease-in-out 0.3s infinite alternate;
+}
+.island-audio-toggle.audio-active .audio-eq-bars span:nth-child(4) {
+  animation: eqBounce 0.8s ease-in-out 0.1s infinite alternate;
+}
+
+@keyframes eqBounce {
+  0% { height: 2px; }
+  100% { height: 12px; }
+}
+
