@@ -1,6 +1,6 @@
 /* ==========================================================================
    THE MISCREANT STUDIOS - THE ARSENAL & SYSTEM ARCHITECTURE
-   JetFyX-Inspired Glassmorphic Tech Viewport Cards & Spec Matrix
+   2026 Cyberpunk Dynamic Slide Deck, Holographic HUD Cards & Live Telemetry
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -9,26 +9,30 @@
 .arsenal-section {
   position: relative;
   z-index: 20;
-  padding: 120px 0 160px;
+  padding: 130px 0 160px;
   background: linear-gradient(180deg, 
-    #060410 0%, 
-    rgba(8, 6, 22, 0.95) 20%, 
-    rgba(10, 8, 28, 0.98) 50%, 
+    #05030e 0%, 
+    rgba(8, 6, 22, 0.98) 25%, 
+    rgba(10, 8, 28, 0.99) 60%, 
     #05030e 100%);
   overflow: hidden;
-  border-top: 1px solid rgba(139, 92, 246, 0.12);
+  border-top: 1px solid rgba(139, 92, 246, 0.16);
 }
 
-/* Background Ambient Lighting & Circuit Matrix */
+/* Cyber Matrix Background Grid & Ambient Lighting */
 .arsenal-section::before {
   content: '';
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
-  width: 1300px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.14) 0%, rgba(6, 182, 212, 0.06) 45%, transparent 70%);
+  width: 1400px;
+  height: 700px;
+  background: 
+    radial-gradient(circle, rgba(139, 92, 246, 0.16) 0%, rgba(6, 182, 212, 0.08) 40%, transparent 70%),
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
   pointer-events: none;
   z-index: 0;
 }
@@ -36,11 +40,11 @@
 .arsenal-section::after {
   content: '';
   position: absolute;
-  bottom: 10%;
-  left: 10%;
-  width: 700px;
+  bottom: 5%;
+  right: 5%;
+  width: 650px;
   height: 500px;
-  background: radial-gradient(circle, rgba(192, 132, 252, 0.08) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(192, 132, 252, 0.09) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -50,30 +54,43 @@
    -------------------------------------------------------------------------- */
 .arsenal-header {
   text-align: center;
-  max-width: 860px;
-  margin: 0 auto 65px;
+  max-width: 920px;
+  margin: 0 auto 48px;
+  position: relative;
+  z-index: 5;
 }
 
-.arsenal-tag {
-  display: inline-block;
-  padding: 6px 16px;
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
-  color: #ffffff;
+.arsenal-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+  color: #93c5fd;
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 22px;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+  border-radius: 9999px;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.arsenal-tag-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: pulse-live 1.8s infinite;
 }
 
 .arsenal-title {
-  font-size: clamp(2.4rem, 4.2vw, 4rem);
+  font-size: clamp(2.5rem, 4.5vw, 4.2rem);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: -0.03em;
   color: #ffffff;
   margin-bottom: 18px;
@@ -81,75 +98,376 @@
 }
 
 .arsenal-desc {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   color: #94a3b8;
   line-height: 1.65;
   font-weight: 400;
 }
 
 /* --------------------------------------------------------------------------
-   3. ARSENAL TECH GRID (JetFyX Style Cards 3x2 Bento)
+   3. ARSENAL INTERACTIVE TOOLBAR (Categories, Slide Controls & View Mode)
    -------------------------------------------------------------------------- */
-.arsenal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+.arsenal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
   position: relative;
-  z-index: 5;
-  perspective: 1200px;
+  z-index: 10;
+  padding: 12px 20px;
+  background: rgba(15, 11, 33, 0.65);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.tech-card {
-  background: rgba(14, 11, 30, 0.78);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
+/* Category Filter Pills */
+.arsenal-categories {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.arsenal-filter-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.arsenal-filter-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(192, 132, 252, 0.3);
+  transform: translateY(-2px);
+}
+
+.arsenal-filter-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.4) 0%, rgba(59, 130, 246, 0.4) 100%);
+  border-color: #c084fc;
+  box-shadow: 0 0 20px rgba(192, 132, 252, 0.35);
+}
+
+.arsenal-filter-btn .cat-count {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+/* Slide & View Switch Controls */
+.arsenal-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Mode Switcher: Slide Deck vs Grid Matrix */
+.arsenal-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(8, 6, 20, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0;
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.view-toggle-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-toggle-btn.active {
+  background: rgba(139, 92, 246, 0.25);
+  color: #ffffff;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+}
+
+/* Cyber Slide Navigation Arrows & Telemetry Indicator */
+.arsenal-slide-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slide-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-nav-btn:hover {
+  background: rgba(139, 92, 246, 0.35);
+  border-color: #c084fc;
+  box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+  transform: translateY(-2px);
+}
+
+.slide-nav-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+}
+
+.slide-counter-badge {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 700;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.slide-counter-badge span {
+  color: #c084fc;
+}
+
+/* --------------------------------------------------------------------------
+   4. SLIDE TRACK & CONTAINER
+   -------------------------------------------------------------------------- */
+.arsenal-viewport {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Slider Track Mode (Default / Active Slide Deck) */
+.arsenal-track {
+  display: flex;
+  gap: 28px;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Grid Mode Toggle */
+.arsenal-viewport.is-grid-mode .arsenal-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  transform: none !important;
+  gap: 28px;
+}
+
+.arsenal-viewport.is-grid-mode .tech-card {
+  width: 100% !important;
+  flex: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. TECH CARD CORE ARCHITECTURE (Futuristic Cyberpunk HUD Model)
+   -------------------------------------------------------------------------- */
+.tech-card {
+  --card-accent: #c084fc;
+  --card-glow: rgba(192, 132, 252, 0.22);
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+
+  flex: 0 0 calc((100% - 56px) / 3);
+  width: calc((100% - 56px) / 3);
+  min-width: 340px;
+  background: rgba(12, 9, 28, 0.85);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
   display: flex;
   flex-direction: column;
-  box-shadow: 
-    0 20px 45px -10px rgba(0, 0, 0, 0.65),
-    inset 0 1px 1px rgba(255, 255, 255, 0.14);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 
+    0 24px 50px -12px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 255, 255, 0.14);
+  transition: 
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+    border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
   transform-style: preserve-3d;
 }
 
-/* Metallic Specular Sweep on Hover */
+/* Specific Card Accent Hues */
+.tech-card[data-tech="ue5"] {
+  --card-accent: #c084fc;
+  --card-glow: rgba(192, 132, 252, 0.25);
+}
+.tech-card[data-tech="unity"] {
+  --card-accent: #38bdf8;
+  --card-glow: rgba(56, 189, 248, 0.25);
+}
+.tech-card[data-tech="blender"] {
+  --card-accent: #fb923c;
+  --card-glow: rgba(251, 146, 60, 0.25);
+}
+.tech-card[data-tech="houdini"] {
+  --card-accent: #f43f5e;
+  --card-glow: rgba(244, 63, 94, 0.25);
+}
+.tech-card[data-tech="wwise"] {
+  --card-accent: #34d399;
+  --card-glow: rgba(52, 211, 153, 0.25);
+}
+.tech-card[data-tech="cpp"] {
+  --card-accent: #a78bfa;
+  --card-glow: rgba(167, 139, 250, 0.25);
+}
+
+/* Interactive Cursor Spotlight */
 .tech-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-  transition: left 0.75s ease;
+  inset: 0;
+  background: radial-gradient(420px circle at var(--spotlight-x) var(--spotlight-y), var(--card-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
 }
 
 .tech-card:hover::before {
-  left: 100%;
+  opacity: 1;
+}
+
+/* Rotating Cyberpunk Border Beam */
+.tech-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0%,
+    transparent 70%,
+    var(--card-accent) 88%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+  animation: rotateBeam 4s linear infinite;
+}
+
+@keyframes rotateBeam {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.tech-card:hover::after {
+  opacity: 1;
 }
 
 .tech-card:hover {
+  border-color: var(--card-accent);
   transform: translateY(-8px) scale(1.015);
-  border-color: rgba(192, 132, 252, 0.45);
   box-shadow: 
-    0 32px 70px -15px rgba(0, 0, 0, 0.85),
-    0 0 40px rgba(139, 92, 246, 0.3),
+    0 35px 75px -15px rgba(0, 0, 0, 0.85),
+    0 0 35px var(--card-glow),
     inset 0 1px 2px rgba(255, 255, 255, 0.25);
 }
 
-/* Card Visual Viewport Area (JetFyX Style Image Inset) */
+/* Cyber Viewfinder Corner Brackets */
+.tech-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--card-accent);
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0.4;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-corner.tl {
+  top: 8px;
+  left: 8px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.tech-corner.tr {
+  top: 8px;
+  right: 8px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+.tech-corner.bl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+.tech-corner.br {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+.tech-card:hover .tech-corner {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* --------------------------------------------------------------------------
+   6. CARD MEDIA VIEWPORT & ANIMATED LASER SCANLINE
+   -------------------------------------------------------------------------- */
 .tech-card-media {
   position: relative;
-  height: 200px;
+  height: 205px;
   width: 100%;
   overflow: hidden;
   background: #090718;
@@ -159,7 +477,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
 }
 
 .tech-card:hover .tech-card-media img {
@@ -169,19 +487,48 @@
 .tech-media-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(14, 11, 30, 0.98) 0%, rgba(14, 11, 30, 0.4) 50%, transparent 100%);
+  background: linear-gradient(0deg, 
+    rgba(12, 9, 28, 1) 0%, 
+    rgba(12, 9, 28, 0.45) 55%, 
+    rgba(12, 9, 28, 0.1) 100%);
   pointer-events: none;
+  z-index: 3;
 }
 
-/* Floating Corner Tech Icon Badge (JetFyX Style elevated capsule) */
+/* Animated Laser Scanline */
+.tech-scanline {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    var(--card-glow) 50%, 
+    var(--card-accent) 90%, 
+    #ffffff 100%);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 4;
+  animation: laserSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes laserSweep {
+  0% { top: -15%; opacity: 0; }
+  10% { opacity: 0.4; }
+  85% { opacity: 0.4; }
+  100% { top: 110%; opacity: 0; }
+}
+
+/* Floating Corner Tech Icon Badge */
 .tech-floating-badge {
   position: absolute;
   top: 14px;
   left: 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 12px;
+  gap: 8px;
+  padding: 6px 14px;
   background: rgba(10, 7, 24, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -192,8 +539,8 @@
 }
 
 .tech-floating-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -206,10 +553,11 @@
 
 .tech-floating-tag {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--card-accent);
 }
 
 /* Floating Top-Right Status */
@@ -217,32 +565,49 @@
   position: absolute;
   top: 14px;
   right: 14px;
-  padding: 4px 10px;
-  background: rgba(16, 185, 129, 0.18);
+  padding: 5px 12px;
+  background: rgba(10, 7, 24, 0.85);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  border-radius: 6px;
+  border: 1px solid var(--card-accent);
+  border-radius: 8px;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 700;
-  color: #34d399;
-  letter-spacing: 0.06em;
+  color: var(--card-accent);
+  letter-spacing: 0.08em;
   z-index: 5;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* Card Body Content */
+.tech-floating-status .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulse-live 1.6s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   7. LIVE ANIMATED TELEMETRY WIDGETS (Card Body Interior)
+   -------------------------------------------------------------------------- */
 .tech-card-body {
   padding: 24px 26px 26px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  position: relative;
+  z-index: 5;
 }
 
 .tech-category-sub {
   font-family: var(--font-mono);
   font-size: 0.74rem;
   font-weight: 600;
-  color: #a855f7;
+  color: var(--card-accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -250,7 +615,7 @@
 
 .tech-name {
   font-size: 1.55rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.015em;
   color: #ffffff;
   margin-bottom: 10px;
@@ -260,10 +625,226 @@
   font-size: 0.88rem;
   color: #94a3b8;
   line-height: 1.58;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
-/* Feature Spec Matrix */
+/* Live Animated HUD Diagnostic Box */
+.tech-live-widget {
+  background: rgba(6, 4, 16, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--card-accent);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.widget-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.widget-val {
+  color: var(--card-accent);
+  font-weight: 700;
+}
+
+/* Widget Specific Visual Animations */
+
+/* 1. Nanite / Lumen Animated Waveform (UE5) */
+.hud-wave-wrap {
+  width: 100%;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hud-wave-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wave-line {
+  stroke: var(--card-accent);
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: wavePulse 2.8s linear infinite;
+}
+
+@keyframes wavePulse {
+  0% { stroke-dashoffset: 200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* 2. DOTS Multi-Thread Burst Bars (Unity 6) */
+.dots-thread-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 24px;
+  padding: 2px 0;
+}
+
+.thread-bar {
+  flex: 1;
+  background: rgba(56, 189, 248, 0.25);
+  border-radius: 4px;
+  height: 40%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.thread-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #38bdf8 0%, #06b6d4 100%);
+  animation: threadBurst 1.8s ease-in-out infinite alternate;
+}
+
+.thread-bar:nth-child(1) .thread-bar-fill { animation-delay: 0.1s; }
+.thread-bar:nth-child(2) .thread-bar-fill { animation-delay: 0.4s; }
+.thread-bar:nth-child(3) .thread-bar-fill { animation-delay: 0.2s; }
+.thread-bar:nth-child(4) .thread-bar-fill { animation-delay: 0.6s; }
+
+@keyframes threadBurst {
+  0% { transform: translateY(60%); }
+  50% { transform: translateY(10%); }
+  100% { transform: translateY(30%); }
+}
+
+/* 3. Blender Geometry Nodes Graph Animation */
+.geo-node-visualizer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 24px;
+}
+
+.node-point {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fb923c;
+  box-shadow: 0 0 8px #fb923c;
+  animation: nodeGlow 1.8s ease-in-out infinite alternate;
+}
+
+.node-wire {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #fb923c, rgba(251, 146, 60, 0.2), #fb923c);
+  background-size: 200% 100%;
+  animation: wireStream 2.2s linear infinite;
+}
+
+@keyframes nodeGlow {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+@keyframes wireStream {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 4. Houdini Thermal Simulation Meter */
+.thermal-sim-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+.thermal-sim-fill {
+  height: 100%;
+  width: 85%;
+  background: linear-gradient(90deg, #f43f5e 0%, #fb923c 60%, #facc15 100%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: thermalShift 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes thermalShift {
+  0% { width: 65%; filter: brightness(0.9); }
+  100% { width: 94%; filter: brightness(1.25); }
+}
+
+/* 5. Wwise Live Equalizer Spectrum Bars */
+.audio-spectrum-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 24px;
+  padding: 2px 0;
+}
+
+.audio-eq-bar {
+  flex: 1;
+  background: #34d399;
+  border-radius: 3px;
+  height: 30%;
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+  animation: eqBounce 1.2s ease-in-out infinite alternate;
+}
+
+.audio-eq-bar:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.9s; }
+.audio-eq-bar:nth-child(2) { animation-delay: 0.3s; animation-duration: 1.3s; }
+.audio-eq-bar:nth-child(3) { animation-delay: 0.05s; animation-duration: 0.8s; }
+.audio-eq-bar:nth-child(4) { animation-delay: 0.4s; animation-duration: 1.1s; }
+.audio-eq-bar:nth-child(5) { animation-delay: 0.2s; animation-duration: 1.4s; }
+.audio-eq-bar:nth-child(6) { animation-delay: 0.5s; animation-duration: 1.0s; }
+.audio-eq-bar:nth-child(7) { animation-delay: 0.15s; animation-duration: 1.2s; }
+
+@keyframes eqBounce {
+  0% { height: 18%; }
+  50% { height: 88%; }
+  100% { height: 35%; }
+}
+
+/* 6. C++ Bare Metal Hex Assembly Stream */
+.hex-opcode-stream {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #a78bfa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.hex-stream-text {
+  animation: hexFlicker 3s steps(4) infinite;
+}
+
+@keyframes hexFlicker {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; color: #ffffff; }
+  100% { opacity: 0.85; }
+}
+
+/* Feature Spec Matrix Pills */
 .tech-spec-list {
   display: flex;
   flex-wrap: wrap;
@@ -276,17 +857,23 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 10px;
+  padding: 5px 11px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: #cbd5e1;
+  transition: all 0.2s ease;
+}
+
+.tech-card:hover .tech-spec-item {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .tech-spec-item span {
-  color: #c084fc;
+  color: var(--card-accent);
 }
 
 /* Tech Card Footer Status */
@@ -294,8 +881,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 14px;
+  padding-top: 15px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
 }
 
 .tech-metric-label {
@@ -307,27 +895,59 @@
 
 .tech-metric-val {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #34d399;
+  color: var(--card-accent);
 }
 
 /* --------------------------------------------------------------------------
-   4. SYSTEM TELEMETRY STRIP (Bottom Matrix Banner)
+   8. SLIDE PROGRESS INDICATOR BAR
+   -------------------------------------------------------------------------- */
+.arsenal-progress-container {
+  max-width: 320px;
+  margin: 32px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.arsenal-progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.arsenal-progress-fill {
+  height: 100%;
+  width: 33.333%;
+  background: linear-gradient(90deg, #38bdf8 0%, #a855f7 50%, #ec4899 100%);
+  border-radius: 9999px;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   9. SYSTEM TELEMETRY STRIP (Bottom Matrix Banner)
    -------------------------------------------------------------------------- */
 .arsenal-telemetry-banner {
-  margin-top: 55px;
-  padding: 22px 30px;
-  background: rgba(14, 11, 30, 0.8);
+  margin-top: 60px;
+  padding: 22px 32px;
+  background: rgba(14, 11, 30, 0.85);
   backdrop-filter: blur(28px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
   box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 5;
 }
 
 .telemetry-item {
@@ -356,16 +976,47 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. RESPONSIVE BREAKPOINTS
+   10. RESPONSIVE BREAKPOINTS
    -------------------------------------------------------------------------- */
-@media (max-width: 1024px) {
-  .arsenal-grid {
+@media (max-width: 1200px) {
+  .tech-card {
+    flex: 0 0 calc((100% - 28px) / 2);
+    width: calc((100% - 28px) / 2);
+  }
+
+  .arsenal-viewport.is-grid-mode .arsenal-track {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .arsenal-grid {
+  .arsenal-section {
+    padding: 90px 0 110px;
+  }
+
+  .arsenal-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arsenal-categories {
+    overflow-x: auto;
+    padding-bottom: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .arsenal-controls-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .tech-card {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 280px;
+  }
+
+  .arsenal-viewport.is-grid-mode .arsenal-track {
     grid-template-columns: 1fr;
   }
 

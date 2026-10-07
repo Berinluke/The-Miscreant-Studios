@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStudioClock();
   initAudioInteractions();
   initGamesCarousel();
+  initArsenalShowcase();
 });
 
 /* ==========================================================================
@@ -484,4 +485,231 @@ function initGamesCarousel() {
   // Launch initial slide layout and begin autoplay
   updateCards();
   startAutoplay();
+}
+
+/* ==========================================================================
+   9. ARSENAL 2026 CYBERPUNK SLIDE DECK & SPOTLIGHT INTERACTION ENGINE
+   ========================================================================== */
+function initArsenalShowcase() {
+  const viewport = document.getElementById('arsenalViewport');
+  const track = document.getElementById('arsenalTrack');
+  const prevBtn = document.getElementById('arsenalPrevBtn');
+  const nextBtn = document.getElementById('arsenalNextBtn');
+  const currentIndexEl = document.getElementById('arsenalCurrentIndex');
+  const totalIndexEl = document.getElementById('arsenalTotalIndex');
+  const progressFill = document.getElementById('arsenalProgressFill');
+  const filterBtns = document.querySelectorAll('.arsenal-filter-btn');
+  const btnSlideView = document.getElementById('btnSlideView');
+  const btnGridView = document.getElementById('btnGridView');
+  const cards = track ? Array.from(track.querySelectorAll('.tech-card')) : [];
+
+  if (!viewport || !track || cards.length === 0) return;
+
+  let activeFilter = 'all';
+  let currentIndex = 0;
+  let isGridMode = false;
+
+  // 1. Interactive Card Spotlight Following Pointer
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--spotlight-x', `${x}px`);
+      card.style.setProperty('--spotlight-y', `${y}px`);
+    });
+
+    card.addEventListener('mouseenter', () => {
+      if (window.cyberAudio && window.cyberAudio.playHover) {
+        window.cyberAudio.playHover();
+      }
+    });
+  });
+
+  // 2. Get Filtered Visible Cards
+  function getVisibleCards() {
+    return cards.filter(card => {
+      if (activeFilter === 'all') return true;
+      return card.getAttribute('data-category') === activeFilter;
+    });
+  }
+
+  // 3. Maximum Slide Index
+  function getMaxIndex() {
+    const visibleCards = getVisibleCards();
+    const visibleCount = visibleCards.length;
+    const windowWidth = window.innerWidth;
+    let cardsPerView = 3;
+    if (windowWidth <= 768) {
+      cardsPerView = 1;
+    } else if (windowWidth <= 1200) {
+      cardsPerView = 2;
+    }
+    return Math.max(0, visibleCount - cardsPerView);
+  }
+
+  // 4. Update Slider Track Position & Telemetry
+  function updateSlider() {
+    const visibleCards = getVisibleCards();
+    const totalVisible = visibleCards.length;
+
+    if (totalIndexEl) {
+      totalIndexEl.textContent = String(totalVisible).padStart(2, '0');
+    }
+
+    if (isGridMode) {
+      track.style.transform = 'none';
+      if (progressFill) progressFill.style.width = '100%';
+      return;
+    }
+
+    const maxIndex = getMaxIndex();
+    if (currentIndex > maxIndex) {
+      currentIndex = maxIndex;
+    }
+    if (currentIndex < 0) {
+      currentIndex = 0;
+    }
+
+    if (currentIndexEl) {
+      currentIndexEl.textContent = String(currentIndex + 1).padStart(2, '0');
+    }
+
+    // Calculate translation
+    if (visibleCards.length > 0) {
+      const firstCard = visibleCards[0];
+      const cardRect = firstCard.getBoundingClientRect();
+      const cardWidth = cardRect.width;
+      const gap = 28;
+      const offset = currentIndex * (cardWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+    }
+
+    // Update Progress Bar
+    if (progressFill) {
+      const progressPercent = maxIndex === 0 ? 100 : ((currentIndex + 1) / (maxIndex + 1)) * 100;
+      progressFill.style.width = `${progressPercent}%`;
+    }
+
+    // Button states
+    if (prevBtn) {
+      prevBtn.style.opacity = currentIndex === 0 ? '0.4' : '1';
+      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+    }
+    if (nextBtn) {
+      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.4' : '1';
+      nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+    }
+  }
+
+  // 5. Filter Category Handling
+  function applyFilter(filter) {
+    activeFilter = filter;
+    currentIndex = 0;
+
+    cards.forEach(card => {
+      const cat = card.getAttribute('data-category');
+      if (filter === 'all' || cat === filter) {
+        card.style.display = 'flex';
+        card.style.opacity = '1';
+      } else {
+        card.style.display = 'none';
+        card.style.opacity = '0';
+      }
+    });
+
+    filterBtns.forEach(btn => {
+      const isTarget = btn.getAttribute('data-filter') === filter;
+      btn.classList.toggle('active', isTarget);
+      btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+    });
+
+    updateSlider();
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) {
+        window.cyberAudio.playClick();
+      }
+      const filter = btn.getAttribute('data-filter');
+      applyFilter(filter);
+    });
+  });
+
+  // 6. Navigation Buttons
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) {
+        window.cyberAudio.playClick();
+      }
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) {
+        window.cyberAudio.playClick();
+      }
+      if (currentIndex < getMaxIndex()) {
+        currentIndex++;
+        updateSlider();
+      }
+    });
+  }
+
+  // 7. View Mode Switcher
+  if (btnSlideView && btnGridView) {
+    btnSlideView.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+      isGridMode = false;
+      viewport.classList.remove('is-grid-mode');
+      btnSlideView.classList.add('active');
+      btnGridView.classList.remove('active');
+      if (prevBtn) prevBtn.style.display = 'inline-flex';
+      if (nextBtn) nextBtn.style.display = 'inline-flex';
+      updateSlider();
+    });
+
+    btnGridView.addEventListener('click', () => {
+      if (window.cyberAudio && window.cyberAudio.playClick) window.cyberAudio.playClick();
+      isGridMode = true;
+      viewport.classList.add('is-grid-mode');
+      btnGridView.classList.add('active');
+      btnSlideView.classList.remove('active');
+      updateSlider();
+    });
+  }
+
+  // 8. Mobile Touch Swipe
+  let touchStartX = 0;
+  viewport.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', (e) => {
+    if (isGridMode) return;
+    const touchEndX = e.changedTouches[0].screenX;
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 45) {
+      if (diff < 0 && currentIndex < getMaxIndex()) {
+        currentIndex++;
+        updateSlider();
+      } else if (diff > 0 && currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    updateSlider();
+  });
+
+  // Initialize
+  updateSlider();
 }

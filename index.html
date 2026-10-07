@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="assets/css/glitch.css">
   <link rel="stylesheet" href="assets/css/cursor.css">
   <link rel="stylesheet" href="assets/css/games-showcase.css?v=2">
-  <link rel="stylesheet" href="assets/css/arsenal.css?v=2">
+  <link rel="stylesheet" href="assets/css/arsenal.css?v=3">
   <link rel="stylesheet" href="assets/css/responsive.css?v=2">
 </head>
 <body>
@@ -282,274 +282,454 @@
 
       <!-- Header -->
       <div class="arsenal-header reveal-on-scroll">
-        <div class="arsenal-tag">ARCHITECTURE</div>
+        <div class="arsenal-tag-badge">
+          <span class="arsenal-tag-pulse"></span>
+          SYS.ARCH // ACTIVE NODES [06]
+        </div>
         <h2 class="arsenal-title">
           THE <span class="text-gradient-purple">ARSENAL</span>
         </h2>
         <p class="arsenal-desc">
-          We build on the bleeding edge. Our studio utilizes industry-standard technology to forge new worlds.
+          Engineered on the bleeding edge. Our studio leverages industry-defining real-time engines, procedural simulation, and bare-metal architectures.
         </p>
       </div>
 
-      <!-- Tech Matrix Grid (JetFyX Inspired 3x2 Bento Layout) -->
-      <div class="arsenal-grid">
+      <!-- Interactive Toolbar: Filter Pills, View Mode & Slide Controls -->
+      <div class="arsenal-toolbar reveal-on-scroll">
+        <div class="arsenal-categories" role="tablist" aria-label="Arsenal technology categories">
+          <button class="arsenal-filter-btn active" data-filter="all" role="tab" aria-selected="true">
+            All Protocols <span class="cat-count">6</span>
+          </button>
+          <button class="arsenal-filter-btn" data-filter="engines" role="tab" aria-selected="false">
+            Game Engines <span class="cat-count">2</span>
+          </button>
+          <button class="arsenal-filter-btn" data-filter="3d" role="tab" aria-selected="false">
+            3D & VFX <span class="cat-count">2</span>
+          </button>
+          <button class="arsenal-filter-btn" data-filter="systems" role="tab" aria-selected="false">
+            Core & Audio <span class="cat-count">2</span>
+          </button>
+        </div>
 
-        <!-- 1. UNREAL ENGINE 5 -->
-        <article class="tech-card reveal-on-scroll delay-100">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-ue5.jpg" alt="Unreal Engine 5 Nanite and Lumen Viewport" loading="lazy">
-            <div class="tech-media-overlay"></div>
-            
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 6v6l4 2"></path>
-                  <path d="M7.5 16.5L12 12"></path>
-                </svg>
+        <div class="arsenal-controls-right">
+          <!-- View Switch: Slide Mode vs Grid Mode -->
+          <div class="arsenal-view-toggle" role="group" aria-label="Display View">
+            <button class="view-toggle-btn active" id="btnSlideView" title="Interactive Slide Deck">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Slide
+            </button>
+            <button class="view-toggle-btn" id="btnGridView" title="Expanded Matrix Grid">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Grid
+            </button>
+          </div>
+
+          <!-- Slide Navigation Controls -->
+          <div class="arsenal-slide-nav">
+            <button class="slide-nav-btn" id="arsenalPrevBtn" aria-label="Previous tech slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="slide-counter-badge">
+              <span id="arsenalCurrentIndex">01</span> / <span id="arsenalTotalIndex">06</span>
+            </div>
+            <button class="slide-nav-btn" id="arsenalNextBtn" aria-label="Next tech slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide Viewport Container -->
+      <div class="arsenal-viewport" id="arsenalViewport">
+        <div class="arsenal-track" id="arsenalTrack">
+
+          <!-- 1. UNREAL ENGINE 5 -->
+          <article class="tech-card" data-tech="ue5" data-category="engines">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
+
+            <div class="tech-card-media">
+              <img src="assets/images/tech-ue5.jpg" alt="Unreal Engine 5 Nanite and Lumen Viewport" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
+              
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                    <path d="M7.5 16.5L12 12"></path>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">UE 5.4+</span>
               </div>
-              <span class="tech-floating-tag" style="color: #c084fc;">UE 5.4+</span>
-            </div>
 
-            <div class="tech-floating-status">
-              <span>● ACTIVE PIPELINE</span>
-            </div>
-          </div>
-
-          <div class="tech-card-body">
-            <div class="tech-category-sub">NEXT-GEN CORE ENGINE</div>
-            <h3 class="tech-name">UNREAL ENGINE 5</h3>
-            <p class="tech-desc">
-              Photorealistic world rendering powered by Nanite virtualized micropolygon geometry and Lumen real-time dynamic global illumination.
-            </p>
-
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> Nanite Geometry</span>
-              <span class="tech-spec-item"><span>✦</span> Lumen 2.0</span>
-              <span class="tech-spec-item"><span>✦</span> Chaos Physics</span>
-              <span class="tech-spec-item"><span>✦</span> World Partition</span>
-            </div>
-
-            <div class="tech-footer">
-              <span class="tech-metric-label">Target Fidelity</span>
-              <span class="tech-metric-val">4K 120 FPS Native</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 2. UNITY 6 -->
-        <article class="tech-card reveal-on-scroll delay-200">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-unity.jpg" alt="Unity 6 DOTS WebGPU Simulation" loading="lazy">
-            <div class="tech-media-overlay"></div>
-
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                  <polyline points="2 17 12 22 22 17"></polyline>
-                  <polyline points="2 12 12 17 22 12"></polyline>
-                </svg>
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>ACTIVE PIPELINE</span>
               </div>
-              <span class="tech-floating-tag" style="color: #38bdf8;">UNITY 6</span>
             </div>
 
-            <div class="tech-floating-status" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.18);">
-              <span>● WEBGPU ENGINE</span>
-            </div>
-          </div>
+            <div class="tech-card-body">
+              <div class="tech-category-sub">NEXT-GEN CORE ENGINE</div>
+              <h3 class="tech-name">UNREAL ENGINE 5</h3>
+              <p class="tech-desc">
+                Photorealistic world rendering powered by Nanite virtualized micropolygon geometry and Lumen real-time dynamic global illumination.
+              </p>
 
-          <div class="tech-card-body">
-            <div class="tech-category-sub">CROSS-PLATFORM MESH</div>
-            <h3 class="tech-name">UNITY 6</h3>
-            <p class="tech-desc">
-              High-concurrency mobile & desktop architecture utilizing Data-Oriented Technology Stack (DOTS) and Universal Render Pipeline.
-            </p>
-
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> DOTS Architecture</span>
-              <span class="tech-spec-item"><span>✦</span> WebGPU Engine</span>
-              <span class="tech-spec-item"><span>✦</span> Adaptive Performance</span>
-              <span class="tech-spec-item"><span>✦</span> URP Core</span>
-            </div>
-
-            <div class="tech-footer">
-              <span class="tech-metric-label">Latency Profile</span>
-              <span class="tech-metric-val">&lt; 2ms Frametime</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 3. BLENDER -->
-        <article class="tech-card reveal-on-scroll delay-300">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-blender.jpg" alt="Blender 3D Cyber Armor Sculpting and Geometry Nodes" loading="lazy">
-            <div class="tech-media-overlay"></div>
-
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3"></circle>
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
+              <!-- Animated Diagnostic Telemetry: Live ECG / Waveform -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#c084fc; box-shadow:0 0 6px #c084fc;"></span> Nanite // Lumen Raytrace</span>
+                  <span class="widget-val">120.4 FPS</span>
+                </div>
+                <div class="hud-wave-wrap">
+                  <svg class="hud-wave-svg" viewBox="0 0 280 40" fill="none">
+                    <path class="wave-line" d="M0 20 Q 35 5, 70 20 T 140 20 T 210 20 T 280 20" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
               </div>
-              <span class="tech-floating-tag" style="color: #fb923c;">BLENDER 4.x</span>
-            </div>
 
-            <div class="tech-floating-status" style="color: #fb923c; border-color: rgba(251, 146, 60, 0.4); background: rgba(251, 146, 60, 0.18);">
-              <span>● PROCEDURAL NODES</span>
-            </div>
-          </div>
-
-          <div class="tech-card-body">
-            <div class="tech-category-sub">3D ASSET GENERATION</div>
-            <h3 class="tech-name">BLENDER</h3>
-            <p class="tech-desc">
-              Precision hard-surface modeling, procedural geometry nodes, and real-time PBR material synthesis tailored for high-density competitive environments.
-            </p>
-
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> Geometry Nodes</span>
-              <span class="tech-spec-item"><span>✦</span> PBR Shaders</span>
-              <span class="tech-spec-item"><span>✦</span> Hard Surface</span>
-              <span class="tech-spec-item"><span>✦</span> Auto Retopo</span>
-            </div>
-
-            <div class="tech-footer">
-              <span class="tech-metric-label">Topology Pipeline</span>
-              <span class="tech-metric-val">Zero-Artifact Meshes</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 4. HOUDINI FX -->
-        <article class="tech-card reveal-on-scroll delay-100">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-houdini.jpg" alt="Houdini Procedural Destruction and Smoke Simulation" loading="lazy">
-            <div class="tech-media-overlay"></div>
-
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                  <path d="M2 17l10 5 10-5"></path>
-                  <path d="M2 12l10 5 10-5"></path>
-                </svg>
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> Nanite Geometry</span>
+                <span class="tech-spec-item"><span>✦</span> Lumen 2.0</span>
+                <span class="tech-spec-item"><span>✦</span> Chaos Physics</span>
+                <span class="tech-spec-item"><span>✦</span> World Partition</span>
               </div>
-              <span class="tech-floating-tag" style="color: #f43f5e;">HOUDINI FX</span>
-            </div>
 
-            <div class="tech-floating-status" style="color: #f43f5e; border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.18);">
-              <span>● PYRO & DESTRUCTION</span>
-            </div>
-          </div>
-
-          <div class="tech-card-body">
-            <div class="tech-category-sub">PROCEDURAL SIMULATION</div>
-            <h3 class="tech-name">HOUDINI FX</h3>
-            <p class="tech-desc">
-              Next-tier environmental destruction, dynamic fluid & pyroclastic systems, and algorithmic world map synthesis for emergent battlefields.
-            </p>
-
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> RBD Destruction</span>
-              <span class="tech-spec-item"><span>✦</span> Pyro & Fluids</span>
-              <span class="tech-spec-item"><span>✦</span> VEX Acceleration</span>
-              <span class="tech-spec-item"><span>✦</span> Terrain Synth</span>
-            </div>
-
-            <div class="tech-footer">
-              <span class="tech-metric-label">Voxel Density</span>
-              <span class="tech-metric-val">10M+ Sim Cells</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 5. WWISE AUDIO -->
-        <article class="tech-card reveal-on-scroll delay-200">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-wwise.jpg" alt="Audiokinetic Wwise 3D Spatial Audio and Frequency Equalizer" loading="lazy">
-            <div class="tech-media-overlay"></div>
-
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
+              <div class="tech-footer">
+                <span class="tech-metric-label">Target Fidelity</span>
+                <span class="tech-metric-val">4K 120 FPS Native</span>
               </div>
-              <span class="tech-floating-tag" style="color: #34d399;">WWISE AUDIO</span>
             </div>
+          </article>
 
-            <div class="tech-floating-status">
-              <span>● 3D SPATIAL HRTF</span>
-            </div>
-          </div>
+          <!-- 2. UNITY 6 -->
+          <article class="tech-card" data-tech="unity" data-category="engines">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
 
-          <div class="tech-card-body">
-            <div class="tech-category-sub">SPATIAL ACOUSTICS</div>
-            <h3 class="tech-name">WWISE AUDIO</h3>
-            <p class="tech-desc">
-              Binaural 3D spatial acoustics and reactive musical engines engineered to deliver pinpoint enemy positioning and atmospheric adrenaline.
-            </p>
+            <div class="tech-card-media">
+              <img src="assets/images/tech-unity.jpg" alt="Unity 6 DOTS WebGPU Simulation" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
 
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> 3D Spatial HRTF</span>
-              <span class="tech-spec-item"><span>✦</span> Dynamic Stems</span>
-              <span class="tech-spec-item"><span>✦</span> Occlusion DSP</span>
-              <span class="tech-spec-item"><span>✦</span> Zero Latency</span>
-            </div>
-
-            <div class="tech-footer">
-              <span class="tech-metric-label">Audio Fidelity</span>
-              <span class="tech-metric-val">24-Bit / 96kHz Lossless</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 6. C++ / C# -->
-        <article class="tech-card reveal-on-scroll delay-300">
-          <div class="tech-card-media">
-            <img src="assets/images/tech-cpp.jpg" alt="High Performance Bare Metal C++ Engine Architecture" loading="lazy">
-            <div class="tech-media-overlay"></div>
-
-            <div class="tech-floating-badge">
-              <div class="tech-floating-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                  <line x1="14" y1="4" x2="10" y2="20"></line>
-                </svg>
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">UNITY 6</span>
               </div>
-              <span class="tech-floating-tag" style="color: #a78bfa;">CORE C++ / C#</span>
+
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>WEBGPU ENGINE</span>
+              </div>
             </div>
 
-            <div class="tech-floating-status" style="color: #a78bfa; border-color: rgba(167, 139, 250, 0.4); background: rgba(167, 139, 250, 0.18);">
-              <span>● BARE-METAL SIMD</span>
+            <div class="tech-card-body">
+              <div class="tech-category-sub">CROSS-PLATFORM MESH</div>
+              <h3 class="tech-name">UNITY 6</h3>
+              <p class="tech-desc">
+                High-concurrency mobile & desktop architecture utilizing Data-Oriented Technology Stack (DOTS) and Universal Render Pipeline.
+              </p>
+
+              <!-- Animated Diagnostic Telemetry: DOTS 4-Core Thread Activity -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#38bdf8; box-shadow:0 0 6px #38bdf8;"></span> DOTS Burst Threads</span>
+                  <span class="widget-val">64K Entities</span>
+                </div>
+                <div class="dots-thread-bars">
+                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                </div>
+              </div>
+
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> DOTS Architecture</span>
+                <span class="tech-spec-item"><span>✦</span> WebGPU Engine</span>
+                <span class="tech-spec-item"><span>✦</span> Adaptive Performance</span>
+                <span class="tech-spec-item"><span>✦</span> URP Core</span>
+              </div>
+
+              <div class="tech-footer">
+                <span class="tech-metric-label">Latency Profile</span>
+                <span class="tech-metric-val">&lt; 2ms Frametime</span>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <div class="tech-card-body">
-            <div class="tech-category-sub">BARE-METAL ARCHITECTURE</div>
-            <h3 class="tech-name">C++ / C#</h3>
-            <p class="tech-desc">
-              Zero-cost abstractions, custom memory arenas, and SIMD parallel computations running directly on native silicon for uncompromising performance.
-            </p>
+          <!-- 3. BLENDER -->
+          <article class="tech-card" data-tech="blender" data-category="3d">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
 
-            <div class="tech-spec-list">
-              <span class="tech-spec-item"><span>✦</span> SIMD Vectorization</span>
-              <span class="tech-spec-item"><span>✦</span> Lock-Free Queues</span>
-              <span class="tech-spec-item"><span>✦</span> Custom Arenas</span>
-              <span class="tech-spec-item"><span>✦</span> Cache Locality</span>
+            <div class="tech-card-media">
+              <img src="assets/images/tech-blender.jpg" alt="Blender 3D Cyber Armor Sculpting and Geometry Nodes" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
+
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">BLENDER 4.x</span>
+              </div>
+
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>PROCEDURAL NODES</span>
+              </div>
             </div>
 
-            <div class="tech-footer">
-              <span class="tech-metric-label">Simulation Step</span>
-              <span class="tech-metric-val">0.4ms Physics Tick</span>
-            </div>
-          </div>
-        </article>
+            <div class="tech-card-body">
+              <div class="tech-category-sub">3D ASSET GENERATION</div>
+              <h3 class="tech-name">BLENDER</h3>
+              <p class="tech-desc">
+                Precision hard-surface modeling, procedural geometry nodes, and real-time PBR material synthesis tailored for high-density competitive environments.
+              </p>
 
+              <!-- Animated Diagnostic Telemetry: Procedural Node Graph -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#fb923c; box-shadow:0 0 6px #fb923c;"></span> Node Graph Pipeline</span>
+                  <span class="widget-val">4.8M Polys</span>
+                </div>
+                <div class="geo-node-visualizer">
+                  <div class="node-point"></div>
+                  <div class="node-wire"></div>
+                  <div class="node-point"></div>
+                  <div class="node-wire"></div>
+                  <div class="node-point"></div>
+                </div>
+              </div>
+
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> Geometry Nodes</span>
+                <span class="tech-spec-item"><span>✦</span> PBR Shaders</span>
+                <span class="tech-spec-item"><span>✦</span> Hard Surface</span>
+                <span class="tech-spec-item"><span>✦</span> Auto Retopo</span>
+              </div>
+
+              <div class="tech-footer">
+                <span class="tech-metric-label">Topology Pipeline</span>
+                <span class="tech-metric-val">Zero-Artifact Meshes</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. HOUDINI FX -->
+          <article class="tech-card" data-tech="houdini" data-category="3d">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
+
+            <div class="tech-card-media">
+              <img src="assets/images/tech-houdini.jpg" alt="Houdini Procedural Destruction and Smoke Simulation" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
+
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">HOUDINI FX</span>
+              </div>
+
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>PYRO & DESTRUCTION</span>
+              </div>
+            </div>
+
+            <div class="tech-card-body">
+              <div class="tech-category-sub">PROCEDURAL SIMULATION</div>
+              <h3 class="tech-name">HOUDINI FX</h3>
+              <p class="tech-desc">
+                Next-tier environmental destruction, dynamic fluid & pyroclastic systems, and algorithmic world map synthesis for emergent battlefields.
+              </p>
+
+              <!-- Animated Diagnostic Telemetry: Voxel Thermal Flow -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#f43f5e; box-shadow:0 0 6px #f43f5e;"></span> Voxel Thermal Solver</span>
+                  <span class="widget-val">10M Voxel Sim</span>
+                </div>
+                <div class="thermal-sim-bar">
+                  <div class="thermal-sim-fill"></div>
+                </div>
+              </div>
+
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> RBD Destruction</span>
+                <span class="tech-spec-item"><span>✦</span> Pyro & Fluids</span>
+                <span class="tech-spec-item"><span>✦</span> VEX Acceleration</span>
+                <span class="tech-spec-item"><span>✦</span> Terrain Synth</span>
+              </div>
+
+              <div class="tech-footer">
+                <span class="tech-metric-label">Voxel Density</span>
+                <span class="tech-metric-val">10M+ Sim Cells</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. WWISE AUDIO -->
+          <article class="tech-card" data-tech="wwise" data-category="systems">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
+
+            <div class="tech-card-media">
+              <img src="assets/images/tech-wwise.jpg" alt="Audiokinetic Wwise 3D Spatial Audio and Frequency Equalizer" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
+
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">WWISE AUDIO</span>
+              </div>
+
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>3D SPATIAL HRTF</span>
+              </div>
+            </div>
+
+            <div class="tech-card-body">
+              <div class="tech-category-sub">SPATIAL ACOUSTICS</div>
+              <h3 class="tech-name">WWISE AUDIO</h3>
+              <p class="tech-desc">
+                Binaural 3D spatial acoustics and reactive musical engines engineered to deliver pinpoint enemy positioning and atmospheric adrenaline.
+              </p>
+
+              <!-- Animated Diagnostic Telemetry: Live 7-Band Equalizer -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#34d399; box-shadow:0 0 6px #34d399;"></span> HRTF Lossless Spectrum</span>
+                  <span class="widget-val">96kHz / 24-Bit</span>
+                </div>
+                <div class="audio-spectrum-bars">
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                  <div class="audio-eq-bar"></div>
+                </div>
+              </div>
+
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> 3D Spatial HRTF</span>
+                <span class="tech-spec-item"><span>✦</span> Dynamic Stems</span>
+                <span class="tech-spec-item"><span>✦</span> Occlusion DSP</span>
+                <span class="tech-spec-item"><span>✦</span> Zero Latency</span>
+              </div>
+
+              <div class="tech-footer">
+                <span class="tech-metric-label">Audio Fidelity</span>
+                <span class="tech-metric-val">24-Bit / 96kHz Lossless</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6. C++ / C# -->
+          <article class="tech-card" data-tech="cpp" data-category="systems">
+            <div class="tech-corner tl"></div>
+            <div class="tech-corner tr"></div>
+            <div class="tech-corner bl"></div>
+            <div class="tech-corner br"></div>
+
+            <div class="tech-card-media">
+              <img src="assets/images/tech-cpp.jpg" alt="High Performance Bare Metal C++ Engine Architecture" loading="lazy">
+              <div class="tech-media-overlay"></div>
+              <div class="tech-scanline"></div>
+
+              <div class="tech-floating-badge">
+                <div class="tech-floating-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                    <line x1="14" y1="4" x2="10" y2="20"></line>
+                  </svg>
+                </div>
+                <span class="tech-floating-tag">CORE C++ / C#</span>
+              </div>
+
+              <div class="tech-floating-status">
+                <span class="pulse-dot"></span>
+                <span>BARE-METAL SIMD</span>
+              </div>
+            </div>
+
+            <div class="tech-card-body">
+              <div class="tech-category-sub">BARE-METAL ARCHITECTURE</div>
+              <h3 class="tech-name">C++ / C#</h3>
+              <p class="tech-desc">
+                Zero-cost abstractions, custom memory arenas, and SIMD parallel computations running directly on native silicon for uncompromising performance.
+              </p>
+
+              <!-- Animated Diagnostic Telemetry: Bare Metal Opcode Matrix -->
+              <div class="tech-live-widget">
+                <div class="widget-header">
+                  <span class="widget-label"><span class="pulse-dot" style="background:#a78bfa; box-shadow:0 0 6px #a78bfa;"></span> AVX-512 SIMD Matrix</span>
+                  <span class="widget-val">0.4ms Tick</span>
+                </div>
+                <div class="hex-opcode-stream">
+                  <span class="hex-stream-text">0x7FF0 // VMOVAPS [RCX], ZMM0 // L1 CACHE: 0.8ns</span>
+                </div>
+              </div>
+
+              <div class="tech-spec-list">
+                <span class="tech-spec-item"><span>✦</span> SIMD Vectorization</span>
+                <span class="tech-spec-item"><span>✦</span> Lock-Free Queues</span>
+                <span class="tech-spec-item"><span>✦</span> Custom Arenas</span>
+                <span class="tech-spec-item"><span>✦</span> Cache Locality</span>
+              </div>
+
+              <div class="tech-footer">
+                <span class="tech-metric-label">Simulation Step</span>
+                <span class="tech-metric-val">0.4ms Physics Tick</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Slide Progress Indicator -->
+      <div class="arsenal-progress-container reveal-on-scroll">
+        <div class="arsenal-progress-track">
+          <div class="arsenal-progress-fill" id="arsenalProgressFill"></div>
+        </div>
       </div>
 
       <!-- System Telemetry Banner -->
@@ -578,7 +758,7 @@
   <script src="assets/js/cursor.js"></script>
   <script src="assets/js/three-scene.js"></script>
   <script src="assets/js/glitch.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=3"></script>
 
 </body>
 </html>
