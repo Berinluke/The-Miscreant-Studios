@@ -116,3 +116,171 @@
   pointer-events: none;
   z-index: 10;
 }
+
+/* ==========================================================================
+   CYBERPUNK GHOSTING TRANSITION SYSTEM ("Ghost In" & "Ghost Out")
+   ========================================================================== */
+.ghost-screen {
+  opacity: 1;
+  filter: blur(0px) brightness(1);
+  transform: scale(1) translateY(0);
+  transition: 
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+/* Ghost Out: Luminous spectral trail without pitch-black void */
+.ghost-screen.ghost-out {
+  opacity: 0.72 !important;
+  filter: blur(8px) brightness(1.25) saturate(140%) drop-shadow(0 0 35px rgba(192, 132, 252, 0.4)) !important;
+  transform: scale(0.98) !important;
+  pointer-events: none !important;
+}
+
+/* Ghost In: Materializes from luminous vapor into crisp focus */
+.ghost-screen.ghost-in {
+  animation: cyberGhostMaterialize 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cyberGhostMaterialize {
+  0% {
+    opacity: 0.75;
+    filter: blur(10px) brightness(1.3) saturate(160%) drop-shadow(0 0 40px rgba(192, 132, 252, 0.5));
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px) brightness(1) saturate(100%) drop-shadow(0 0 0 transparent);
+    transform: scale(1);
+  }
+}
+
+
+/* ==========================================================================
+   CYBERPUNK CORNER TELEMETRY HUD (Pure CSS Studio Brackets)
+   ========================================================================== */
+.cyber-hud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.hud-corner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: rgba(192, 132, 252, 0.45);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.hud-bracket {
+  font-size: 0.95rem;
+  line-height: 1;
+  color: rgba(192, 132, 252, 0.65);
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+
+.hud-tag {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+}
+
+.hud-sub {
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 0.58rem;
+}
+
+.hud-top-left {
+  top: clamp(22px, 3.8vh, 38px);
+  left: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-top-right {
+  top: clamp(22px, 3.8vh, 38px);
+  right: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-bottom-left {
+  bottom: clamp(20px, 3.2vh, 32px);
+  left: clamp(24px, 3.5vw, 52px);
+}
+
+.hud-bottom-right {
+  bottom: clamp(20px, 3.2vh, 32px);
+  right: clamp(24px, 3.5vw, 52px);
+}
+
+@media (max-width: 992px) {
+  .hud-sub {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cyber-hud-layer {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   1. INTERACTIVE 3D HOLOGRAPHIC GLARE & METALLIC FOIL SHEEN
+   ========================================================================== */
+.carousel-card::before,
+.arsenal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(192, 132, 252, 0.22) 25%,
+    rgba(56, 189, 248, 0.12) 50%,
+    transparent 75%
+  );
+  opacity: var(--glare-opacity, 0);
+  pointer-events: none;
+  z-index: 15;
+  mix-blend-mode: overlay;
+  transition: opacity 0.25s ease;
+}
+
+/* ==========================================================================
+   2. RGB CHROMATIC ABERRATION & NEURAL GLITCH BURST ON SLIDE CHANGE
+   ========================================================================== */
+.chromatic-flash {
+  animation: chromaticAberrationGlitch 0.14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes chromaticAberrationGlitch {
+  0% {
+    filter: drop-shadow(-4px 0 0 rgba(244, 63, 94, 0.85)) 
+            drop-shadow(4px 0 0 rgba(56, 189, 248, 0.85));
+    transform: translate3d(-1px, 1px, 0);
+  }
+  35% {
+    filter: drop-shadow(5px 0 0 rgba(244, 63, 94, 0.9)) 
+            drop-shadow(-5px 0 0 rgba(56, 189, 248, 0.9)) 
+            hue-rotate(20deg);
+    transform: translate3d(2px, -1px, 0);
+  }
+  70% {
+    filter: drop-shadow(-2px 0 0 rgba(244, 63, 94, 0.5)) 
+            drop-shadow(2px 0 0 rgba(56, 189, 248, 0.5));
+    transform: translate3d(-1px, 0, 0);
+  }
+  100% {
+    filter: drop-shadow(0 0 0 transparent);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
