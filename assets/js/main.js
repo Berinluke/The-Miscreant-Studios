@@ -451,7 +451,7 @@ function initGamesCarousel() {
       if (!isHovered) {
         nextSlide();
       }
-    }, 3800);
+    }, 2000);
   }
 
   function pauseAutoplay() {
@@ -720,7 +720,7 @@ function initArsenalShowcase() {
       if (!isHovered) {
         nextSlide();
       }
-    }, 4200);
+    }, 2000);
   }
 
   function pauseAutoplay() {
