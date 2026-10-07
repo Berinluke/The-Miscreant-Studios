@@ -1,0 +1,117 @@
+/* ==========================================================================
+   CYBERPUNK TARGETING RETICLE & TELEMETRY CURSOR
+   Smooth Lerping | Crosshairs | Coordinates Readout
+   ========================================================================== */
+
+.cyber-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #c084fc, 0 0 4px #ffffff;
+  transition: opacity 0.2s ease;
+}
+
+.cyber-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(192, 132, 252, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background-color 0.25s ease,
+              border-radius 0.25s ease;
+}
+
+/* Crosshair notches on the ring */
+.cyber-cursor-ring::before,
+.cyber-cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: var(--accent-purple-bright);
+}
+
+.cyber-cursor-ring::before {
+  top: -4px;
+  left: 50%;
+  width: 1px;
+  height: 8px;
+  transform: translateX(-50%);
+}
+
+.cyber-cursor-ring::after {
+  top: 50%;
+  left: -4px;
+  width: 8px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+/* Hover State - Target Lock */
+.cyber-cursor-ring.cursor-hover {
+  width: 54px;
+  height: 54px;
+  border-color: #06b6d4;
+  border-radius: 4px; /* Switches to chamfered target box */
+  background: rgba(6, 182, 212, 0.08);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+.cyber-cursor-ring.cursor-hover::before,
+.cyber-cursor-ring.cursor-hover::after {
+  background: #06b6d4;
+}
+
+/* Click Active State */
+.cyber-cursor-ring.cursor-down {
+  transform: translate(-50%, -50%) scale(0.85);
+  border-color: #f43f5e;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.6);
+}
+
+/* Telemetry Badge (Mouse Coordinates) */
+.cyber-cursor-coords {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(192, 132, 252, 0.7);
+  letter-spacing: 0.08em;
+  padding: 2px 4px;
+  background: rgba(8, 7, 14, 0.8);
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  border-radius: 2px;
+  transform: translate(24px, 20px);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body:hover .cyber-cursor-coords {
+  opacity: 1;
+}
+
+/* Mobile & Touch Fallback */
+@media (hover: none) or (pointer: coarse) {
+  .cyber-cursor-dot,
+  .cyber-cursor-ring,
+  .cyber-cursor-coords {
+    display: none !important;
+  }
+}
