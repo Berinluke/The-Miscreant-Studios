@@ -917,20 +917,25 @@ function initFullscreenScreenSnapping() {
     }
   }, { passive: true });
 
-  // Sync index on scroll position (e.g. from nav anchors or hash)
-  window.addEventListener('scroll', () => {
+  // Sync index on scroll position (viewport midpoint detection)
+  function syncActiveScreen() {
     if (isTransitioning) return;
-    const scrollPos = window.scrollY + window.innerHeight / 2;
-    sections.forEach((sec, idx) => {
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
+    const midPoint = window.innerHeight / 2;
+    for (let idx = 0; idx < sections.length; idx++) {
+      const rect = sections[idx].getBoundingClientRect();
+      if (rect.top <= midPoint && rect.bottom >= midPoint) {
         if (currentIndex !== idx) {
           currentIndex = idx;
           updateActiveNav(idx);
         }
+        break;
       }
-    });
-  }, { passive: true });
+    }
+  }
+
+  window.addEventListener('scroll', syncActiveScreen, { passive: true });
+  if (window.lenisInstance) {
+    window.lenisInstance.on('scroll', syncActiveScreen);
+  }
 }
 

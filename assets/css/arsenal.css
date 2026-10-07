@@ -58,26 +58,26 @@
    -------------------------------------------------------------------------- */
 .arsenal-header {
   text-align: center;
-  max-width: 900px;
-  margin: 0 auto 16px;
+  max-width: 800px;
+  margin: 0 auto 10px;
   position: relative;
   z-index: 5;
 }
 
 .arsenal-title {
-  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   text-transform: uppercase;
 }
 
 .arsenal-desc {
-  font-size: 0.98rem;
+  font-size: 0.85rem;
   color: #94a3b8;
-  line-height: 1.5;
+  line-height: 1.4;
   font-weight: 400;
 }
 
@@ -88,7 +88,7 @@
   position: relative;
   width: 100%;
   max-width: 1360px;
-  height: min(470px, 54vh);
+  height: min(400px, 48vh);
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -117,8 +117,8 @@
   --card-glow: rgba(192, 132, 252, 0.35);
 
   position: absolute;
-  width: min(440px, 86vw);
-  max-width: 460px;
+  width: min(360px, 80vw);
+  max-width: 380px;
   transform-origin: center center;
   background: rgba(14, 11, 28, 0.85);
   backdrop-filter: blur(28px) saturate(180%);
@@ -217,7 +217,7 @@
    6. CARD MEDIA VIEWPORT & SCANLINE
    -------------------------------------------------------------------------- */
 .arsenal-card-media {
-  height: 170px;
+  height: 135px;
   position: relative;
   overflow: hidden;
   background: #090718;
@@ -276,7 +276,7 @@
    7. CARD BODY & ANIMATED HUD DIAGNOSTICS
    -------------------------------------------------------------------------- */
 .arsenal-card-body {
-  padding: 16px 20px 18px;
+  padding: 12px 16px 14px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -284,27 +284,31 @@
 
 .arsenal-category-sub {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--card-accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 .arsenal-card-title {
-  font-size: 1.55rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.015em;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .arsenal-card-desc {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   color: #94a3b8;
-  line-height: 1.55;
-  margin-bottom: 16px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Live Animated HUD Diagnostic Box */
@@ -312,12 +316,12 @@
   background: rgba(6, 4, 16, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 3px solid var(--card-accent);
-  border-radius: 10px;
-  padding: 10px 14px;
-  margin-bottom: 18px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .widget-header {
@@ -518,21 +522,21 @@
 .arsenal-spec-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 5px;
   margin-top: auto;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .arsenal-spec-item {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 11px;
+  gap: 4px;
+  padding: 3px 8px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   color: #cbd5e1;
 }
 
@@ -545,21 +549,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 15px;
+  padding-top: 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: auto;
+  margin-top: 4px;
 }
 
 .arsenal-metric-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   color: #64748b;
   text-transform: uppercase;
 }
 
 .arsenal-metric-val {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--card-accent);
 }
@@ -571,15 +575,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  margin-top: 24px;
+  gap: 16px;
+  margin-top: 12px;
   position: relative;
   z-index: 25;
 }
 
 .arsenal-nav-btn {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(18, 14, 38, 0.88);
   backdrop-filter: blur(20px);
@@ -647,25 +651,25 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
   .arsenal-carousel-stage {
-    height: 600px;
+    height: min(400px, 48vh);
   }
 
   .arsenal-card {
-    width: min(390px, 88vw);
+    width: min(350px, 84vw);
   }
 
   .arsenal-card-media {
-    height: 190px;
+    height: 135px;
   }
 }
 
 @media (max-width: 768px) {
   .arsenal-section {
-    padding: 70px 0 100px;
+    padding: 0;
   }
 
   .arsenal-carousel-stage {
-    height: 570px;
+    height: 420px;
   }
 
   .arsenal-card {
@@ -673,11 +677,11 @@
   }
 
   .arsenal-card-media {
-    height: 170px;
+    height: 135px;
   }
 
   .arsenal-card-body {
-    padding: 18px 20px 22px;
+    padding: 12px 16px 14px;
   }
 
   .arsenal-dock-wrapper {
