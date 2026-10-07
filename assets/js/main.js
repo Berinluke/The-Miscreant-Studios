@@ -216,32 +216,72 @@ function initMacOsFiltering() {
 }
 
 /* ==========================================================================
-   5. 3D INTERACTIVE CARD PERSPECTIVE TILT (Static cards only)
+   5. 3D GYROSCOPE CARD PERSPECTIVE TILT & HOLOGRAPHIC GLARE SHEEN
    ========================================================================== */
 function initCard3DTilt() {
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const cards = document.querySelectorAll('.macos-card:not(.carousel-card), .tech-card');
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
+  const tiltCards = document.querySelectorAll('.carousel-card, .arsenal-card, .macos-card');
+
+  tiltCards.forEach(card => {
+    let rafId = null;
+
+    card.addEventListener('mousemove', (e) => {
+      // Only tilt the active card or static cards to maintain layout harmony
+      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      if (isCarousel && !card.classList.contains('active-card')) return;
+
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        const normX = (x / rect.width) - 0.5; // -0.5 to 0.5
+        const normY = (y / rect.height) - 0.5; // -0.5 to 0.5
 
-        const rotateX = ((y - centerY) / centerY) * -4.5;
-        const rotateY = ((x - centerX) / centerX) * 4.5;
+        const rotateY = (normX * 13).toFixed(2);
+        const rotateX = (-normY * 13).toFixed(2);
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      });
+        if (isCarousel) {
+          card.style.transform = `translateX(0%) translateZ(28px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        } else {
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        }
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        // Dynamic holographic glare reflection positioning
+        card.style.setProperty('--glare-x', `${((normX + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty('--glare-y', `${((normY + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty('--glare-opacity', '1');
       });
     });
-  }
+
+    card.addEventListener('mouseleave', () => {
+      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      if (isCarousel && !card.classList.contains('active-card')) return;
+
+      if (rafId) cancelAnimationFrame(rafId);
+      if (isCarousel) {
+        card.style.transform = 'translateX(0%) translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1)';
+      } else {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      }
+      card.style.setProperty('--glare-opacity', '0');
+    });
+  });
+}
+
+/* ==========================================================================
+   RGB CHROMATIC ABERRATION & NEURAL GLITCH BURST UTILITY
+   ========================================================================== */
+function triggerChromaticGlitch(trackEl) {
+  if (!trackEl) return;
+  trackEl.classList.remove('chromatic-flash');
+  void trackEl.offsetWidth; // Force DOM reflow
+  trackEl.classList.add('chromatic-flash');
+  setTimeout(() => {
+    trackEl.classList.remove('chromatic-flash');
+  }, 160);
 }
 
 /* ==========================================================================
@@ -369,6 +409,8 @@ function initGamesCarousel() {
         card.style.pointerEvents = 'none';
         card.style.cursor = 'default';
       }
+
+      card.style.setProperty('--glare-opacity', '0');
     });
 
     // Update dot indicators
@@ -381,6 +423,7 @@ function initGamesCarousel() {
 
   function goToSlide(index) {
     currentIndex = (index + total) % total;
+    triggerChromaticGlitch(track);
     updateCards();
     resetAutoplay();
   }
@@ -608,6 +651,8 @@ function initArsenalShowcase() {
         card.style.pointerEvents = 'none';
         card.style.cursor = 'default';
       }
+
+      card.style.setProperty('--glare-opacity', '0');
     });
 
     // Update dots
@@ -623,6 +668,7 @@ function initArsenalShowcase() {
     const total = filteredCards.length;
     if (total === 0) return;
     currentIndex = (index + total) % total;
+    triggerChromaticGlitch(track);
     updateCards();
     resetAutoplay();
   }
