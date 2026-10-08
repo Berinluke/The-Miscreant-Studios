@@ -38,7 +38,8 @@ class CyberGlitchEngine {
   }
 
   bindTextScramblers() {
-    const scramblers = document.querySelectorAll('[data-scramble]');
+    // Strictly confined to landing page hero section
+    const scramblers = document.querySelectorAll('#hero [data-scramble]');
     scramblers.forEach(el => {
       const originalText = el.getAttribute('data-scramble') || el.innerText;
       el.addEventListener('mouseenter', () => {

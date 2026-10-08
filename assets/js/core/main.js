@@ -153,7 +153,8 @@ function initLenisSmoothScroll() {
    ========================================================================== */
 function initGlitchScramble() {
   const chars = '!<>-_\\/[]{}—=+*^?#________010101';
-  const scramblers = document.querySelectorAll('[data-scramble]');
+  // Strictly confined to the landing page hero section
+  const scramblers = document.querySelectorAll('#hero [data-scramble]');
 
   scramblers.forEach(el => {
     const originalText = el.getAttribute('data-scramble') || el.innerText;
@@ -197,35 +198,11 @@ function initScrollReveal() {
   targets.forEach(el => el.classList.add('reveal-on-scroll'));
 
   let lastAudioTransition = 0;
-  const scrambleChars = '!<>-_/[]{}—=+*^?#01';
-
-  function decryptElementText(el) {
-    if (el.dataset.scrambled === 'done') return;
-    el.dataset.scrambled = 'done';
-    const original = el.innerText;
-    let iteration = 0;
-    const timer = setInterval(() => {
-      el.innerText = original.split('').map((letter, i) => {
-        if (i < iteration) return original[i];
-        if (letter === ' ') return ' ';
-        return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-      }).join('');
-      if (iteration >= original.length) {
-        clearInterval(timer);
-        el.innerText = original;
-      }
-      iteration += 1;
-    }, 25);
-  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
-
-        // Cyberpunk text decrypt effect on section titles
-        const sectionTitle = entry.target.querySelector('h2, .showcase-title, .arsenal-title, .studio-section-title');
-        if (sectionTitle) decryptElementText(sectionTitle);
 
         // Tactile chapter switch sound sweep (debounced to avoid audio spam)
         const now = Date.now();
@@ -318,7 +295,7 @@ function triggerChromaticGlitch(trackEl) {
    5. AUDIO FEEDBACK HOOKS ON BUTTONS & LINKS
    ========================================================================== */
 function initAudioInteractions() {
-  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .btn-universe-action, .island-nav-link, .island-cta-btn, .scroll-indicator-wrap');
+  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .btn-universe-action, .scroll-indicator-wrap');
 
   interactives.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
