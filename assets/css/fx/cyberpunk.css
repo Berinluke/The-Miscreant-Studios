@@ -11,7 +11,7 @@
   position: relative;
   width: 100%;
   padding: 40px 0;
-  background-image: url('../images/hero-full-bg.jpg');
+  background-image: url('../../images/hero/hero-full-bg.jpg');
   background-size: cover;
   background-position: 42% center;
   background-repeat: no-repeat;
@@ -109,7 +109,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../images/hero-foreground-controller.png');
+  background-image: url('../../images/hero/hero-foreground-controller.png');
   background-size: cover;
   background-position: 42% center;
   background-repeat: no-repeat;
