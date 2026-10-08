@@ -20,14 +20,12 @@ The-Miscreant-Studios/
 └── assets/
     ├── brand/                      # Brand identity, vectors & application icons
     │   ├── logo.png                # Primary studio badge
-    │   ├── The_Miscreant_Studios_Logo.png # Master high-resolution brand asset
     │   ├── favicon.png             # Modern 128x128 PNG icon
     │   └── favicon-192.png         # High-DPI PWA / mobile touch icon
     │
     ├── images/                     # Categorized production visual media
     │   ├── hero/                   # Full-bleed 3D scene elements & controllers
     │   │   ├── hero-full-bg.jpg
-    │   │   ├── hero-controller.png
     │   │   ├── hero-foreground-controller.png
     │   │   └── cyber-stage-bg.png
     │   ├── games/                  # Studio titles & operations key art

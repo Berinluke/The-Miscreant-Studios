@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLenisSmoothScroll();
   initGlitchScramble();
   initScrollReveal();
-  initMacOsFiltering();
   initCard3DTilt();
-  initStudioClock();
   initAudioInteractions();
   initGamesCarousel();
   initArsenalShowcase();
@@ -248,46 +246,7 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   4. MACOS DOCK PILL CATEGORY FILTERING
-   ========================================================================== */
-function initMacOsFiltering() {
-  const filterPills = document.querySelectorAll('.dock-pill');
-  const cards = document.querySelectorAll('.macos-card');
-
-  if (!filterPills.length || !cards.length) return;
-
-  filterPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-
-      if (window.cyberAudio) window.cyberAudio.playClick();
-
-      const filter = pill.getAttribute('data-filter');
-
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category') || '';
-        
-        if (filter === 'all' || category.includes(filter)) {
-          card.style.display = card.classList.contains('card-featured-expansion') ? 'grid' : 'flex';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0) scale(1)';
-          }, 20);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'perspective(1000px) rotateX(8deg) translateY(20px) scale(0.96)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 250);
-        }
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   5. 3D GYROSCOPE CARD PERSPECTIVE TILT & HOLOGRAPHIC GLARE SHEEN
+   4. 3D GYROSCOPE CARD PERSPECTIVE TILT & HOLOGRAPHIC GLARE SHEEN
    ========================================================================== */
 function initCard3DTilt() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -356,29 +315,10 @@ function triggerChromaticGlitch(trackEl) {
 }
 
 /* ==========================================================================
-   6. MACOS STUDIO LIVE CLOCK (UTC/Local)
-   ========================================================================== */
-function initStudioClock() {
-  const clockEl = document.getElementById('studio-live-clock');
-  if (!clockEl) return;
-
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getUTCHours()).padStart(2, '0');
-    const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-    clockEl.innerText = `CLUSTER TIME: ${hours}:${minutes}:${seconds} UTC • MESH: ACTIVE`;
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-}
-
-/* ==========================================================================
-   7. AUDIO FEEDBACK HOOKS ON BUTTONS & LINKS
+   5. AUDIO FEEDBACK HOOKS ON BUTTONS & LINKS
    ========================================================================== */
 function initAudioInteractions() {
-  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .social-mac-btn, .scroll-indicator-wrap, .dock-pill, .carousel-nav-btn, .tech-card');
+  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .btn-universe-action, .island-nav-link, .island-cta-btn, .scroll-indicator-wrap');
 
   interactives.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
@@ -928,16 +868,6 @@ function initFullscreenScreenSnapping() {
   let lastScrollTime = 0;
   const SCROLL_COOLDOWN = 850; // ms
 
-  // Remove any legacy cyber screen navigator dock if present
-  const existingNavDock = document.querySelector('.cyber-screen-navigator');
-  if (existingNavDock) {
-    existingNavDock.remove();
-  }
-
-  function updateActiveNav(idx) {
-    // Navigator dock removed per design preference
-  }
-
   function goToScreen(targetIndex) {
     if (targetIndex < 0 || targetIndex >= sections.length) return;
     if (targetIndex === currentIndex && !isTransitioning) return;
@@ -949,7 +879,6 @@ function initFullscreenScreenSnapping() {
     const targetSec = sections[targetIndex];
 
     currentIndex = targetIndex;
-    updateActiveNav(targetIndex);
 
     // Audio cue on screen transition
     if (window.cyberAudio && typeof window.cyberAudio.playHover === 'function') {
@@ -1048,7 +977,6 @@ function initFullscreenScreenSnapping() {
 
       if (maxVisibleHeight > 100 && currentIndex !== bestIdx) {
         currentIndex = bestIdx;
-        updateActiveNav(bestIdx);
       }
     });
   }

@@ -266,12 +266,6 @@
   z-index: 2;
 }
 
-/* Scanner Scanline Disabled */
-.arsenal-scanline {
-  display: none !important;
-}
-
-
 /* --------------------------------------------------------------------------
    7. CARD BODY & ANIMATED HUD DIAGNOSTICS
    -------------------------------------------------------------------------- */
@@ -569,79 +563,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   8. BOTTOM NAVIGATION CONTROLS (Disabled)
-   -------------------------------------------------------------------------- */
-.arsenal-carousel-controls {
-  display: none !important;
-}
-
-.arsenal-nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(18, 14, 38, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  color: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 18px rgba(139, 92, 246, 0.2);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  outline: none;
-}
-
-.arsenal-nav-btn:hover {
-  transform: scale(1.12);
-  color: #ffffff;
-  border-color: rgba(192, 132, 252, 0.8);
-  background: rgba(139, 92, 246, 0.35);
-  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.8), 0 0 28px rgba(139, 92, 246, 0.6);
-}
-
-.arsenal-nav-btn:active {
-  transform: scale(0.92);
-}
-
-.arsenal-nav-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: currentColor;
-}
-
-.arsenal-dots {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.arsenal-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
-  border: none;
-  cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 0;
-}
-
-.arsenal-dot:hover {
-  background: rgba(255, 255, 255, 0.6);
-  transform: scale(1.25);
-}
-
-.arsenal-dot.active {
-  width: 24px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #38bdf8 0%, #c084fc 100%);
-  box-shadow: 0 0 14px rgba(192, 132, 252, 0.8);
-}
-
-/* --------------------------------------------------------------------------
-   10. RESPONSIVE BREAKPOINTS
+   8. RESPONSIVE BREAKPOINTS
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
   .arsenal-carousel-stage {
@@ -676,15 +598,5 @@
 
   .arsenal-card-body {
     padding: 12px 16px 14px;
-  }
-
-  .arsenal-dock-wrapper {
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding-bottom: 6px;
-  }
-
-  .arsenal-dock {
-    width: max-content;
   }
 }
