@@ -235,7 +235,7 @@ function initCard3DTilt() {
 
     card.addEventListener('mousemove', (e) => {
       // Only tilt the active card or static cards to maintain layout harmony
-      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      const isCarousel = card.classList.contains('carousel-card');
       if (isCarousel && !card.classList.contains('active-card')) return;
 
       if (rafId) cancelAnimationFrame(rafId);
@@ -264,7 +264,7 @@ function initCard3DTilt() {
     });
 
     card.addEventListener('mouseleave', () => {
-      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      const isCarousel = card.classList.contains('carousel-card');
       if (isCarousel && !card.classList.contains('active-card')) return;
 
       if (rafId) cancelAnimationFrame(rafId);

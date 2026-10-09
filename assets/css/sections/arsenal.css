@@ -114,46 +114,31 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. 3D CAROUSEL STAGE & TRACK (Matching Operations Carousel)
+   4. DUAL-ENGINE ARSENAL GRID
    -------------------------------------------------------------------------- */
-.arsenal-carousel-stage {
-  position: relative;
-  width: 100%;
-  max-width: 1360px;
-  height: min(470px, 58vh);
-  margin: auto auto;
-  display: flex;
+.arsenal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 500px));
   justify-content: center;
-  align-items: center;
-  perspective: 1200px;
-  perspective-origin: 50% 50%;
-  overflow: visible;
+  align-items: stretch;
+  gap: 32px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
   z-index: 10;
 }
 
-.arsenal-carousel-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-style: preserve-3d;
-}
-
 /* --------------------------------------------------------------------------
-   5. ARSENAL CAROUSEL CARD ARCHITECTURE (Interactive 3D Cover Flow)
+   5. ARSENAL CARD ARCHITECTURE (Interactive Cyberpunk Showcase)
    -------------------------------------------------------------------------- */
 .arsenal-card {
   --card-accent: #c084fc;
   --card-glow: rgba(192, 132, 252, 0.35);
 
-  position: absolute;
-  width: min(440px, 86vw);
-  max-width: 460px;
-  height: min(460px, 56vh);
-  max-height: 470px;
-  transform-origin: center center;
+  position: relative;
+  width: 100%;
+  min-height: 480px;
   background: rgba(14, 11, 28, 0.85);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
@@ -166,31 +151,24 @@
     0 25px 50px -12px rgba(0, 0, 0, 0.75),
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
   transform-style: preserve-3d;
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), 
-              opacity 0.65s ease, 
-              filter 0.65s ease, 
-              box-shadow 0.65s ease,
-              border-color 0.4s ease;
-  will-change: transform, opacity;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), 
+              border-color 0.35s ease, 
+              box-shadow 0.35s ease;
+  will-change: transform;
   cursor: pointer;
   z-index: 1;
 }
 
 /* Unified Cyberpunk Purple / Violet Brand Accent & Glow on All Cards */
 .arsenal-card,
-.arsenal-card[data-tech="ue5"],
 .arsenal-card[data-tech="unity"],
-.arsenal-card[data-tech="blender"],
-.arsenal-card[data-tech="houdini"],
-.arsenal-card[data-tech="wwise"],
 .arsenal-card[data-tech="cpp"] {
   --card-accent: #c084fc;
   --card-glow: rgba(192, 132, 252, 0.45);
 }
 
-/* Active Center Card Highlight (Elevated + Glowing Perimeter) */
-.arsenal-card.active-card {
-  cursor: default;
+/* Card Hover Elevation + Glowing Perimeter */
+.arsenal-card:hover {
   border-color: var(--card-accent);
   box-shadow: 
     0 35px 75px -15px rgba(0, 0, 0, 0.92),
@@ -198,8 +176,8 @@
     inset 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
-/* Rotating Border Beam on Active Card */
-.arsenal-card.active-card::after {
+/* Rotating Border Beam on Hover */
+.arsenal-card:hover::after {
   content: '';
   position: absolute;
   inset: -1px;
@@ -566,16 +544,17 @@
    8. RESPONSIVE BREAKPOINTS
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
-  .arsenal-carousel-stage {
-    height: min(400px, 48vh);
+  .arsenal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
   }
 
   .arsenal-card {
-    width: min(350px, 84vw);
+    min-height: 440px;
   }
 
   .arsenal-card-media {
-    height: 135px;
+    height: 140px;
   }
 }
 
@@ -584,19 +563,22 @@
     padding: 0;
   }
 
-  .arsenal-carousel-stage {
-    height: 420px;
+  .arsenal-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    gap: 24px;
   }
 
   .arsenal-card {
-    width: min(340px, 90vw);
+    min-height: auto;
   }
 
   .arsenal-card-media {
-    height: 135px;
+    height: 140px;
   }
 
   .arsenal-card-body {
-    padding: 12px 16px 14px;
+    padding: 14px 18px 16px;
   }
 }
+
