@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="assets/css/fx/cursor.css?v=3">
   <link rel="stylesheet" href="assets/css/sections/games-showcase.css?v=2">
   <link rel="stylesheet" href="assets/css/sections/arsenal.css?v=4">
-  <link rel="stylesheet" href="assets/css/sections/studio-universe.css?v=9">
+  <link rel="stylesheet" href="assets/css/sections/studio-universe.css?v=10">
 </head>
 <body>
 
@@ -1319,57 +1319,141 @@
        STUDIO MASTER FOOTER
        ========================================================================== -->
   <footer class="studio-master-footer" role="contentinfo">
+    <!-- Ambient Cyber Glow Mesh & Monumental Ghost Watermark -->
+    <div class="footer-ambient-mesh" aria-hidden="true"></div>
+    <div class="footer-ghost-watermark" aria-hidden="true">MISCREANT</div>
+
     <div class="app-container">
       
-      <div class="footer-top-grid">
-        <div>
-          <div class="footer-brand-title">THE MISCREANT STUDIOS</div>
-          <div class="footer-brand-tagline">DIGITAL CHAOS SIMULATOR • ESTD. 2026</div>
-          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6; max-width: 320px;">
-            Independent high-fidelity game development studio headquartered in Chennai, India. Built for players. Designed for chaos.
-          </p>
-        </div>
-
-        <div>
-          <div class="footer-col-title">SECTIONS</div>
-          <div class="footer-links-list">
-            <a href="#hero" class="footer-link-anchor">01 — Hero</a>
-            <a href="#showcase" class="footer-link-anchor">02 — Operations</a>
-            <a href="#arsenal" class="footer-link-anchor">03 — The Arsenal</a>
-            <a href="#about" class="footer-link-anchor">04 — About Studio</a>
-            <a href="#universe" class="footer-link-anchor">05 — Universe</a>
+      <!-- Top Interactive Command Header -->
+      <div class="footer-header-banner">
+        <div class="footer-brand-lockup">
+          <div class="footer-logo-badge">
+            <img src="assets/brand/logo.png" alt="The Miscreant Studios Emblem" class="footer-logo-img">
+          </div>
+          <div>
+            <div class="footer-brand-title">THE MISCREANT STUDIOS</div>
+            <div class="footer-brand-tagline">DIGITAL CHAOS SIMULATOR // ESTD. 2026</div>
           </div>
         </div>
 
-        <div>
-          <div class="footer-col-title">STUDIO ARCHIVE</div>
-          <div class="footer-links-list">
-            <a href="#team" class="footer-link-anchor">06 — The Team</a>
-            <a href="#culture" class="footer-link-anchor">07 — Culture</a>
-            <a href="#transmissions" class="footer-link-anchor">08 — Transmissions</a>
-            <a href="#careers" class="footer-link-anchor">09 — Careers</a>
-            <a href="#contact" class="footer-link-anchor">10 — Contact</a>
-          </div>
-        </div>
-
-        <div>
-          <div class="footer-col-title">NETWORK</div>
-          <div class="footer-links-list">
-            <a href="https://github.com/Berinluke" target="_blank" rel="noopener" class="footer-link-anchor">GitHub</a>
-            <a href="#contact" class="footer-link-anchor">Discord Server</a>
-            <a href="#contact" class="footer-link-anchor">X / Twitter</a>
-            <a href="#contact" class="footer-link-anchor">YouTube</a>
-            <a href="#contact" class="footer-link-anchor">Steam Studio Page</a>
-          </div>
-        </div>
+        <button class="footer-command-trigger" id="footerCmdTrigger" type="button" aria-label="Open Cyber Command Bar">
+          <span class="cmd-trigger-icon">⌘</span>
+          <span class="cmd-trigger-text">COMMAND PALETTE</span>
+          <kbd class="cmd-trigger-kbd">⌘K</kbd>
+        </button>
       </div>
 
+      <!-- Main Navigation & Node Bento Grid -->
+      <div class="footer-top-grid">
+        
+        <!-- Col 1: Operational Node & Mission -->
+        <div class="footer-node-card">
+          <div class="footer-node-badge">
+            <span class="pulse-live-dot"></span> CHENNAI OPERATIONAL NODE
+          </div>
+          <p class="footer-node-desc">
+            Forging high-fidelity digital battlegrounds and low-level engine architecture that push human reflexes and raw silicon to their breaking points.
+          </p>
+          <div class="footer-node-telemetry">
+            <div class="telemetry-pill">
+              <span class="telemetry-pill-dot"></span>
+              <span>13.0827° N, 80.2707° E</span>
+            </div>
+            <div class="telemetry-pill">
+              <span class="telemetry-pill-dot dot-cyan"></span>
+              <span>120Hz TICK • SIMD CORE ACTIVE</span>
+            </div>
+          </div>
+          <a href="#contact" class="footer-uplink-btn">
+            <span>INITIATE UPLINK</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Col 2: Core Sectors -->
+        <div class="footer-nav-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> SECTORS <span class="title-bracket">]</span>
+          </div>
+          <nav class="footer-links-list" aria-label="Footer Sectors Navigation">
+            <a href="#hero" class="footer-link-anchor"><span class="link-num">01</span><span class="link-label">Hero Apex</span><span class="link-arrow">↗</span></a>
+            <a href="#showcase" class="footer-link-anchor"><span class="link-num">02</span><span class="link-label">Running Operations</span><span class="link-arrow">↗</span></a>
+            <a href="#arsenal" class="footer-link-anchor"><span class="link-num">03</span><span class="link-label">The Arsenal</span><span class="link-arrow">↗</span></a>
+            <a href="#about" class="footer-link-anchor"><span class="link-num">04</span><span class="link-label">Studio Manifesto</span><span class="link-arrow">↗</span></a>
+            <a href="#universe" class="footer-link-anchor"><span class="link-num">05</span><span class="link-label">Universe Radar</span><span class="link-arrow">↗</span></a>
+          </nav>
+        </div>
+
+        <!-- Col 3: Studio Archive -->
+        <div class="footer-nav-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> ARCHIVE <span class="title-bracket">]</span>
+          </div>
+          <nav class="footer-links-list" aria-label="Footer Archive Navigation">
+            <a href="#team" class="footer-link-anchor"><span class="link-num">06</span><span class="link-label">The Leaders</span><span class="link-arrow">↗</span></a>
+            <a href="#culture" class="footer-link-anchor"><span class="link-num">07</span><span class="link-label">War Room Culture</span><span class="link-arrow">↗</span></a>
+            <a href="#transmissions" class="footer-link-anchor"><span class="link-num">08</span><span class="link-label">Transmissions</span><span class="link-arrow">↗</span></a>
+            <a href="#careers" class="footer-link-anchor"><span class="link-num">09</span><span class="link-label">Careers (We're Hiring)</span><span class="link-arrow">↗</span></a>
+            <a href="#contact" class="footer-link-anchor"><span class="link-num">10</span><span class="link-label">HQ Dispatch</span><span class="link-arrow">↗</span></a>
+          </nav>
+        </div>
+
+        <!-- Col 4: Network Channels -->
+        <div class="footer-nav-col footer-social-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> NETWORK UPLINK <span class="title-bracket">]</span>
+          </div>
+          <div class="footer-social-grid">
+            <a href="https://github.com/Berinluke" target="_blank" rel="noopener" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+              </svg>
+              <span>Discord Server</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+              </svg>
+              <span>X / Twitter</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+              <span>YouTube Channel</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 0 0-9.95 9h5.11a3.5 3.5 0 0 1 4.68 3.5 3.5 3.5 0 0 1-3.5 3.5c-.4 0-.78-.07-1.13-.2l-3.32 2.37A10 10 0 1 0 12 2z"></path>
+              </svg>
+              <span>Steam Studio Hub</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Status & Telemetry Bar -->
       <div class="footer-bottom-bar">
-        <div>
+        <div class="footer-copy-text">
           © 2026 The Miscreant Studios. All Rights Reserved.
         </div>
-        <a href="#hero" class="footer-back-to-top">
-          <span>▲ RETURN TO TOP</span>
+        <div class="footer-sec-telemetry">
+          <span class="telemetry-dot"></span>
+          <span>SYS.CORE: 100% NOMINAL • ZERO TRACKING • CHENNAI HQ</span>
+        </div>
+        <a href="#hero" class="footer-back-to-top" id="footerBackToTop" aria-label="Return to top of page">
+          <span>RETURN TO APEX</span>
+          <span class="top-icon">▲</span>
         </a>
       </div>
 
