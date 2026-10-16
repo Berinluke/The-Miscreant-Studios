@@ -61,6 +61,29 @@ function initCommandPalette() {
     closeBtn.addEventListener('click', closePalette);
   }
 
+  const footerTrigger = document.getElementById('footerCmdTrigger');
+  if (footerTrigger) {
+    footerTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPalette();
+    });
+  }
+
+  const backToTopBtn = document.getElementById('footerBackToTop');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.cyberAudio && typeof window.cyberAudio.playClick === 'function') {
+        window.cyberAudio.playClick();
+      }
+      if (window.lenisInstance) {
+        window.lenisInstance.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
   palette.addEventListener('click', (e) => {
     if (e.target === palette) {
       closePalette();

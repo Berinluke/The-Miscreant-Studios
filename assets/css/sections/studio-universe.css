@@ -79,10 +79,6 @@
   z-index: 2;
 }
 
-.studio-section-tag {
-  display: none !important;
-}
-
 .studio-section-title {
   font-family: var(--font-title, 'Space Grotesk', sans-serif);
   font-size: clamp(2rem, 4.5vw, 3.4rem);
@@ -325,10 +321,6 @@
 /* --------------------------------------------------------------------------
    05 — THE MISCREANT UNIVERSE (EXPANDED GAME PORTFOLIO)
    -------------------------------------------------------------------------- */
-.universe-filter-bar {
-  display: none !important;
-}
-
 .universe-games-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -501,8 +493,11 @@
    -------------------------------------------------------------------------- */
 .team-grid-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  grid-template-columns: repeat(2, minmax(0, 520px));
+  justify-content: center;
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
   position: relative;
   z-index: 2;
 }
@@ -591,10 +586,6 @@
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 4px;
-}
-
-.team-card-lead .team-member-name {
-  font-size: 1.55rem;
 }
 
 .team-member-role {
@@ -830,10 +821,6 @@
 .term-dot-red { background: #ef4444; }
 .term-dot-yellow { background: #eab308; }
 .term-dot-green { background: #22c55e; }
-
-.terminal-filters {
-  display: none !important;
-}
 
 .transmissions-list {
   display: flex;
@@ -1086,7 +1073,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 
 .contact-channel-item {
@@ -1228,232 +1215,446 @@
   filter: brightness(1.1);
 }
 
-/* Master Footer */
+/* ==========================================================================
+   MASTER STUDIO FOOTER (Awwwards 2026 Tier Cyber Architecture)
+   ========================================================================== */
 .studio-master-footer {
-  border-top: 1px solid rgba(192, 132, 252, 0.2);
-  background: #030206;
-  padding: 50px 0 30px;
+  border-top: 1px solid rgba(192, 132, 252, 0.22);
+  background: #04020a;
+  padding: 70px 0 35px;
   position: relative;
+  overflow: hidden;
   z-index: 10;
 }
 
-.footer-top-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 40px;
+/* 1. Ambient Lighting & Giant Watermark */
+.footer-ambient-mesh {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-ghost-watermark {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-title, 'Space Grotesk', sans-serif);
+  font-size: clamp(5rem, 15vw, 13rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.018);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  z-index: 0;
+}
+
+.studio-master-footer .app-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* 2. Top Interactive Command Header */
+.footer-header-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 44px;
+  gap: 24px;
+}
+
+.footer-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-logo-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: rgba(192, 132, 252, 0.08);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(192, 132, 252, 0.2);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-brand-lockup:hover .footer-logo-badge {
+  transform: scale(1.06);
+  border-color: rgba(192, 132, 252, 0.6);
+}
+
+.footer-logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .footer-brand-title {
   font-family: var(--font-title, 'Space Grotesk', sans-serif);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
 }
 
 .footer-brand-tagline {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
+  color: #c084fc;
+  letter-spacing: 0.12em;
+  margin-top: 3px;
+}
+
+.footer-command-trigger {
+  background: rgba(14, 11, 28, 0.85);
+  border: 1px solid rgba(192, 132, 252, 0.32);
+  border-radius: 12px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #cbd5e1;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.footer-command-trigger:hover {
+  border-color: #c084fc;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(192, 132, 252, 0.28);
+}
+
+.cmd-trigger-icon {
+  color: #c084fc;
+  font-size: 0.95rem;
+}
+
+.cmd-trigger-kbd {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  color: #38bdf8;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+}
+
+/* 3. Main Bento Columns */
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1.05fr 1.05fr 1.25fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+/* Col 1: Node Card */
+.footer-node-card {
+  background: rgba(14, 11, 28, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.footer-node-badge {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footer-node-desc {
+  font-size: 0.83rem;
   color: #94a3b8;
-  letter-spacing: 0.1em;
-  margin-bottom: 16px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.footer-node-telemetry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  color: #cbd5e1;
+}
+
+.telemetry-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c084fc;
+  box-shadow: 0 0 6px #c084fc;
+}
+
+.telemetry-pill-dot.dot-cyan {
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.footer-uplink-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(192, 132, 252, 0.1);
+  border: 1px solid rgba(192, 132, 252, 0.28);
+  color: #f1f5f9;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: all 0.22s ease;
+}
+
+.footer-uplink-btn:hover {
+  background: rgba(192, 132, 252, 0.22);
+  border-color: #c084fc;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(192, 132, 252, 0.3);
+}
+
+.footer-uplink-btn .btn-arrow {
+  color: #38bdf8;
+  transition: transform 0.2s ease;
+}
+
+.footer-uplink-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Col 2 & 3: Navigation Columns */
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-col-title {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   color: #c084fc;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.title-bracket {
+  color: #38bdf8;
+  font-weight: 400;
 }
 
 .footer-links-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 }
 
 .footer-link-anchor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: #94a3b8;
   text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: all 0.22s ease;
+  padding: 3px 0;
 }
 
-.footer-link-anchor:hover {
+.link-num {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.68rem;
+  color: #64748b;
+  font-weight: 600;
+  min-width: 20px;
+  transition: color 0.2s ease;
+}
+
+.link-label {
+  flex-grow: 1;
+  transition: color 0.2s ease;
+}
+
+.link-arrow {
+  font-size: 0.72rem;
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: all 0.2s ease;
+  color: #c084fc;
+}
+
+.footer-link-anchor:hover .link-label {
   color: #ffffff;
-  transform: translateX(3px);
 }
 
+.footer-link-anchor:hover .link-num {
+  color: #38bdf8;
+}
+
+.footer-link-anchor:hover .link-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Col 4: Network Channels */
+.footer-social-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer-social-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 13px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 11px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-icon {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.footer-social-pill:hover {
+  background: rgba(192, 132, 252, 0.1);
+  border-color: rgba(192, 132, 252, 0.45);
+  color: #ffffff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 18px rgba(192, 132, 252, 0.16);
+}
+
+.footer-social-pill:hover .social-icon {
+  transform: scale(1.15);
+  stroke: #c084fc;
+}
+
+/* 4. Bottom Status & Telemetry Bar */
 .footer-bottom-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: #64748b;
+}
+
+.footer-copy-text {
+  color: #94a3b8;
+}
+
+.footer-sec-telemetry {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.telemetry-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulseLiveDot 2.2s infinite ease-in-out;
+}
+
+@keyframes pulseLiveDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
 .footer-back-to-top {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  padding: 7px 15px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(56, 189, 248, 0.28);
   color: #38bdf8;
   text-decoration: none;
   font-weight: 700;
-  transition: transform 0.2s ease;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .footer-back-to-top:hover {
+  background: rgba(56, 189, 248, 0.14);
+  border-color: #38bdf8;
+  color: #ffffff;
   transform: translateY(-2px);
-  color: #c084fc;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.32);
 }
 
-/* --------------------------------------------------------------------------
-   FLOATING ISLAND NAVBAR (2026 Sleek Island Architecture)
-   -------------------------------------------------------------------------- */
-.floating-island-navbar {
-  position: fixed;
-  top: clamp(14px, 2.2vh, 24px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 900;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(12px, 2vw, 24px);
-  padding: 6px 14px 6px 18px;
-  background: rgba(10, 8, 20, 0.82);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(192, 132, 252, 0.28);
-  border-radius: 9999px;
-  box-shadow: 
-    0 16px 36px -10px rgba(0, 0, 0, 0.85),
-    0 0 24px rgba(139, 92, 246, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  user-select: none;
-  max-width: 95vw;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.footer-back-to-top .top-icon {
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
 }
 
-.floating-island-navbar:hover {
-  border-color: rgba(192, 132, 252, 0.5);
-  box-shadow: 
-    0 20px 42px -10px rgba(0, 0, 0, 0.95),
-    0 0 32px rgba(192, 132, 252, 0.25),
-    inset 0 1px 2px rgba(255, 255, 255, 0.25);
-}
-
-.island-brand-tag {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #ffffff;
-  font-family: var(--font-title, 'Space Grotesk', sans-serif);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-}
-
-.island-brand-accent {
-  color: #c084fc;
-  font-size: 0.95rem;
-  text-shadow: 0 0 8px #c084fc;
-}
-
-.island-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.island-nav-link {
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: #94a3b8;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  transition: all 0.25s ease;
-}
-
-.island-nav-link:hover,
-.island-nav-link.active {
-  color: #ffffff;
-  background: rgba(192, 132, 252, 0.15);
-  text-shadow: 0 0 10px rgba(192, 132, 252, 0.5);
-}
-
-.island-action-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.island-cmd-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  cursor: pointer;
-  color: #cbd5e1;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.68rem;
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-
-.island-cmd-trigger:hover {
-  background: rgba(192, 132, 252, 0.2);
-  border-color: rgba(192, 132, 252, 0.5);
-  color: #ffffff;
-}
-
-.island-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #38bdf8 100%);
-  color: #ffffff;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
-  transition: all 0.25s ease;
-  white-space: nowrap;
-}
-
-.island-cta-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.6);
-  filter: brightness(1.1);
-}
-
-@media (max-width: 900px) {
-  .island-nav-links {
-    display: none;
-  }
+.footer-back-to-top:hover .top-icon {
+  transform: translateY(-2px);
 }
 
 /* --------------------------------------------------------------------------
@@ -1810,6 +2011,10 @@ html {
   .contact-command-grid {
     grid-template-columns: 1fr;
   }
+  .footer-top-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1835,6 +2040,24 @@ html {
   }
   .footer-top-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .footer-header-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .footer-command-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .footer-sec-telemetry {
+    font-size: 0.65rem;
   }
 }
 

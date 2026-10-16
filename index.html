@@ -8,24 +8,24 @@
   <meta name="theme-color" content="#070512">
 
   <!-- Browser Favicon (Max Bleed & High Res) -->
-  <link rel="icon" type="image/png" sizes="128x128" href="assets/images/favicon.png?v=2">
+  <link rel="icon" type="image/png" sizes="128x128" href="assets/brand/favicon.png?v=2">
   <link rel="shortcut icon" href="favicon.ico?v=2">
-  <link rel="apple-touch-icon" href="assets/images/favicon-192.png?v=2">
+  <link rel="apple-touch-icon" href="assets/brand/favicon-192.png?v=2">
 
   <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Modular CSS Architecture -->
-  <link rel="stylesheet" href="assets/css/main.css?v=3">
-  <link rel="stylesheet" href="assets/css/cyberpunk.css?v=6">
-  <link rel="stylesheet" href="assets/css/glitch.css">
-  <link rel="stylesheet" href="assets/css/cursor.css?v=3">
-  <link rel="stylesheet" href="assets/css/games-showcase.css?v=2">
-  <link rel="stylesheet" href="assets/css/arsenal.css?v=3">
-  <link rel="stylesheet" href="assets/css/studio-universe.css?v=7">
-  <link rel="stylesheet" href="assets/css/responsive.css?v=3">
+  <!-- Modular Enterprise CSS Architecture (Core -> FX -> Sections) -->
+  <link rel="stylesheet" href="assets/css/core/main.css?v=3">
+  <link rel="stylesheet" href="assets/css/core/responsive.css?v=3">
+  <link rel="stylesheet" href="assets/css/fx/cyberpunk.css?v=6">
+  <link rel="stylesheet" href="assets/css/fx/glitch.css">
+  <link rel="stylesheet" href="assets/css/fx/cursor.css?v=3">
+  <link rel="stylesheet" href="assets/css/sections/games-showcase.css?v=2">
+  <link rel="stylesheet" href="assets/css/sections/arsenal.css?v=4">
+  <link rel="stylesheet" href="assets/css/sections/studio-universe.css?v=10">
 </head>
 <body>
 
@@ -35,40 +35,6 @@
 
   <!-- Neon Top Scroll Progress Bar -->
   <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
-
-  <!-- Floating Island Studio Navbar (2026 Sleek Island) -->
-  <nav class="floating-island-navbar" aria-label="Main Studio Navigation">
-    <a href="#hero" class="island-brand-tag" aria-label="The Miscreant Studios Home">
-      <span class="island-brand-accent">✦</span>
-      <span class="island-brand-text">THE MISCREANT</span>
-    </a>
-
-    <div class="island-nav-links">
-      <a href="#showcase" class="island-nav-link">OPERATIONS</a>
-      <a href="#arsenal" class="island-nav-link">ARSENAL</a>
-      <a href="#about" class="island-nav-link">ABOUT</a>
-      <a href="#universe" class="island-nav-link">UNIVERSE</a>
-      <a href="#team" class="island-nav-link">TEAM</a>
-      <a href="#careers" class="island-nav-link">CAREERS</a>
-      <a href="#contact" class="island-nav-link">CONTACT</a>
-    </div>
-
-    <div class="island-action-group">
-      <!-- Tactile Audio Cockpit Toggle -->
-      <button class="island-audio-toggle" id="islandAudioToggle" aria-label="Toggle Studio Audio" aria-pressed="false">
-        <div class="audio-eq-bars" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <span class="audio-toggle-label">SOUND: OFF</span>
-      </button>
-
-      <button class="island-cmd-trigger" id="cmdPaletteTrigger" aria-label="Open Command Palette (Ctrl+K)">
-        <span class="cmd-icon">⌘</span>
-        <span class="cmd-label">K</span>
-      </button>
-      <a href="#contact" class="island-cta-btn">UPLINK →</a>
-    </div>
-  </nav>
 
   <!-- Fullscreen Minimalist Hero Showcase (Integrated Single Background) -->
   <main id="hero" class="hero-standalone-wrapper ghost-screen">
@@ -179,7 +145,7 @@
             <!-- Card 0: DEEP VOID -->
             <article class="macos-card carousel-card active-card" data-index="0">
               <div class="game-card-media">
-                <img src="assets/images/game-deepvoid.jpg" alt="Deep Void: Nebula Rising MMORPG" loading="lazy">
+                <img src="assets/images/games/game-deepvoid.jpg" alt="Deep Void: Nebula Rising MMORPG" loading="lazy">
                 <div class="media-overlay"></div>
               </div>
 
@@ -220,7 +186,7 @@
             <!-- Card 1: PROJECT OMEGA -->
             <article class="macos-card carousel-card" data-index="1">
               <div class="game-card-media">
-                <img src="assets/images/game-battleroyale.jpg" alt="Project Omega Tactical Battle Royale" loading="lazy">
+                <img src="assets/images/games/game-battleroyale.jpg" alt="Project Omega Tactical Battle Royale" loading="lazy">
                 <div class="media-overlay"></div>
               </div>
 
@@ -261,7 +227,7 @@
             <!-- Card 2: NEON GRIND -->
             <article class="macos-card carousel-card" data-index="2">
               <div class="game-card-media">
-                <img src="assets/images/game-freefire.jpg" alt="Neon Grind High Velocity Squad Shooter" loading="lazy">
+                <img src="assets/images/games/game-freefire.jpg" alt="Neon Grind High Velocity Squad Shooter" loading="lazy">
                 <div class="media-overlay"></div>
               </div>
 
@@ -302,7 +268,7 @@
             <!-- Card 3: ENDLESS RUNNER -->
             <article class="macos-card carousel-card" data-index="3">
               <div class="game-card-media">
-                <img src="assets/images/game-runner.jpg" alt="Endless Runner Project Velocity" loading="lazy">
+                <img src="assets/images/games/game-runner.jpg" alt="Endless Runner Project Velocity" loading="lazy">
                 <div class="media-overlay"></div>
               </div>
 
@@ -376,269 +342,99 @@
     <div class="app-container">
 
       <!-- Header -->
-      <div class="arsenal-header reveal-on-scroll">
+      <div class="arsenal-header">
         <h2 class="arsenal-title">
           THE <span class="text-gradient-purple">ARSENAL</span>
         </h2>
         <p class="arsenal-desc">
-          Engineered on the bleeding edge. Real-time engines, procedural simulation, and bare-metal systems.
+          Engineered on the bleeding edge. High-concurrency real-time engines and bare-metal systems.
         </p>
       </div>
 
-      <!-- 3D Carousel Stage (Matching Running Operations) -->
-      <div class="arsenal-carousel-stage reveal-on-scroll" id="arsenalCarousel">
-        <div class="arsenal-carousel-track" id="arsenalCarouselTrack">
+      <!-- Dual Arsenal Grid (Unity 6 & C++ / C#) -->
+      <div class="arsenal-grid">
 
-          <!-- 1. UNREAL ENGINE 5 -->
-          <article class="arsenal-card" data-tech="ue5" data-category="engines">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-ue5.jpg" alt="Unreal Engine 5 Nanite and Lumen Viewport" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
-            </div>
+        <!-- 1. UNITY 6 -->
+        <article class="arsenal-card" data-tech="unity" data-category="engines">
+          <div class="arsenal-card-media">
+            <img src="assets/images/tech/tech-unity.jpg" alt="Unity 6 DOTS WebGPU Simulation" loading="lazy">
+            <div class="arsenal-media-overlay"></div>
+          </div>
 
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">NEXT-GEN CORE ENGINE</div>
-              <h3 class="arsenal-card-title">UNREAL ENGINE 5</h3>
-              <p class="arsenal-card-desc">
-                Photorealistic world rendering powered by Nanite virtualized micropolygon geometry and Lumen real-time dynamic global illumination.
-              </p>
+          <div class="arsenal-card-body">
+            <div class="arsenal-category-sub">CROSS-PLATFORM MESH</div>
+            <h3 class="arsenal-card-title">UNITY 6</h3>
+            <p class="arsenal-card-desc">
+              High-concurrency mobile & desktop architecture utilizing Data-Oriented Technology Stack (DOTS) and Universal Render Pipeline.
+            </p>
 
-              <!-- Live Animated Telemetry: ECG Waveform -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#c084fc; box-shadow:0 0 6px #c084fc;"></span> Nanite &amp; Lumen Raytrace</span>
-                  <span class="widget-val">120.4 FPS</span>
-                </div>
-                <div class="hud-wave-wrap">
-                  <svg class="hud-wave-svg" viewBox="0 0 280 40" fill="none">
-                    <path class="wave-line" d="M0 20 Q 35 5, 70 20 T 140 20 T 210 20 T 280 20" stroke-width="2.5" stroke-linecap="round"/>
-                  </svg>
-                </div>
+            <!-- Live Animated Telemetry: DOTS 4-Core Burst Bars -->
+            <div class="arsenal-live-widget">
+              <div class="widget-header">
+                <span class="widget-label"><span class="pulse-dot" style="background:#38bdf8; box-shadow:0 0 6px #38bdf8;"></span> DOTS Burst Threads</span>
+                <span class="widget-val">64K Entities</span>
               </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> Nanite Geometry</span>
-                <span class="arsenal-spec-item"><span>✦</span> Lumen 2.0</span>
-                <span class="arsenal-spec-item"><span>✦</span> Chaos Physics</span>
-                <span class="arsenal-spec-item"><span>✦</span> World Partition</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Target Fidelity</span>
-                <span class="arsenal-metric-val">4K 120 FPS Native</span>
+              <div class="dots-thread-bars">
+                <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                <div class="thread-bar"><div class="thread-bar-fill"></div></div>
+                <div class="thread-bar"><div class="thread-bar-fill"></div></div>
               </div>
             </div>
-          </article>
 
-          <!-- 2. UNITY 6 -->
-          <article class="arsenal-card" data-tech="unity" data-category="engines">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-unity.jpg" alt="Unity 6 DOTS WebGPU Simulation" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
+            <div class="arsenal-spec-list">
+              <span class="arsenal-spec-item"><span>✦</span> DOTS Architecture</span>
+              <span class="arsenal-spec-item"><span>✦</span> WebGPU Engine</span>
+              <span class="arsenal-spec-item"><span>✦</span> Adaptive Performance</span>
+              <span class="arsenal-spec-item"><span>✦</span> URP Core</span>
             </div>
 
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">CROSS-PLATFORM MESH</div>
-              <h3 class="arsenal-card-title">UNITY 6</h3>
-              <p class="arsenal-card-desc">
-                High-concurrency mobile & desktop architecture utilizing Data-Oriented Technology Stack (DOTS) and Universal Render Pipeline.
-              </p>
+            <div class="arsenal-card-footer">
+              <span class="arsenal-metric-label">Latency Profile</span>
+              <span class="arsenal-metric-val">&lt; 2ms Frametime</span>
+            </div>
+          </div>
+        </article>
 
-              <!-- Live Animated Telemetry: DOTS 4-Core Burst Bars -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#38bdf8; box-shadow:0 0 6px #38bdf8;"></span> DOTS Burst Threads</span>
-                  <span class="widget-val">64K Entities</span>
-                </div>
-                <div class="dots-thread-bars">
-                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
-                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
-                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
-                  <div class="thread-bar"><div class="thread-bar-fill"></div></div>
-                </div>
+        <!-- 2. C++ / C# -->
+        <article class="arsenal-card" data-tech="cpp" data-category="systems">
+          <div class="arsenal-card-media">
+            <img src="assets/images/tech/tech-cpp.jpg" alt="High Performance Bare Metal C++ Engine Architecture" loading="lazy">
+            <div class="arsenal-media-overlay"></div>
+          </div>
+
+          <div class="arsenal-card-body">
+            <div class="arsenal-category-sub">BARE-METAL ARCHITECTURE</div>
+            <h3 class="arsenal-card-title">C++ / C#</h3>
+            <p class="arsenal-card-desc">
+              Zero-cost abstractions, custom memory arenas, and SIMD parallel computations running directly on native silicon for uncompromising performance.
+            </p>
+
+            <!-- Live Animated Telemetry: Bare Metal Opcode Matrix -->
+            <div class="arsenal-live-widget">
+              <div class="widget-header">
+                <span class="widget-label"><span class="pulse-dot" style="background:#a78bfa; box-shadow:0 0 6px #a78bfa;"></span> AVX-512 SIMD Matrix</span>
+                <span class="widget-val">0.4ms Tick</span>
               </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> DOTS Architecture</span>
-                <span class="arsenal-spec-item"><span>✦</span> WebGPU Engine</span>
-                <span class="arsenal-spec-item"><span>✦</span> Adaptive Performance</span>
-                <span class="arsenal-spec-item"><span>✦</span> URP Core</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Latency Profile</span>
-                <span class="arsenal-metric-val">&lt; 2ms Frametime</span>
+              <div class="hex-opcode-stream">
+                <span class="hex-stream-text">0x7FF0 • VMOVAPS [RCX], ZMM0 • L1 CACHE: 0.8ns</span>
               </div>
             </div>
-          </article>
 
-          <!-- 3. BLENDER 4.X -->
-          <article class="arsenal-card" data-tech="blender" data-category="3d">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-blender.jpg" alt="Blender 3D Cyber Armor Sculpting and Geometry Nodes" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
+            <div class="arsenal-spec-list">
+              <span class="arsenal-spec-item"><span>✦</span> SIMD Vectorization</span>
+              <span class="arsenal-spec-item"><span>✦</span> Lock-Free Queues</span>
+              <span class="arsenal-spec-item"><span>✦</span> Custom Arenas</span>
+              <span class="arsenal-spec-item"><span>✦</span> Cache Locality</span>
             </div>
 
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">3D ASSET GENERATION</div>
-              <h3 class="arsenal-card-title">BLENDER 4.X</h3>
-              <p class="arsenal-card-desc">
-                Precision hard-surface modeling, procedural geometry nodes, and real-time PBR material synthesis tailored for high-density competitive environments.
-              </p>
-
-              <!-- Live Animated Telemetry: Geometry Node Graph -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#fb923c; box-shadow:0 0 6px #fb923c;"></span> Node Graph Pipeline</span>
-                  <span class="widget-val">4.8M Polys</span>
-                </div>
-                <div class="geo-node-visualizer">
-                  <div class="node-point"></div>
-                  <div class="node-wire"></div>
-                  <div class="node-point"></div>
-                  <div class="node-wire"></div>
-                  <div class="node-point"></div>
-                </div>
-              </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> Geometry Nodes</span>
-                <span class="arsenal-spec-item"><span>✦</span> PBR Shaders</span>
-                <span class="arsenal-spec-item"><span>✦</span> Hard Surface</span>
-                <span class="arsenal-spec-item"><span>✦</span> Auto Retopo</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Topology Pipeline</span>
-                <span class="arsenal-metric-val">Zero-Artifact Meshes</span>
-              </div>
+            <div class="arsenal-card-footer">
+              <span class="arsenal-metric-label">Simulation Step</span>
+              <span class="arsenal-metric-val">0.4ms Physics Tick</span>
             </div>
-          </article>
+          </div>
+        </article>
 
-          <!-- 4. HOUDINI FX -->
-          <article class="arsenal-card" data-tech="houdini" data-category="3d">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-houdini.jpg" alt="Houdini Procedural Destruction and Smoke Simulation" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
-            </div>
-
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">PROCEDURAL SIMULATION</div>
-              <h3 class="arsenal-card-title">HOUDINI FX</h3>
-              <p class="arsenal-card-desc">
-                Next-tier environmental destruction, dynamic fluid & pyroclastic systems, and algorithmic world map synthesis for emergent battlefields.
-              </p>
-
-              <!-- Live Animated Telemetry: Voxel Thermal Flow -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#f43f5e; box-shadow:0 0 6px #f43f5e;"></span> Voxel Thermal Solver</span>
-                  <span class="widget-val">10M Voxel Sim</span>
-                </div>
-                <div class="thermal-sim-bar">
-                  <div class="thermal-sim-fill"></div>
-                </div>
-              </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> RBD Destruction</span>
-                <span class="arsenal-spec-item"><span>✦</span> Pyro & Fluids</span>
-                <span class="arsenal-spec-item"><span>✦</span> VEX Acceleration</span>
-                <span class="arsenal-spec-item"><span>✦</span> Terrain Synth</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Voxel Density</span>
-                <span class="arsenal-metric-val">10M+ Sim Cells</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- 5. WWISE AUDIO -->
-          <article class="arsenal-card" data-tech="wwise" data-category="systems">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-wwise.jpg" alt="Audiokinetic Wwise 3D Spatial Audio and Frequency Equalizer" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
-            </div>
-
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">SPATIAL ACOUSTICS</div>
-              <h3 class="arsenal-card-title">WWISE AUDIO</h3>
-              <p class="arsenal-card-desc">
-                Binaural 3D spatial acoustics and reactive musical engines engineered to deliver pinpoint enemy positioning and atmospheric adrenaline.
-              </p>
-
-              <!-- Live Animated Telemetry: 7-Band Equalizer -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#34d399; box-shadow:0 0 6px #34d399;"></span> HRTF Lossless Spectrum</span>
-                  <span class="widget-val">96kHz / 24-Bit</span>
-                </div>
-                <div class="audio-spectrum-bars">
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                  <div class="audio-eq-bar"></div>
-                </div>
-              </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> 3D Spatial HRTF</span>
-                <span class="arsenal-spec-item"><span>✦</span> Dynamic Stems</span>
-                <span class="arsenal-spec-item"><span>✦</span> Occlusion DSP</span>
-                <span class="arsenal-spec-item"><span>✦</span> Zero Latency</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Audio Fidelity</span>
-                <span class="arsenal-metric-val">24-Bit / 96kHz Lossless</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- 6. C++ / C# -->
-          <article class="arsenal-card" data-tech="cpp" data-category="systems">
-            <div class="arsenal-card-media">
-              <img src="assets/images/tech-cpp.jpg" alt="High Performance Bare Metal C++ Engine Architecture" loading="lazy">
-              <div class="arsenal-media-overlay"></div>
-            </div>
-
-            <div class="arsenal-card-body">
-              <div class="arsenal-category-sub">BARE-METAL ARCHITECTURE</div>
-              <h3 class="arsenal-card-title">C++ / C#</h3>
-              <p class="arsenal-card-desc">
-                Zero-cost abstractions, custom memory arenas, and SIMD parallel computations running directly on native silicon for uncompromising performance.
-              </p>
-
-              <!-- Live Animated Telemetry: Bare Metal Opcode Matrix -->
-              <div class="arsenal-live-widget">
-                <div class="widget-header">
-                  <span class="widget-label"><span class="pulse-dot" style="background:#a78bfa; box-shadow:0 0 6px #a78bfa;"></span> AVX-512 SIMD Matrix</span>
-                  <span class="widget-val">0.4ms Tick</span>
-                </div>
-                <div class="hex-opcode-stream">
-                  <span class="hex-stream-text">0x7FF0 • VMOVAPS [RCX], ZMM0 • L1 CACHE: 0.8ns</span>
-                </div>
-              </div>
-
-              <div class="arsenal-spec-list">
-                <span class="arsenal-spec-item"><span>✦</span> SIMD Vectorization</span>
-                <span class="arsenal-spec-item"><span>✦</span> Lock-Free Queues</span>
-                <span class="arsenal-spec-item"><span>✦</span> Custom Arenas</span>
-                <span class="arsenal-spec-item"><span>✦</span> Cache Locality</span>
-              </div>
-
-              <div class="arsenal-card-footer">
-                <span class="arsenal-metric-label">Simulation Step</span>
-                <span class="arsenal-metric-val">0.4ms Physics Tick</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
       </div>
     </div>
   </section>
@@ -845,7 +641,7 @@
         <!-- Game 1: DEEP VOID -->
         <article class="universe-game-card" data-category="mmorpg">
           <div class="universe-card-visual">
-            <img src="assets/images/game-deepvoid.jpg" alt="Deep Void MMORPG Gameplay" loading="lazy">
+            <img src="assets/images/games/game-deepvoid.jpg" alt="Deep Void MMORPG Gameplay" loading="lazy">
             <span class="universe-card-badge">UNREAL ENGINE 5.5</span>
             <span class="universe-card-status"><span class="pulse-dot"></span> LIVE • EXPANSION 2.4</span>
           </div>
@@ -872,7 +668,7 @@
         <!-- Game 2: PROJECT OMEGA -->
         <article class="universe-game-card" data-category="battleroyale">
           <div class="universe-card-visual">
-            <img src="assets/images/game-battleroyale.jpg" alt="Project Omega Tactical Battle Royale" loading="lazy">
+            <img src="assets/images/games/game-battleroyale.jpg" alt="Project Omega Tactical Battle Royale" loading="lazy">
             <span class="universe-card-badge">CHAOS DESTRUCTION</span>
             <span class="universe-card-status"><span class="pulse-dot" style="background:#38bdf8;"></span> CLOSED BETA WAVE 03</span>
           </div>
@@ -899,7 +695,7 @@
         <!-- Game 3: PROJECT VELOCITY -->
         <article class="universe-game-card" data-category="speedrun">
           <div class="universe-card-visual">
-            <img src="assets/images/game-runner.jpg" alt="Project Velocity Cyberpunk Parkour" loading="lazy">
+            <img src="assets/images/games/game-runner.jpg" alt="Project Velocity Cyberpunk Parkour" loading="lazy">
             <span class="universe-card-badge">HIGH-REFRESH ENGINE</span>
             <span class="universe-card-status"><span class="pulse-dot" style="background:#fb923c;"></span> STEAM NEXT FEST</span>
           </div>
@@ -926,7 +722,7 @@
         <!-- Game 4: PROJECT NEBULA (In-Dev) -->
         <article class="universe-game-card" data-category="indev">
           <div class="universe-card-visual">
-            <img src="assets/images/cyber-stage-bg.png" alt="Project Nebula Zero-G Extraction" loading="lazy">
+            <img src="assets/images/hero/cyber-stage-bg.png" alt="Project Nebula Zero-G Extraction" loading="lazy">
             <span class="universe-card-badge">UNANNOUNCED PROTOCOL</span>
             <span class="universe-card-status" style="border-color:#f43f5e; color:#f43f5e;"><span class="pulse-dot" style="background:#f43f5e;"></span> CLASSIFIED • R&amp;D</span>
           </div>
@@ -1024,36 +820,7 @@
           </div>
         </article>
 
-        <!-- Leader 02: Creative Director -->
-        <article class="team-card">
-          <div class="team-avatar-box">
-            <div class="team-avatar-graphic">
-              <div class="avatar-initials-crest">KR</div>
-            </div>
-            <div class="team-status-indicator">
-              <span class="pulse-live-dot"></span> NARRATIVE DECK
-            </div>
-          </div>
-          <h3 class="team-member-name">Kavya Raman</h3>
-          <div class="team-member-role">CREATIVE & WORLD DIRECTOR</div>
-          <p class="team-member-bio">
-            Crafting the lore, faction conflicts, and environmental storytelling across the interconnected Miscreant multiverse. Bringing rich worldbuilding and cinematic narrative design to every title.
-          </p>
-          <div class="team-skill-tags">
-            <span class="team-skill-tag">Worldbuilding</span>
-            <span class="team-skill-tag">Cinematics</span>
-            <span class="team-skill-tag">Narrative Bible</span>
-            <span class="team-skill-tag">Visual Lore</span>
-          </div>
-          <div class="team-social-links">
-            <a href="#contact" class="team-social-link">LINKEDIN</a>
-            <a href="#contact" class="team-social-link">ARTSTATION</a>
-            <a href="#contact" class="team-social-link">DISCORD</a>
-            <a href="#contact" class="team-social-link">BEHANCE</a>
-          </div>
-        </article>
-
-        <!-- Leader 03: Lead Systems Programmer -->
+        <!-- Leader 02: Lead Systems Programmer -->
         <article class="team-card">
           <div class="team-avatar-box">
             <div class="team-avatar-graphic">
@@ -1371,40 +1138,40 @@
         <div class="career-job-card">
           <div class="job-main-info">
             <div class="job-title-row">
-              <span class="job-role-name">Senior Gameplay Programmer</span>
+              <span class="job-role-name">Gameplay Programmer</span>
               <span class="job-type-pill">FULL-TIME</span>
             </div>
             <div class="job-meta-row">
               <span>C++ / Unreal Engine 5</span> • <span>Chennai / Hybrid</span> • <span>Competitive + Equity</span>
             </div>
           </div>
-          <button class="job-action-btn" data-role="Senior Gameplay Programmer">APPLY FOR ROLE →</button>
+          <button class="job-action-btn" data-role="Gameplay Programmer">APPLY FOR ROLE →</button>
         </div>
 
         <div class="career-job-card">
           <div class="job-main-info">
             <div class="job-title-row">
-              <span class="job-role-name">Lead 3D Environment Artist</span>
+              <span class="job-role-name">3D Environment Artist</span>
               <span class="job-type-pill">FULL-TIME</span>
             </div>
             <div class="job-meta-row">
               <span>Blender / Substance / Nanite</span> • <span>Chennai / Remote</span> • <span>Competitive + Equity</span>
             </div>
           </div>
-          <button class="job-action-btn" data-role="Lead 3D Environment Artist">APPLY FOR ROLE →</button>
+          <button class="job-action-btn" data-role="3D Environment Artist">APPLY FOR ROLE →</button>
         </div>
 
         <div class="career-job-card">
           <div class="job-main-info">
             <div class="job-title-row">
-              <span class="job-role-name">Cyberpunk UI/UX Designer</span>
+              <span class="job-role-name">UI/UX Designer</span>
               <span class="job-type-pill">FULL-TIME</span>
             </div>
             <div class="job-meta-row">
               <span>Figma / WebGL / Slate</span> • <span>Chennai / Remote</span> • <span>Competitive + Equity</span>
             </div>
           </div>
-          <button class="job-action-btn" data-role="Cyberpunk UI/UX Designer">APPLY FOR ROLE →</button>
+          <button class="job-action-btn" data-role="UI/UX Designer">APPLY FOR ROLE →</button>
         </div>
 
         <div class="career-job-card">
@@ -1481,38 +1248,28 @@
         
         <!-- Left Column: Studio Transmission Hub -->
         <div class="contact-hub-card">
-          <div>
-            <div class="contact-hub-header">
-              <h3>CHENNAI HQ DISPATCH</h3>
-              <p>
-                The Miscreant Studios Operational Node<br>
-                Cyber Corridor, Chennai, Tamil Nadu, India<br>
-                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #38bdf8;">COORDINATES: 13.0827° N, 80.2707° E • SECTOR ASIA-SOUTH</span>
-              </p>
-            </div>
-
-            <div class="contact-channels-list">
-              <div class="contact-channel-item">
-                <span class="channel-tag">General Inquiries</span>
-                <a href="mailto:ops@themiscreantstudios.com" class="channel-value">ops@themiscreantstudios.com</a>
-              </div>
-              <div class="contact-channel-item">
-                <span class="channel-tag">Press & Media Kit</span>
-                <a href="mailto:press@themiscreantstudios.com" class="channel-value">press@themiscreantstudios.com</a>
-              </div>
-              <div class="contact-channel-item">
-                <span class="channel-tag">Business & Publishing</span>
-                <a href="mailto:partnerships@themiscreantstudios.com" class="channel-value">partnerships@themiscreantstudios.com</a>
-              </div>
-              <div class="contact-channel-item">
-                <span class="channel-tag">Recruitment / Enlistment</span>
-                <a href="mailto:careers@themiscreantstudios.com" class="channel-value">careers@themiscreantstudios.com</a>
-              </div>
-            </div>
+          <div class="contact-hub-header">
+            <h3>CHENNAI HQ DISPATCH</h3>
+            <p>
+              The Miscreant Studios Operational Node<br>
+              Cyber Corridor, Chennai, Tamil Nadu, India<br>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #38bdf8;">COORDINATES: 13.0827° N, 80.2707° E • SECTOR ASIA-SOUTH</span>
+            </p>
           </div>
 
-          <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #34d399; display: flex; align-items: center; gap: 8px;">
-            <span class="pulse-live-dot"></span> SECURE TRANSMISSION CHANNEL ONLINE (TLS 1.3)
+          <div class="contact-channels-list">
+            <div class="contact-channel-item">
+              <span class="channel-tag">General Inquiries</span>
+              <a href="mailto:ops@themiscreantstudios.com" class="channel-value">ops@themiscreantstudios.com</a>
+            </div>
+            <div class="contact-channel-item">
+              <span class="channel-tag">Business & Publishing</span>
+              <a href="mailto:partnerships@themiscreantstudios.com" class="channel-value">partnerships@themiscreantstudios.com</a>
+            </div>
+            <div class="contact-channel-item">
+              <span class="channel-tag">Recruitment / Enlistment</span>
+              <a href="mailto:careers@themiscreantstudios.com" class="channel-value">careers@themiscreantstudios.com</a>
+            </div>
           </div>
         </div>
 
@@ -1562,57 +1319,141 @@
        STUDIO MASTER FOOTER
        ========================================================================== -->
   <footer class="studio-master-footer" role="contentinfo">
+    <!-- Ambient Cyber Glow Mesh & Monumental Ghost Watermark -->
+    <div class="footer-ambient-mesh" aria-hidden="true"></div>
+    <div class="footer-ghost-watermark" aria-hidden="true">MISCREANT</div>
+
     <div class="app-container">
       
-      <div class="footer-top-grid">
-        <div>
-          <div class="footer-brand-title">THE MISCREANT STUDIOS</div>
-          <div class="footer-brand-tagline">DIGITAL CHAOS SIMULATOR • ESTD. 2026</div>
-          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6; max-width: 320px;">
-            Independent high-fidelity game development studio headquartered in Chennai, India. Built for players. Designed for chaos.
-          </p>
-        </div>
-
-        <div>
-          <div class="footer-col-title">SECTIONS</div>
-          <div class="footer-links-list">
-            <a href="#hero" class="footer-link-anchor">01 — Hero</a>
-            <a href="#showcase" class="footer-link-anchor">02 — Operations</a>
-            <a href="#arsenal" class="footer-link-anchor">03 — The Arsenal</a>
-            <a href="#about" class="footer-link-anchor">04 — About Studio</a>
-            <a href="#universe" class="footer-link-anchor">05 — Universe</a>
+      <!-- Top Interactive Command Header -->
+      <div class="footer-header-banner">
+        <div class="footer-brand-lockup">
+          <div class="footer-logo-badge">
+            <img src="assets/brand/logo.png" alt="The Miscreant Studios Emblem" class="footer-logo-img">
+          </div>
+          <div>
+            <div class="footer-brand-title">THE MISCREANT STUDIOS</div>
+            <div class="footer-brand-tagline">DIGITAL CHAOS SIMULATOR // ESTD. 2026</div>
           </div>
         </div>
 
-        <div>
-          <div class="footer-col-title">STUDIO ARCHIVE</div>
-          <div class="footer-links-list">
-            <a href="#team" class="footer-link-anchor">06 — The Team</a>
-            <a href="#culture" class="footer-link-anchor">07 — Culture</a>
-            <a href="#transmissions" class="footer-link-anchor">08 — Transmissions</a>
-            <a href="#careers" class="footer-link-anchor">09 — Careers</a>
-            <a href="#contact" class="footer-link-anchor">10 — Contact</a>
-          </div>
-        </div>
-
-        <div>
-          <div class="footer-col-title">NETWORK</div>
-          <div class="footer-links-list">
-            <a href="https://github.com/Berinluke" target="_blank" rel="noopener" class="footer-link-anchor">GitHub</a>
-            <a href="#contact" class="footer-link-anchor">Discord Server</a>
-            <a href="#contact" class="footer-link-anchor">X / Twitter</a>
-            <a href="#contact" class="footer-link-anchor">YouTube</a>
-            <a href="#contact" class="footer-link-anchor">Steam Studio Page</a>
-          </div>
-        </div>
+        <button class="footer-command-trigger" id="footerCmdTrigger" type="button" aria-label="Open Cyber Command Bar">
+          <span class="cmd-trigger-icon">⌘</span>
+          <span class="cmd-trigger-text">COMMAND PALETTE</span>
+          <kbd class="cmd-trigger-kbd">⌘K</kbd>
+        </button>
       </div>
 
-      <div class="footer-bottom-bar">
-        <div>
-          © 2026 The Miscreant Studios. All Rights Reserved. Built with bare-metal passion in Chennai, India.
+      <!-- Main Navigation & Node Bento Grid -->
+      <div class="footer-top-grid">
+        
+        <!-- Col 1: Operational Node & Mission -->
+        <div class="footer-node-card">
+          <div class="footer-node-badge">
+            <span class="pulse-live-dot"></span> CHENNAI OPERATIONAL NODE
+          </div>
+          <p class="footer-node-desc">
+            Forging high-fidelity digital battlegrounds and low-level engine architecture that push human reflexes and raw silicon to their breaking points.
+          </p>
+          <div class="footer-node-telemetry">
+            <div class="telemetry-pill">
+              <span class="telemetry-pill-dot"></span>
+              <span>13.0827° N, 80.2707° E</span>
+            </div>
+            <div class="telemetry-pill">
+              <span class="telemetry-pill-dot dot-cyan"></span>
+              <span>120Hz TICK • SIMD CORE ACTIVE</span>
+            </div>
+          </div>
+          <a href="#contact" class="footer-uplink-btn">
+            <span>INITIATE UPLINK</span>
+            <span class="btn-arrow">→</span>
+          </a>
         </div>
-        <a href="#hero" class="footer-back-to-top">
-          <span>▲ RETURN TO TOP</span>
+
+        <!-- Col 2: Core Sectors -->
+        <div class="footer-nav-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> SECTORS <span class="title-bracket">]</span>
+          </div>
+          <nav class="footer-links-list" aria-label="Footer Sectors Navigation">
+            <a href="#hero" class="footer-link-anchor"><span class="link-num">01</span><span class="link-label">Hero Apex</span><span class="link-arrow">↗</span></a>
+            <a href="#showcase" class="footer-link-anchor"><span class="link-num">02</span><span class="link-label">Running Operations</span><span class="link-arrow">↗</span></a>
+            <a href="#arsenal" class="footer-link-anchor"><span class="link-num">03</span><span class="link-label">The Arsenal</span><span class="link-arrow">↗</span></a>
+            <a href="#about" class="footer-link-anchor"><span class="link-num">04</span><span class="link-label">Studio Manifesto</span><span class="link-arrow">↗</span></a>
+            <a href="#universe" class="footer-link-anchor"><span class="link-num">05</span><span class="link-label">Universe Radar</span><span class="link-arrow">↗</span></a>
+          </nav>
+        </div>
+
+        <!-- Col 3: Studio Archive -->
+        <div class="footer-nav-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> ARCHIVE <span class="title-bracket">]</span>
+          </div>
+          <nav class="footer-links-list" aria-label="Footer Archive Navigation">
+            <a href="#team" class="footer-link-anchor"><span class="link-num">06</span><span class="link-label">The Leaders</span><span class="link-arrow">↗</span></a>
+            <a href="#culture" class="footer-link-anchor"><span class="link-num">07</span><span class="link-label">War Room Culture</span><span class="link-arrow">↗</span></a>
+            <a href="#transmissions" class="footer-link-anchor"><span class="link-num">08</span><span class="link-label">Transmissions</span><span class="link-arrow">↗</span></a>
+            <a href="#careers" class="footer-link-anchor"><span class="link-num">09</span><span class="link-label">Careers (We're Hiring)</span><span class="link-arrow">↗</span></a>
+            <a href="#contact" class="footer-link-anchor"><span class="link-num">10</span><span class="link-label">HQ Dispatch</span><span class="link-arrow">↗</span></a>
+          </nav>
+        </div>
+
+        <!-- Col 4: Network Channels -->
+        <div class="footer-nav-col footer-social-col">
+          <div class="footer-col-title">
+            <span class="title-bracket">[</span> NETWORK UPLINK <span class="title-bracket">]</span>
+          </div>
+          <div class="footer-social-grid">
+            <a href="https://github.com/Berinluke" target="_blank" rel="noopener" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+              </svg>
+              <span>Discord Server</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+              </svg>
+              <span>X / Twitter</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+              <span>YouTube Channel</span>
+            </a>
+            <a href="#contact" class="footer-social-pill">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 0 0-9.95 9h5.11a3.5 3.5 0 0 1 4.68 3.5 3.5 3.5 0 0 1-3.5 3.5c-.4 0-.78-.07-1.13-.2l-3.32 2.37A10 10 0 1 0 12 2z"></path>
+              </svg>
+              <span>Steam Studio Hub</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Status & Telemetry Bar -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copy-text">
+          © 2026 The Miscreant Studios. All Rights Reserved.
+        </div>
+        <div class="footer-sec-telemetry">
+          <span class="telemetry-dot"></span>
+          <span>SYS.CORE: 100% NOMINAL • ZERO TRACKING • CHENNAI HQ</span>
+        </div>
+        <a href="#hero" class="footer-back-to-top" id="footerBackToTop" aria-label="Return to top of page">
+          <span>RETURN TO APEX</span>
+          <span class="top-icon">▲</span>
         </a>
       </div>
 
@@ -1729,13 +1570,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
-  <!-- Application Engine Scripts -->
-  <script src="assets/js/audio.js?v=2"></script>
-  <script src="assets/js/cursor.js?v=2"></script>
-  <script src="assets/js/three-scene.js?v=2"></script>
-  <script src="assets/js/glitch.js"></script>
-  <script src="assets/js/main.js?v=12"></script>
-  <script src="assets/js/studio-sections.js?v=4"></script>
+  <!-- Application Engine Scripts (Modular Core -> FX -> Telemetry Sections) -->
+  <script src="assets/js/core/main.js?v=12"></script>
+  <script src="assets/js/fx/audio.js?v=2"></script>
+  <script src="assets/js/fx/cursor.js?v=2"></script>
+  <script src="assets/js/fx/three-scene.js?v=2"></script>
+  <script src="assets/js/fx/glitch.js"></script>
+  <script src="assets/js/sections/studio-sections.js?v=4"></script>
 
 </body>
 </html>

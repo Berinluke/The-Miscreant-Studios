@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLenisSmoothScroll();
   initGlitchScramble();
   initScrollReveal();
-  initMacOsFiltering();
   initCard3DTilt();
-  initStudioClock();
   initAudioInteractions();
   initGamesCarousel();
   initArsenalShowcase();
@@ -155,7 +153,8 @@ function initLenisSmoothScroll() {
    ========================================================================== */
 function initGlitchScramble() {
   const chars = '!<>-_\\/[]{}—=+*^?#________010101';
-  const scramblers = document.querySelectorAll('[data-scramble]');
+  // Strictly confined to the landing page hero section
+  const scramblers = document.querySelectorAll('#hero [data-scramble]');
 
   scramblers.forEach(el => {
     const originalText = el.getAttribute('data-scramble') || el.innerText;
@@ -199,35 +198,11 @@ function initScrollReveal() {
   targets.forEach(el => el.classList.add('reveal-on-scroll'));
 
   let lastAudioTransition = 0;
-  const scrambleChars = '!<>-_/[]{}—=+*^?#01';
-
-  function decryptElementText(el) {
-    if (el.dataset.scrambled === 'done') return;
-    el.dataset.scrambled = 'done';
-    const original = el.innerText;
-    let iteration = 0;
-    const timer = setInterval(() => {
-      el.innerText = original.split('').map((letter, i) => {
-        if (i < iteration) return original[i];
-        if (letter === ' ') return ' ';
-        return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-      }).join('');
-      if (iteration >= original.length) {
-        clearInterval(timer);
-        el.innerText = original;
-      }
-      iteration += 1;
-    }, 25);
-  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-revealed');
-
-        // Cyberpunk text decrypt effect on section titles
-        const sectionTitle = entry.target.querySelector('h2, .showcase-title, .arsenal-title, .studio-section-title');
-        if (sectionTitle) decryptElementText(sectionTitle);
 
         // Tactile chapter switch sound sweep (debounced to avoid audio spam)
         const now = Date.now();
@@ -248,46 +223,7 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   4. MACOS DOCK PILL CATEGORY FILTERING
-   ========================================================================== */
-function initMacOsFiltering() {
-  const filterPills = document.querySelectorAll('.dock-pill');
-  const cards = document.querySelectorAll('.macos-card');
-
-  if (!filterPills.length || !cards.length) return;
-
-  filterPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-
-      if (window.cyberAudio) window.cyberAudio.playClick();
-
-      const filter = pill.getAttribute('data-filter');
-
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category') || '';
-        
-        if (filter === 'all' || category.includes(filter)) {
-          card.style.display = card.classList.contains('card-featured-expansion') ? 'grid' : 'flex';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'perspective(1000px) rotateX(0deg) translateY(0) scale(1)';
-          }, 20);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'perspective(1000px) rotateX(8deg) translateY(20px) scale(0.96)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 250);
-        }
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   5. 3D GYROSCOPE CARD PERSPECTIVE TILT & HOLOGRAPHIC GLARE SHEEN
+   4. 3D GYROSCOPE CARD PERSPECTIVE TILT & HOLOGRAPHIC GLARE SHEEN
    ========================================================================== */
 function initCard3DTilt() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -299,7 +235,7 @@ function initCard3DTilt() {
 
     card.addEventListener('mousemove', (e) => {
       // Only tilt the active card or static cards to maintain layout harmony
-      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      const isCarousel = card.classList.contains('carousel-card');
       if (isCarousel && !card.classList.contains('active-card')) return;
 
       if (rafId) cancelAnimationFrame(rafId);
@@ -328,7 +264,7 @@ function initCard3DTilt() {
     });
 
     card.addEventListener('mouseleave', () => {
-      const isCarousel = card.classList.contains('carousel-card') || card.classList.contains('arsenal-card');
+      const isCarousel = card.classList.contains('carousel-card');
       if (isCarousel && !card.classList.contains('active-card')) return;
 
       if (rafId) cancelAnimationFrame(rafId);
@@ -356,29 +292,10 @@ function triggerChromaticGlitch(trackEl) {
 }
 
 /* ==========================================================================
-   6. MACOS STUDIO LIVE CLOCK (UTC/Local)
-   ========================================================================== */
-function initStudioClock() {
-  const clockEl = document.getElementById('studio-live-clock');
-  if (!clockEl) return;
-
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getUTCHours()).padStart(2, '0');
-    const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-    const seconds = String(now.getUTCSeconds()).padStart(2, '0');
-    clockEl.innerText = `CLUSTER TIME: ${hours}:${minutes}:${seconds} UTC • MESH: ACTIVE`;
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-}
-
-/* ==========================================================================
-   7. AUDIO FEEDBACK HOOKS ON BUTTONS & LINKS
+   5. AUDIO FEEDBACK HOOKS ON BUTTONS & LINKS
    ========================================================================== */
 function initAudioInteractions() {
-  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .social-mac-btn, .scroll-indicator-wrap, .dock-pill, .carousel-nav-btn, .tech-card');
+  const interactives = document.querySelectorAll('.btn-primary-glow, .btn-secondary-mac, .btn-universe-action, .scroll-indicator-wrap');
 
   interactives.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
@@ -928,16 +845,6 @@ function initFullscreenScreenSnapping() {
   let lastScrollTime = 0;
   const SCROLL_COOLDOWN = 850; // ms
 
-  // Remove any legacy cyber screen navigator dock if present
-  const existingNavDock = document.querySelector('.cyber-screen-navigator');
-  if (existingNavDock) {
-    existingNavDock.remove();
-  }
-
-  function updateActiveNav(idx) {
-    // Navigator dock removed per design preference
-  }
-
   function goToScreen(targetIndex) {
     if (targetIndex < 0 || targetIndex >= sections.length) return;
     if (targetIndex === currentIndex && !isTransitioning) return;
@@ -949,7 +856,6 @@ function initFullscreenScreenSnapping() {
     const targetSec = sections[targetIndex];
 
     currentIndex = targetIndex;
-    updateActiveNav(targetIndex);
 
     // Audio cue on screen transition
     if (window.cyberAudio && typeof window.cyberAudio.playHover === 'function') {
@@ -1048,7 +954,6 @@ function initFullscreenScreenSnapping() {
 
       if (maxVisibleHeight > 100 && currentIndex !== bestIdx) {
         currentIndex = bestIdx;
-        updateActiveNav(bestIdx);
       }
     });
   }
