@@ -32,13 +32,10 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
       id="hero" 
       className="relative min-h-screen w-full flex flex-col justify-between pt-12 sm:pt-16 pb-10 px-6 sm:px-10 lg:px-16 bg-transparent overflow-hidden select-none"
     >
-      {/* Interactive Fighter Jet & Stickmen Paratrooper Scrollytelling Mission */}
+      {/* Supersonic Fighter Jet Atmospheric Flyby */}
       <JetMissionScrollytelling
         containerRef={containerRef}
         letterTRef={letterTRef}
-        studiosRef={studiosRef}
-        btnRef={btnRef}
-        monitorRef={monitorRef}
       />
 
       {/* Main Hero Stage */}
