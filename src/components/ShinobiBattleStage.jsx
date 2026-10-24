@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 /**
- * ShinobiBattleStage (Naruto vs Sasuke Stickman Ninja Jutsu War)
+ * ShinobiBattleStage (Naruto vs Sasuke Stickman Shinobi Jutsu War)
  * 
- * Authentic hand-drawn ballpoint pen anime battle for Slide 2 ("OUR GAMES"):
- * - Naruto Shinobi: Spiky hair, leaf headband, swirling RASENGAN chakra, Shadow Clone jutsu.
- * - Sasuke Shinobi: Dark collar, rogue headband, crimson SHARINGAN eye, crackling CHIDORI lightning, Fireball jutsu.
- * - Parkour Battleground: They leap across "OUR GAMES" header, wall-run down the game selection cards,
- *   and execute the legendary mid-air RASENGAN vs CHIDORI collision in the center!
- * - Zero dialogue, zero text bubbles, pure high-octane ninja martial arts & jutsu physics.
+ * Contained entirely within the user's marked battleground in Slide 2 ("OUR GAMES"):
+ * - Naruto Shinobi: Spiky blonde hair, leaf headband with fluttering ribbons, whisker marks,
+ *   swirling blue RASENGAN, Shadow Clone jutsu, and dynamic taijutsu.
+ * - Sasuke Shinobi: Dark collar, rogue headband, glowing crimson SHARINGAN eye,
+ *   crackling purple lightning CHIDORI, Fireball jutsu, and Kusa blade.
+ * - Fighting Floor: The horizontal notebook border line acts as their sparring floor!
+ * - Mid-air Clash: Epic Rasengan vs Chidori collision with shockwave sphere in the center.
+ * - 100% clean: Zero text bubbles, zero dialogue, pure hand-drawn anime martial arts physics!
  */
 
 // --- RASENGAN CHAKRA ORB COMPONENT ---
@@ -18,20 +20,14 @@ function RasenganOrb({ scale = 1 }) {
       className="relative pointer-events-none"
       style={{ transform: `scale(${scale})` }}
     >
-      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" className="overflow-visible animate-spin" style={{ animationDuration: '0.6s' }}>
-        {/* Outer Aura Glow */}
-        <circle cx="21" cy="21" r="18" fill="rgba(56, 189, 248, 0.25)" />
-        <circle cx="21" cy="21" r="14" fill="rgba(37, 99, 235, 0.4)" />
-        {/* Core Chakra Sphere */}
-        <circle cx="21" cy="21" r="9" fill="#38BDF8" stroke="#FFFFFF" strokeWidth="1.8" />
-        {/* Swirling Chakra Spirals */}
-        <path d="M 21 7 C 28 7, 33 13, 33 21 C 33 27, 27 31, 21 31" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M 21 35 C 14 35, 9 29, 9 21 C 9 15, 15 11, 21 11" stroke="#60A5FA" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M 11 21 C 11 13, 17 9, 23 11 C 29 13, 31 19, 27 25" stroke="#FFFFFF" strokeWidth="1.4" strokeLinecap="round" />
-        {/* Orbital Chakra Sparks */}
-        <circle cx="29" cy="12" r="1.5" fill="#FFFFFF" />
-        <circle cx="13" cy="30" r="1.5" fill="#38BDF8" />
-        <circle cx="32" cy="28" r="1.5" fill="#93C5FD" />
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="overflow-visible animate-spin" style={{ animationDuration: '0.55s' }}>
+        <circle cx="20" cy="20" r="18" fill="rgba(56, 189, 248, 0.28)" />
+        <circle cx="20" cy="20" r="13" fill="rgba(37, 99, 235, 0.45)" />
+        <circle cx="20" cy="20" r="8" fill="#38BDF8" stroke="#FFFFFF" strokeWidth="1.8" />
+        <path d="M 20 6 C 27 6, 32 12, 32 20 C 32 26, 26 30, 20 30" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M 20 34 C 13 34, 8 28, 8 20 C 8 14, 14 10, 20 10" stroke="#60A5FA" strokeWidth="1.6" strokeLinecap="round" />
+        <circle cx="28" cy="11" r="1.4" fill="#FFFFFF" />
+        <circle cx="12" cy="29" r="1.4" fill="#38BDF8" />
       </svg>
     </div>
   );
@@ -44,17 +40,15 @@ function ChidoriBlade({ scale = 1 }) {
       className="relative pointer-events-none"
       style={{ transform: `scale(${scale})` }}
     >
-      <svg width="46" height="46" viewBox="0 0 46 46" fill="none" className="overflow-visible animate-pulse">
-        {/* Violet Lightning Aura */}
-        <circle cx="23" cy="23" r="16" fill="rgba(129, 140, 248, 0.3)" />
-        <circle cx="23" cy="23" r="10" fill="rgba(99, 102, 241, 0.6)" />
-        <circle cx="23" cy="23" r="5" fill="#FFFFFF" />
-        {/* Crackling Lightning Bolts */}
-        <path d="M 23 23 L 33 11 L 30 7 L 42 3" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 23 23 L 37 25 L 34 32 L 44 38" stroke="#818CF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 23 23 L 13 33 L 18 38 L 9 44" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 23 23 L 11 15 L 16 10 L 4 6" stroke="#C7D2FE" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M 23 23 L 26 37 L 22 43" stroke="#FFFFFF" strokeWidth="1.6" />
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" className="overflow-visible animate-pulse">
+        <circle cx="22" cy="22" r="16" fill="rgba(129, 140, 248, 0.32)" />
+        <circle cx="22" cy="22" r="9" fill="rgba(99, 102, 241, 0.65)" />
+        <circle cx="22" cy="22" r="5" fill="#FFFFFF" />
+        {/* Lightning Bolts */}
+        <path d="M 22 22 L 32 10 L 29 6 L 41 2" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 22 22 L 36 24 L 33 31 L 43 37" stroke="#818CF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 22 22 L 12 32 L 17 37 L 8 43" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M 22 22 L 10 14 L 15 9 L 3 5" stroke="#C7D2FE" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   );
@@ -64,18 +58,18 @@ function ChidoriBlade({ scale = 1 }) {
 function FireballJutsu() {
   return (
     <div className="relative pointer-events-none animate-pulse">
-      <svg width="54" height="44" viewBox="0 0 54 44" fill="none" className="overflow-visible">
-        <ellipse cx="28" cy="22" rx="24" ry="18" fill="rgba(239, 68, 68, 0.35)" />
-        <ellipse cx="26" cy="22" rx="18" ry="13" fill="#F59E0B" />
-        <ellipse cx="24" cy="22" rx="12" ry="8" fill="#FEF08A" />
-        <path d="M 4 22 Q 18 12, 34 16 Q 48 22, 34 28 Q 18 32, 4 22 Z" fill="#EF4444" opacity="0.8" />
-        <circle cx="12" cy="22" r="2" fill="#FFFFFF" />
+      <svg width="56" height="40" viewBox="0 0 56 40" fill="none" className="overflow-visible">
+        <ellipse cx="28" cy="20" rx="26" ry="17" fill="rgba(239, 68, 68, 0.35)" />
+        <ellipse cx="26" cy="20" rx="19" ry="12" fill="#F59E0B" />
+        <ellipse cx="24" cy="20" rx="12" ry="7" fill="#FEF08A" />
+        <path d="M 4 20 Q 18 10, 36 14 Q 50 20, 36 26 Q 18 30, 4 20 Z" fill="#EF4444" opacity="0.8" />
+        <circle cx="12" cy="20" r="2" fill="#FFFFFF" />
       </svg>
     </div>
   );
 }
 
-// --- DYNAMIC STICKMAN SHINOBI SPRITE ---
+// --- DYNAMIC SHINOBI STICKMAN SPRITE ---
 function ShinobiSprite({ type, pose, facing = 'right', rotation = 0 }) {
   const isNaruto = type === 'naruto';
   const scaleX = facing === 'left' ? -1 : 1;
@@ -90,172 +84,153 @@ function ShinobiSprite({ type, pose, facing = 'right', rotation = 0 }) {
       }}
     >
       <svg 
-        width="52" 
-        height="56" 
-        viewBox="0 0 52 56" 
+        width="48" 
+        height="52" 
+        viewBox="0 0 48 52" 
         fill="none" 
         stroke={inkColor} 
         strokeWidth="2.6" 
         strokeLinecap="round" 
         strokeLinejoin="round"
-        className="overflow-visible drop-shadow-[0_4px_12px_rgba(15,23,42,0.22)]"
+        className="overflow-visible drop-shadow-[0_4px_10px_rgba(15,23,42,0.22)]"
       >
-        {/* --- HEAD & HAIR --- */}
+        {/* Animated Bandana / Ribbons */}
+        {isNaruto ? (
+          <g stroke="#3B82F6" strokeWidth="2.4">
+            <path d="M 12 11 Q 5 6, -2 10 Q -8 15, -14 12" className="animate-pulse" />
+            <path d="M 12 13 Q 5 11, 0 17 Q -5 22, -10 20" />
+          </g>
+        ) : (
+          <g stroke="#4338CA" strokeWidth="2.4">
+            <path d="M 12 11 Q 6 8, 1 12 Q -4 16, -10 13" />
+          </g>
+        )}
+
+        {/* Head */}
         {isNaruto ? (
           <>
-            {/* Naruto Spiky Blonde/Orange Hair */}
-            <path d="M 15 10 L 13 4 L 18 7 L 22 2 L 25 7 L 30 3 L 30 9" fill="#F59E0B" stroke={inkColor} strokeWidth="2" strokeLinejoin="round" />
-            {/* Konoha Leaf Headband */}
-            <rect x="15" y="9" width="15" height="5" rx="1.5" fill="#3B82F6" stroke={inkColor} strokeWidth="1.8" />
-            <rect x="19" y="10" width="7" height="3" rx="1" fill="#E2E8F0" stroke={inkColor} strokeWidth="1" />
-            {/* Flowing Bandana Tails */}
-            <path d="M 15 11 Q 9 9, 4 14" stroke="#3B82F6" strokeWidth="2.2" />
-            <path d="M 15 13 Q 8 15, 2 21" stroke="#3B82F6" strokeWidth="2.2" />
-            {/* Face */}
-            <circle cx="22" cy="14" r="6.5" fill="#FAF8F2" />
+            {/* Naruto Spiky Blonde Hair */}
+            <path d="M 14 10 L 12 4 L 17 7 L 21 2 L 24 7 L 29 3 L 29 9" fill="#F59E0B" stroke={inkColor} strokeWidth="2" strokeLinejoin="round" />
+            {/* Konoha Headband Plate */}
+            <rect x="14" y="9" width="14" height="4.5" rx="1.2" fill="#3B82F6" stroke={inkColor} strokeWidth="1.6" />
+            <rect x="18" y="10" width="6" height="2.5" rx="0.8" fill="#E2E8F0" stroke={inkColor} strokeWidth="0.9" />
+            <circle cx="21" cy="14" r="6.2" fill="#FAF8F2" />
             {/* Whiskers */}
-            <line x1="17" y1="13" x2="19" y2="13" stroke="#F97316" strokeWidth="1.2" />
-            <line x1="17" y1="15" x2="19" y2="15" stroke="#F97316" strokeWidth="1.2" />
-            <line x1="25" y1="13" x2="27" y2="13" stroke="#F97316" strokeWidth="1.2" />
-            <line x1="25" y1="15" x2="27" y2="15" stroke="#F97316" strokeWidth="1.2" />
-            {/* Determined Blue Eyes */}
-            <circle cx="24" cy="13" r="1.1" fill="#0284C7" />
+            <line x1="16" y1="13" x2="18" y2="13" stroke="#F97316" strokeWidth="1.1" />
+            <line x1="16" y1="15" x2="18" y2="15" stroke="#F97316" strokeWidth="1.1" />
+            <line x1="24" y1="13" x2="26" y2="13" stroke="#F97316" strokeWidth="1.1" />
+            <line x1="24" y1="15" x2="26" y2="15" stroke="#F97316" strokeWidth="1.1" />
+            <circle cx="23" cy="13" r="1" fill="#0284C7" />
           </>
         ) : (
           <>
             {/* Sasuke Spiky Dark Ninja Hair with Bangs */}
-            <path d="M 14 12 L 10 7 L 16 9 L 19 3 L 23 8 L 28 4 L 31 10" fill="#1E1B4B" stroke={inkColor} strokeWidth="2" strokeLinejoin="round" />
-            {/* High Uchiha Collar */}
-            <path d="M 17 19 L 14 14 L 19 17" fill="#1E1B4B" stroke={inkColor} strokeWidth="2" />
-            <path d="M 27 19 L 30 14 L 25 17" fill="#1E1B4B" stroke={inkColor} strokeWidth="2" />
-            {/* Face */}
-            <circle cx="22" cy="14" r="6.5" fill="#FAF8F2" />
+            <path d="M 13 12 L 9 7 L 15 9 L 18 3 L 22 8 L 27 4 L 30 10" fill="#1E1B4B" stroke={inkColor} strokeWidth="2" strokeLinejoin="round" />
+            {/* High Collar */}
+            <path d="M 16 18 L 13 13 L 18 16" fill="#1E1B4B" stroke={inkColor} strokeWidth="1.8" />
+            <path d="M 26 18 L 29 13 L 24 16" fill="#1E1B4B" stroke={inkColor} strokeWidth="1.8" />
+            <circle cx="21" cy="14" r="6.2" fill="#FAF8F2" />
             {/* Red Sharingan Eye! */}
-            <circle cx="24" cy="13" r="1.5" fill="#DC2626" />
-            <circle cx="24" cy="13" r="0.6" fill="#000000" />
-            {/* Dark Hair Bangs framing face */}
-            <path d="M 16 11 L 18 16" stroke="#1E1B4B" strokeWidth="2.2" />
-            <path d="M 28 11 L 26 16" stroke="#1E1B4B" strokeWidth="2.2" />
+            <circle cx="23" cy="13" r="1.5" fill="#DC2626" />
+            <circle cx="23" cy="13" r="0.6" fill="#000000" />
+            <path d="M 15 11 L 17 16" stroke="#1E1B4B" strokeWidth="2" />
           </>
         )}
 
         {/* Torso Spine */}
-        <line x1="22" y1="20" x2="22" y2="35" strokeWidth="2.8" stroke={isNaruto ? '#EA580C' : '#312E81'} />
+        <line x1="21" y1="20" x2="21" y2="34" strokeWidth="2.8" stroke={isNaruto ? '#EA580C' : '#312E81'} />
 
         {/* --- POSES --- */}
 
-        {/* 1. RASENGAN CHARGE POSE (Naruto thrusting glowing sphere forward) */}
+        {/* 1. RASENGAN THRUST (Naruto charging with sphere) */}
         {pose === 'rasengan_thrust' && (
           <>
-            {/* Thrusting arm holding sphere */}
-            <line x1="22" y1="24" x2="40" y2="24" strokeWidth="3" stroke="#EA580C" />
-            {/* Back guard arm */}
-            <path d="M 22 24 L 13 20 L 8 24" />
-            {/* Stride legs */}
-            <path d="M 22 35 L 14 44 L 7 52" strokeWidth="3" />
-            <path d="M 22 35 L 32 43 L 41 50" strokeWidth="3.2" stroke="#EA580C" />
+            <line x1="21" y1="23" x2="38" y2="23" strokeWidth="3" stroke="#EA580C" />
+            <path d="M 21 23 L 12 19 L 8 23" />
+            <path d="M 21 34 L 13 43 L 6 51" strokeWidth="3" />
+            <path d="M 21 34 L 30 42 L 39 49" strokeWidth="3.2" stroke="#EA580C" />
           </>
         )}
 
-        {/* 2. CHIDORI RUN POSE (Sasuke dragging lightning hand across the ground) */}
+        {/* 2. CHIDORI SPRINT (Sasuke charging with lightning) */}
         {pose === 'chidori_sprint' && (
           <>
-            {/* Leaning 30 degrees into sprint */}
-            <line x1="22" y1="24" x2="42" y2="32" strokeWidth="3" stroke="#4338CA" />
-            <path d="M 22 24 L 12 18 L 8 12" />
-            {/* Powerful sprint stride */}
-            <path d="M 22 35 L 12 43 L 4 48" strokeWidth="3" />
-            <path d="M 22 35 L 34 42 L 44 46" strokeWidth="3.2" stroke="#4338CA" />
+            <line x1="21" y1="23" x2="40" y2="30" strokeWidth="3" stroke="#4338CA" />
+            <path d="M 21 23 L 11 17 L 7 11" />
+            <path d="M 21 34 L 11 42 L 4 47" strokeWidth="3" />
+            <path d="M 21 34 L 32 41 L 42 45" strokeWidth="3.2" stroke="#4338CA" />
           </>
         )}
 
-        {/* 3. FLYING DRAGON KICK */}
+        {/* 3. FLYING KICK */}
         {pose === 'flying_kick' && (
           <>
-            <path d="M 22 23 L 12 17 L 6 20" />
-            <path d="M 22 23 L 30 18 L 36 14" strokeWidth="2.6" />
-            {/* Extended kick leg */}
-            <line x1="22" y1="35" x2="46" y2="33" strokeWidth="3.4" stroke={isNaruto ? '#EA580C' : '#4338CA'} />
-            <circle cx="46" cy="33" r="2.8" fill={isNaruto ? '#F97316' : '#6366F1'} />
-            {/* Tucked leg */}
-            <path d="M 22 35 L 12 40 L 18 48" />
+            <path d="M 21 22 L 11 16 L 5 19" />
+            <path d="M 21 22 L 29 17 L 35 13" strokeWidth="2.6" />
+            <line x1="21" y1="34" x2="44" y2="32" strokeWidth="3.4" stroke={isNaruto ? '#EA580C' : '#4338CA'} />
+            <circle cx="44" cy="32" r="2.6" fill={isNaruto ? '#F97316' : '#6366F1'} />
+            <path d="M 21 34 L 11 39 L 17 47" />
           </>
         )}
 
-        {/* 4. FIREBALL HAND SIGN POSE */}
+        {/* 4. FIREBALL HAND SIGN */}
         {pose === 'fireball_cast' && (
           <>
-            {/* Hands brought to mouth in tiger hand seal */}
-            <path d="M 22 23 L 26 18 L 26 15" strokeWidth="2.8" stroke="#4338CA" />
-            <path d="M 22 23 L 20 18 L 24 15" strokeWidth="2.8" stroke="#4338CA" />
-            {/* Balanced crouch legs */}
-            <path d="M 22 35 L 12 42 L 6 50" strokeWidth="3" />
-            <path d="M 22 35 L 32 42 L 38 50" strokeWidth="3" />
+            <path d="M 21 23 L 25 18 L 25 15" strokeWidth="2.8" stroke="#4338CA" />
+            <path d="M 21 23 L 19 18 L 23 15" strokeWidth="2.8" stroke="#4338CA" />
+            <path d="M 21 34 L 11 41 L 5 49" strokeWidth="3" />
+            <path d="M 21 34 L 31 41 L 37 49" strokeWidth="3" />
           </>
         )}
 
-        {/* 5. KUSA BLADE SWORD SLASH (Sasuke katana) */}
+        {/* 5. KATANA SWORD SLASH */}
         {pose === 'sword_slash' && (
           <>
-            <path d="M 22 23 L 33 16 L 41 10" strokeWidth="2.8" />
-            {/* Steel Chokuto Katana with lightning gleam */}
-            <line x1="33" y1="16" x2="48" y2="2" stroke="#818CF8" strokeWidth="3" strokeLinecap="round" />
-            <path d="M 22 23 L 14 27 L 9 24" />
-            <path d="M 22 35 L 13 43 L 6 51" />
-            <path d="M 22 35 L 31 42 L 40 49" strokeWidth="3" />
+            <path d="M 21 22 L 31 15 L 39 9" strokeWidth="2.8" />
+            <line x1="31" y1="15" x2="46" y2="2" stroke="#818CF8" strokeWidth="3" strokeLinecap="round" />
+            <path d="M 21 22 L 13 26 L 8 23" />
+            <path d="M 21 34 L 12 42 L 5 50" />
+            <path d="M 21 34 L 29 41 L 38 48" strokeWidth="3" />
           </>
         )}
 
-        {/* 6. WALL PERCH (Planting feet on tab button / card edges) */}
-        {pose === 'wall_perch' && (
-          <>
-            <path d="M 22 23 L 13 20 L 5 22" strokeWidth="2.8" />
-            <path d="M 22 23 L 30 18 L 36 14" strokeWidth="2.6" />
-            <path d="M 22 35 L 12 39 L 2 35" strokeWidth="3.2" />
-            <path d="M 22 35 L 15 45 L 2 49" strokeWidth="3.2" stroke={isNaruto ? '#EA580C' : '#4338CA'} />
-            <circle cx="2" cy="35" r="2.2" fill={isNaruto ? '#F97316' : '#6366F1'} />
-            <circle cx="2" cy="49" r="2.2" fill={isNaruto ? '#F97316' : '#6366F1'} />
-          </>
-        )}
-
-        {/* 7. WALL SPRING (Exploding off card / letter) */}
-        {pose === 'wall_spring' && (
-          <>
-            <line x1="22" y1="23" x2="44" y2="21" strokeWidth="3" stroke={isNaruto ? '#EA580C' : '#4338CA'} />
-            <circle cx="44" cy="21" r="2.6" fill={isNaruto ? '#F97316' : '#818CF8'} />
-            <path d="M 22 23 L 14 18 L 9 14" />
-            <line x1="22" y1="35" x2="2" y2="41" strokeWidth="3.4" />
-            <line x1="22" y1="35" x2="6" y2="47" strokeWidth="3.4" />
-          </>
-        )}
-
-        {/* 8. MATRIX DODGE */}
+        {/* 6. MATRIX DODGE */}
         {pose === 'dodge' && (
           <>
-            <path d="M 22 23 L 12 18 L 7 12" />
-            <path d="M 22 23 L 31 20 L 37 24" strokeWidth="2.6" />
-            <path d="M 22 35 L 11 40 L 5 48" />
-            <path d="M 22 35 L 33 41 L 40 48" />
+            <path d="M 21 23 L 11 17 L 6 11" />
+            <path d="M 21 23 L 30 19 L 36 23" strokeWidth="2.6" />
+            <path d="M 21 34 L 10 39 L 4 47" />
+            <path d="M 21 34 L 32 40 L 39 47" />
           </>
         )}
 
-        {/* 9. RECOIL */}
+        {/* 7. LOW SWEEP */}
+        {pose === 'sweep' && (
+          <>
+            <path d="M 21 23 L 12 19 L 8 24" />
+            <path d="M 21 23 L 27 21 L 31 27" />
+            <line x1="21" y1="34" x2="42" y2="47" strokeWidth="3.2" stroke={isNaruto ? '#EA580C' : '#4338CA'} />
+            <path d="M 21 34 L 12 40 L 7 48" />
+          </>
+        )}
+
+        {/* 8. RECOIL */}
         {pose === 'recoil' && (
           <>
-            <path d="M 22 23 L 13 16 L 7 19" />
-            <path d="M 22 23 L 15 28 L 9 32" />
-            <path d="M 22 35 L 14 39 L 10 47" />
-            <path d="M 22 35 L 23 41 L 21 49" />
+            <path d="M 21 23 L 12 16 L 6 19" />
+            <path d="M 21 23 L 14 28 L 8 32" />
+            <path d="M 21 34 L 13 39 L 9 47" />
+            <path d="M 21 34 L 22 41 L 20 49" />
           </>
         )}
 
-        {/* 10. DEFAULT COMBAT IDLE */}
+        {/* 9. DEFAULT COMBAT IDLE */}
         {pose === 'idle' && (
           <>
-            <path d="M 22 23 L 14 26 L 11 20" />
-            <path d="M 22 23 L 30 20 L 34 16" />
-            <path d="M 22 35 L 14 43 L 9 51" strokeWidth="2.8" />
-            <path d="M 22 35 L 30 42 L 35 50" strokeWidth="2.8" />
+            <path d="M 21 22 L 13 25 L 11 20" />
+            <path d="M 21 22 L 29 20 L 33 16" />
+            <path d="M 21 34 L 13 42 L 8 50" strokeWidth="2.8" />
+            <path d="M 21 34 L 29 41 L 34 49" strokeWidth="2.8" />
           </>
         )}
       </svg>
@@ -268,129 +243,46 @@ function ClashSphere({ active }) {
   if (!active) return null;
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-50">
-      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" className="overflow-visible animate-pulse">
-        {/* Expanding Shockwave Rings */}
-        <circle cx="60" cy="60" r="54" stroke="#38BDF8" strokeWidth="2.5" opacity="0.7" className="animate-ping" />
-        <circle cx="60" cy="60" r="44" stroke="#818CF8" strokeWidth="3" opacity="0.85" />
-        {/* Dual Chakra Collision Core */}
-        <ellipse cx="52" cy="60" rx="22" ry="22" fill="rgba(56, 189, 248, 0.7)" />
-        <ellipse cx="68" cy="60" rx="22" ry="22" fill="rgba(129, 140, 248, 0.7)" />
-        <circle cx="60" cy="60" r="14" fill="#FFFFFF" />
-        {/* Electric Tendrils */}
-        <path d="M 60 60 L 90 35 L 105 45" stroke="#FFFFFF" strokeWidth="2.5" />
-        <path d="M 60 60 L 30 85 L 15 75" stroke="#38BDF8" strokeWidth="2.5" />
-        <path d="M 60 60 L 85 90 L 98 102" stroke="#818CF8" strokeWidth="2.5" />
-        <path d="M 60 60 L 35 30 L 22 18" stroke="#FFFFFF" strokeWidth="2.5" />
+      <svg width="110" height="110" viewBox="0 0 110 110" fill="none" className="overflow-visible animate-pulse">
+        <circle cx="55" cy="55" r="50" stroke="#38BDF8" strokeWidth="2.4" opacity="0.75" className="animate-ping" />
+        <circle cx="55" cy="55" r="40" stroke="#818CF8" strokeWidth="2.8" opacity="0.85" />
+        <ellipse cx="48" cy="55" rx="20" ry="20" fill="rgba(56, 189, 248, 0.7)" />
+        <ellipse cx="62" cy="55" rx="20" ry="20" fill="rgba(129, 140, 248, 0.7)" />
+        <circle cx="55" cy="55" r="12" fill="#FFFFFF" />
+        <path d="M 55 55 L 82 32 L 96 42" stroke="#FFFFFF" strokeWidth="2.4" />
+        <path d="M 55 55 L 28 78 L 14 68" stroke="#38BDF8" strokeWidth="2.4" />
+        <path d="M 55 55 L 78 82 L 90 94" stroke="#818CF8" strokeWidth="2.4" />
+        <path d="M 55 55 L 32 28 L 20 16" stroke="#FFFFFF" strokeWidth="2.4" />
       </svg>
     </div>
   );
 }
 
-// --- SHADOW CLONE SMOKE PUFF ---
-function SmokePuff({ active, x, y }) {
-  if (!active) return null;
-  return (
-    <div 
-      className="absolute pointer-events-none z-40 transition-opacity duration-300"
-      style={{ left: `${x}px`, top: `${y}px`, transform: 'translate(-50%, -50%)' }}
-    >
-      <svg width="60" height="48" viewBox="0 0 60 48" fill="none" className="animate-ping">
-        <ellipse cx="30" cy="24" rx="22" ry="16" fill="rgba(241, 245, 249, 0.85)" stroke="#64748B" strokeWidth="1.8" />
-        <circle cx="18" cy="20" r="10" fill="rgba(241, 245, 249, 0.9)" />
-        <circle cx="42" cy="20" r="10" fill="rgba(241, 245, 249, 0.9)" />
-      </svg>
-    </div>
-  );
-}
-
-// --- MAIN SHINOBI BATTLE STAGE ---
-export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, cardRef }) {
-  const [mounted, setMounted] = useState(false);
+// --- MAIN ARENA COMPONENT (RESTRICTED TO THE EXACT MARKED RED BOX) ---
+export default function ShinobiBattleStage() {
+  const arenaRef = useRef(null);
+  const [arenaWidth, setArenaWidth] = useState(480);
+  const [arenaHeight, setArenaHeight] = useState(140);
   const [battleTime, setBattleTime] = useState(0);
 
-  // Position anchors relative to Slide 2 container
-  const [anchors, setAnchors] = useState({
-    headerLeft: 120,   // "OUR"
-    headerRight: 360,  // "GAMES"
-    headerTop: 95,
-    tabsTop: 240,
-    tabsBottom: 580,
-    tabsLeft: 110,
-    tabsRight: 380,
-    cardLeft: 460,
-    cardRight: 980,
-    cardTop: 240,
-    centerChasmX: 420
-  });
-
-  const updateAnchors = () => {
-    if (!containerRef?.current) return;
-    const cRect = containerRef.current.getBoundingClientRect();
-
-    let hLeft = 120;
-    let hRight = 360;
-    let hTop = 95;
-    if (headerRef?.current) {
-      const hRect = headerRef.current.getBoundingClientRect();
-      hLeft = hRect.left - cRect.left + (hRect.width * 0.25);
-      hRight = hRect.left - cRect.left + (hRect.width * 0.75);
-      hTop = hRect.top - cRect.top + 10;
-    }
-
-    let tTop = 240;
-    let tBottom = 580;
-    let tLeft = 110;
-    let tRight = 380;
-    if (tabsRef?.current) {
-      const tbRect = tabsRef.current.getBoundingClientRect();
-      tTop = tbRect.top - cRect.top;
-      tBottom = tbRect.bottom - cRect.top;
-      tLeft = tbRect.left - cRect.left;
-      tRight = tbRect.right - cRect.left;
-    }
-
-    let cLeft = tRight + 60;
-    let cRight = cLeft + 520;
-    let cTop = tTop;
-    if (cardRef?.current) {
-      const cdRect = cardRef.current.getBoundingClientRect();
-      cLeft = cdRect.left - cRect.left;
-      cRight = cdRect.right - cRect.left;
-      cTop = cdRect.top - cRect.top;
-    }
-
-    const centerChasm = (tRight + cLeft) / 2;
-
-    setAnchors({
-      headerLeft: hLeft,
-      headerRight: hRight,
-      headerTop: hTop,
-      tabsTop: tTop,
-      tabsBottom: tBottom,
-      tabsLeft: tLeft,
-      tabsRight: tRight,
-      cardLeft: cLeft,
-      cardRight: cRight,
-      cardTop: cTop,
-      centerChasmX: centerChasm
-    });
-  };
-
   useEffect(() => {
-    setMounted(true);
-    updateAnchors();
-
-    const handleResize = () => updateAnchors();
-    window.addEventListener('resize', handleResize);
+    const updateSize = () => {
+      if (arenaRef.current) {
+        setArenaWidth(arenaRef.current.clientWidth || 480);
+        setArenaHeight(arenaRef.current.clientHeight || 140);
+      }
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
 
     let animId;
     const startTime = Date.now();
 
-    // 60 FPS Continuous Shinobi War Loop
+    // 60 FPS Jutsu War Loop
     const loop = () => {
       const now = Date.now();
       const elapsed = (now - startTime) / 1000;
-      setBattleTime(elapsed % 13.5); // 13.5 second anime jutsu war cycle
+      setBattleTime(elapsed % 13.0); // 13.0 second loop
       animId = requestAnimationFrame(loop);
     };
 
@@ -398,24 +290,27 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', updateSize);
     };
   }, []);
 
-  if (!mounted) return null;
-
   const t = battleTime;
+  const width = Math.max(340, arenaWidth);
+  const floorY = arenaHeight - 4; // Sparring right on top of the notebook line
+  const leftBound = 35;
+  const rightBound = width - 35;
+  const centerX = width / 2;
 
-  // --- TRAJECTORY & JUTSU ENGINE ---
-  let narutoX = anchors.headerLeft;
-  let narutoY = anchors.headerTop;
+  // --- TRAJECTORY COMPUTATION ---
+  let narutoX = leftBound;
+  let narutoY = floorY;
   let narutoPose = 'idle';
   let narutoFacing = 'right';
   let narutoRotation = 0;
   let hasRasengan = false;
 
-  let sasukeX = anchors.headerRight;
-  let sasukeY = anchors.headerTop;
+  let sasukeX = rightBound;
+  let sasukeY = floorY;
   let sasukePose = 'idle';
   let sasukeFacing = 'left';
   let sasukeRotation = 0;
@@ -427,174 +322,154 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
   let cloneY = 0;
 
   let clashActive = false;
-  let clashX = anchors.centerChasmX;
-  let clashY = anchors.tabsTop + 140;
 
-  // --- 13.5s CHOREOGRAPHED JUTSU WAR TIMELINE ---
+  // --- 13.0s ARENA CHOREOGRAPHY ---
   if (t < 2.5) {
-    // Phase 1: Sparring on the "OUR GAMES" Summit
+    // Phase 1: Sprint & Opening Fireball Jutsu
     const sub = t;
-    narutoY = anchors.headerTop;
-    sasukeY = anchors.headerTop;
-
     if (sub < 0.8) {
-      narutoX = anchors.headerLeft;
-      sasukeX = anchors.headerRight;
+      narutoX = leftBound + 15;
+      sasukeX = rightBound - 15;
       narutoPose = 'idle';
       sasukePose = 'idle';
     } else if (sub < 1.6) {
-      // Sasuke hand signs -> Fireball Jutsu!
-      sasukeX = anchors.headerRight - 15;
+      // Sasuke leaps back, hand signs -> Fireball Jutsu!
+      sasukeX = rightBound - 20;
+      sasukeY = floorY - 10;
       sasukePose = 'fireball_cast';
       hasFireball = true;
 
-      // Naruto Matrix Dodge
-      narutoX = anchors.headerLeft + 35;
+      // Naruto slides low under the fireball
+      narutoX = leftBound + (centerX - leftBound) * 0.55;
+      narutoY = floorY;
       narutoPose = 'dodge';
     } else {
-      // Naruto leaps over fireball, preparing clone
-      narutoX = anchors.headerLeft + 70;
-      narutoY = anchors.headerTop - 25;
+      // Naruto leaps out of slide
+      narutoX = centerX - 40;
+      narutoY = floorY - 25;
       narutoPose = 'flying_kick';
 
-      sasukeX = anchors.headerRight;
+      sasukeX = rightBound - 25;
+      sasukeY = floorY;
       sasukePose = 'sword_slash';
     }
-  } else if (t < 5.8) {
-    // Phase 2: Parkour Wall-Run down the Game Tabs (Left) & Card (Right)
+  } else if (t < 5.5) {
+    // Phase 2: Shadow Clone Double Strike
     const sub = t - 2.5;
-    const p = sub / 3.3;
 
-    // Naruto leaps down to the Game Selection Tabs on left
-    const tabTargetY = anchors.tabsTop + (anchors.tabsBottom - anchors.tabsTop) * p;
-    narutoX = anchors.tabsRight - 15;
-    narutoY = tabTargetY;
+    // Naruto summons a Shadow Clone
+    cloneActive = sub > 0.4 && sub < 2.4;
+    cloneX = rightBound - 25;
+    cloneY = floorY - 55;
+
+    // Real Naruto sweeps low
+    narutoX = centerX + (rightBound - 85 - centerX) * (sub / 3.0);
+    narutoY = floorY;
+    narutoPose = 'sweep';
     narutoFacing = 'right';
 
-    // Shadow Clone assists Naruto!
-    cloneActive = sub > 0.8 && sub < 2.5;
-    cloneX = anchors.tabsLeft + 60;
-    cloneY = tabTargetY - 20;
-
-    if (sub < 1.1) {
-      narutoPose = 'wall_perch';
-    } else if (sub < 2.2) {
-      narutoPose = 'wall_spring';
-    } else {
-      narutoPose = 'dash';
-    }
-
-    // Sasuke teleports (Shunshin) and wall-runs down the Card Border
-    sasukeX = anchors.cardLeft + 15;
-    sasukeY = tabTargetY + 15;
+    // Sasuke parries sweep and slashes through clone
+    sasukeX = rightBound - 35;
+    sasukeY = floorY;
+    sasukePose = sub < 1.5 ? 'dodge' : 'sword_slash';
     sasukeFacing = 'left';
+  } else if (t < 9.0) {
+    // Phase 3: THE LEGENDARY RASENGAN VS CHIDORI CLASH (WAR TIME!)
+    const sub = t - 5.5;
 
-    if (sub < 1.1) {
-      sasukePose = 'sword_slash';
-    } else if (sub < 2.2) {
-      sasukePose = 'flying_kick';
-    } else {
-      sasukePose = 'chidori_sprint';
-    }
-  } else if (t < 9.2) {
-    // Phase 3: THE LEGENDARY RASENGAN VS CHIDORI CLASH (War Time!)
-    const sub = t - 5.8;
-
-    if (sub < 1.4) {
-      // Charging toward center chasm!
-      const p = sub / 1.4;
+    if (sub < 1.3) {
+      // Charging toward center!
+      const p = sub / 1.3;
       hasRasengan = true;
       hasChidori = true;
 
-      // Naruto charging with Rasengan from left
-      narutoX = anchors.tabsRight + (anchors.centerChasmX - 35 - anchors.tabsRight) * p;
-      narutoY = anchors.tabsTop + 140 - Math.sin(p * Math.PI) * 35;
+      // Naruto sprinting from left with Rasengan
+      narutoX = leftBound + (centerX - 28 - leftBound) * p;
+      narutoY = floorY - Math.sin(p * Math.PI) * 25;
       narutoPose = 'rasengan_thrust';
       narutoFacing = 'right';
 
-      // Sasuke charging with Chidori from right
-      sasukeX = anchors.cardLeft - (anchors.cardLeft - (anchors.centerChasmX + 35)) * p;
-      sasukeY = anchors.tabsTop + 140 - Math.sin(p * Math.PI) * 35;
+      // Sasuke sprinting from right with Chidori
+      sasukeX = rightBound - (rightBound - (centerX + 28)) * p;
+      sasukeY = floorY - Math.sin(p * Math.PI) * 25;
       sasukePose = 'chidori_sprint';
       sasukeFacing = 'left';
-    } else if (sub < 2.6) {
-      // MID-AIR COLLISION! (Rasengan vs Chidori Sphere)
+    } else if (sub < 2.5) {
+      // MID-AIR COLLISION AT CENTER!
       hasRasengan = true;
       hasChidori = true;
       clashActive = true;
-      clashX = anchors.centerChasmX;
-      clashY = anchors.tabsTop + 130;
 
-      // Locked in power struggle with vibration
-      const jitter = Math.sin(sub * 30) * 4;
-      narutoX = anchors.centerChasmX - 24 + jitter;
-      narutoY = anchors.tabsTop + 130;
+      const jitter = Math.sin(sub * 28) * 3;
+      narutoX = centerX - 24 + jitter;
+      narutoY = floorY - 35;
       narutoPose = 'rasengan_thrust';
       narutoFacing = 'right';
 
-      sasukeX = anchors.centerChasmX + 24 - jitter;
-      sasukeY = anchors.tabsTop + 130;
+      sasukeX = centerX + 24 - jitter;
+      sasukeY = floorY - 35;
       sasukePose = 'chidori_sprint';
       sasukeFacing = 'left';
     } else {
-      // RECOIL: Shockwave pushes both fighters back onto the platforms!
-      const p = (sub - 2.6) / 0.8;
-      narutoX = (anchors.centerChasmX - 24) - (anchors.centerChasmX - 24 - (anchors.tabsRight - 30)) * p;
-      narutoY = anchors.tabsTop + 130 - Math.sin(p * Math.PI) * 25;
+      // Recoil: Blast launches both fighters back to edges!
+      const p = (sub - 2.5) / 1.0;
+      narutoX = (centerX - 24) - (centerX - 24 - (leftBound + 20)) * p;
+      narutoY = floorY - 35 + 35 * p;
       narutoPose = 'recoil';
       narutoRotation = -20 * (1 - p);
 
-      sasukeX = (anchors.centerChasmX + 24) + ((anchors.cardLeft + 30) - (anchors.centerChasmX + 24)) * p;
-      sasukeY = anchors.tabsTop + 130 - Math.sin(p * Math.PI) * 25;
+      sasukeX = (centerX + 24) + ((rightBound - 20) - (centerX + 24)) * p;
+      sasukeY = floorY - 35 + 35 * p;
       sasukePose = 'recoil';
       sasukeRotation = 20 * (1 - p);
     }
-  } else if (t < 11.8) {
-    // Phase 4: Card Rooftop Taijutsu Duel
-    const sub = t - 9.2;
-    narutoY = anchors.cardTop - 8;
-    sasukeY = anchors.cardTop - 8;
+  } else if (t < 11.5) {
+    // Phase 4: High-Speed Close Quarters Taijutsu Duel
+    const sub = t - 9.0;
+    narutoY = floorY;
+    sasukeY = floorY;
 
     if (sub < 1.2) {
-      narutoX = anchors.cardLeft + 60;
-      sasukeX = anchors.cardLeft + 150;
+      narutoX = centerX - 32;
+      sasukeX = centerX + 32;
       narutoPose = 'dash';
       narutoFacing = 'right';
       sasukePose = 'sword_slash';
       sasukeFacing = 'left';
     } else {
-      narutoX = anchors.cardLeft + 90;
-      sasukeX = anchors.cardLeft + 170;
+      narutoX = centerX - 26;
+      sasukeX = centerX + 38;
       narutoPose = 'flying_kick';
       narutoFacing = 'right';
       sasukePose = 'dodge';
       sasukeFacing = 'left';
     }
   } else {
-    // Phase 5: Super Chakra Leap Back to "OUR GAMES" Summit
-    const sub = t - 11.8;
-    const p = sub / 1.7;
-    const apex = Math.sin(p * Math.PI) * 95;
+    // Phase 5: Acrobatic Somersault Reset to Edge
+    const sub = t - 11.5;
+    const p = sub / 1.5;
+    const apex = Math.sin(p * Math.PI) * 45;
 
-    // Naruto leaps from card back to "OUR"
-    narutoX = (anchors.cardLeft + 90) + (anchors.headerLeft - (anchors.cardLeft + 90)) * p;
-    narutoY = (anchors.cardTop - 8) + (anchors.headerTop - (anchors.cardTop - 8)) * p - apex;
-    narutoPose = 'wall_spring';
+    narutoX = (centerX - 26) + (leftBound - (centerX - 26)) * p;
+    narutoY = floorY - apex;
+    narutoPose = 'flying_kick';
     narutoFacing = 'left';
 
-    // Sasuke leaps from card back to "GAMES"
-    sasukeX = (anchors.cardLeft + 170) + (anchors.headerRight - (anchors.cardLeft + 170)) * p;
-    sasukeY = (anchors.cardTop - 8) + (anchors.headerTop - (anchors.cardTop - 8)) * p - apex;
+    sasukeX = (centerX + 38) + (rightBound - (centerX + 38)) * p;
+    sasukeY = floorY - apex;
     sasukePose = 'flying_kick';
-    sasukeFacing = 'left';
+    sasukeFacing = 'right';
   }
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-30 overflow-visible select-none">
+    <div 
+      ref={arenaRef}
+      className="relative w-full h-full pointer-events-none select-none overflow-visible"
+    >
       
       {/* 1. NARUTO SHINOBI */}
       <div 
-        className="absolute z-40 transition-transform"
+        className="absolute z-30 transition-transform"
         style={{
           transform: `translate3d(${narutoX}px, ${narutoY}px, 0px)`,
           transition: 'none'
@@ -607,12 +482,12 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
             <div 
               className="absolute pointer-events-none z-50"
               style={{
-                right: narutoFacing === 'right' ? '-24px' : 'auto',
-                left: narutoFacing === 'left' ? '-24px' : 'auto',
-                top: '16px'
+                right: narutoFacing === 'right' ? '-22px' : 'auto',
+                left: narutoFacing === 'left' ? '-22px' : 'auto',
+                top: '15px'
               }}
             >
-              <RasenganOrb scale={1.25} />
+              <RasenganOrb scale={1.2} />
             </div>
           )}
 
@@ -630,7 +505,7 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
       {/* 2. SHADOW CLONE (KAGE BUNSHIN) */}
       {cloneActive && (
         <div 
-          className="absolute z-35 transition-transform"
+          className="absolute z-25 transition-transform"
           style={{
             transform: `translate3d(${cloneX}px, ${cloneY}px, 0px)`,
             transition: 'none'
@@ -641,7 +516,7 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
               type="naruto"
               pose="flying_kick"
               facing="right"
-              rotation={10}
+              rotation={15}
             />
           </div>
         </div>
@@ -650,7 +525,7 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
 
       {/* 3. SASUKE SHINOBI */}
       <div 
-        className="absolute z-40 transition-transform"
+        className="absolute z-30 transition-transform"
         style={{
           transform: `translate3d(${sasukeX}px, ${sasukeY}px, 0px)`,
           transition: 'none'
@@ -658,17 +533,17 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
       >
         <div className="relative -translate-x-1/2 -translate-y-full flex flex-col items-center">
           
-          {/* Crackling Chidori Lightning Blade in Hand */}
+          {/* Crackling Chidori Lightning Blade */}
           {hasChidori && (
             <div 
               className="absolute pointer-events-none z-50"
               style={{
-                left: sasukeFacing === 'left' ? '-26px' : 'auto',
-                right: sasukeFacing === 'right' ? '-26px' : 'auto',
-                top: '20px'
+                left: sasukeFacing === 'left' ? '-24px' : 'auto',
+                right: sasukeFacing === 'right' ? '-24px' : 'auto',
+                top: '18px'
               }}
             >
-              <ChidoriBlade scale={1.3} />
+              <ChidoriBlade scale={1.25} />
             </div>
           )}
 
@@ -677,8 +552,8 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
             <div 
               className="absolute pointer-events-none z-50"
               style={{
-                left: sasukeFacing === 'left' ? '-58px' : 'auto',
-                right: sasukeFacing === 'right' ? '-58px' : 'auto',
+                left: sasukeFacing === 'left' ? '-54px' : 'auto',
+                right: sasukeFacing === 'right' ? '-54px' : 'auto',
                 top: '6px'
               }}
             >
@@ -699,7 +574,7 @@ export default function ShinobiBattleStage({ containerRef, headerRef, tabsRef, c
 
       {/* 4. MID-AIR RASENGAN VS CHIDORI CLASH SHOCKWAVE */}
       {clashActive && (
-        <div style={{ position: 'absolute', left: `${clashX}px`, top: `${clashY}px` }}>
+        <div style={{ position: 'absolute', left: `${centerX}px`, top: `${floorY - 35}px` }}>
           <ClashSphere active={clashActive} />
         </div>
       )}

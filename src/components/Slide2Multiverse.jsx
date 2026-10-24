@@ -5,43 +5,40 @@ import ShinobiBattleStage from './ShinobiBattleStage';
 
 export default function Slide2Multiverse() {
   const [selectedGame, setSelectedGame] = useState(gameUniverse[0]);
-  const containerRef = useRef(null);
-  const headerRef = useRef(null);
-  const tabsRef = useRef(null);
-  const cardRef = useRef(null);
 
   return (
     <section 
-      ref={containerRef}
       id="games" 
       className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 bg-transparent flex flex-col justify-center select-none border-t border-slate-200 overflow-hidden"
     >
-      {/* Naruto vs Sasuke Shinobi Stickman Jutsu Battle */}
-      <ShinobiBattleStage 
-        containerRef={containerRef}
-        headerRef={headerRef}
-        tabsRef={tabsRef}
-        cardRef={cardRef}
-      />
       <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12 pl-6 sm:pl-12">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-8">
-          <div className="space-y-2">
+        {/* Section Header with Dedicated Shinobi Battle Arena in the Marked Space */}
+        <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200 pb-6 min-h-[160px]">
+          
+          {/* Left: Portfolio Typography */}
+          <div className="space-y-2 max-w-xl z-10">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF2A5F]">
               Portfolio
             </span>
-            <h2 ref={headerRef} className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none inline-block">
+            <h2 className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none inline-block">
               OUR GAMES
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
+            <p className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed">
               Every title is built from scratch around fluid player controls, destructible physics, and high-tick multiplayer netcode.
             </p>
           </div>
 
-          <span className="text-xs font-semibold text-slate-500">
+          {/* DEDICATED SHINOBI JUTSU WAR ARENA (IN THE EXACT MARKED RED BOX!) */}
+          <div className="relative flex-1 h-36 min-w-[300px] max-w-2xl self-stretch overflow-visible hidden md:block z-20 mx-2">
+            <ShinobiBattleStage />
+          </div>
+
+          {/* Right: Active Service Count */}
+          <span className="text-xs font-semibold text-slate-500 whitespace-nowrap self-end z-10 pb-1">
             5 Titles in Active Development &amp; Live Service
           </span>
+
         </div>
 
         {/* Master-Detail Layout */}
