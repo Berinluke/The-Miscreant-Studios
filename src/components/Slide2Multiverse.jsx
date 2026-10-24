@@ -13,15 +13,13 @@ export default function Slide2Multiverse() {
     >
       <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12 pl-6 sm:pl-12">
         
-        {/* Section Header with Dedicated Shinobi Battle Arena in the Marked Space */}
-        <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-slate-200 pb-6 min-h-[160px]">
-          
-          {/* Left: Portfolio Typography */}
-          <div className="space-y-2 max-w-xl z-10">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-slate-200 pb-6">
+          <div className="space-y-2 max-w-xl">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF2A5F]">
               Portfolio
             </span>
-            <h2 className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none inline-block">
+            <h2 className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none">
               OUR GAMES
             </h2>
             <p className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed">
@@ -29,20 +27,13 @@ export default function Slide2Multiverse() {
             </p>
           </div>
 
-          {/* DEDICATED SHINOBI JUTSU WAR ARENA (IN THE EXACT MARKED RED BOX!) */}
-          <div className="relative flex-1 h-36 min-w-[300px] max-w-2xl self-stretch overflow-visible hidden md:block z-20 mx-2">
-            <ShinobiBattleStage />
-          </div>
-
-          {/* Right: Active Service Count */}
-          <span className="text-xs font-semibold text-slate-500 whitespace-nowrap self-end z-10 pb-1">
+          <span className="text-xs font-semibold text-slate-500 whitespace-nowrap self-end pb-1">
             5 Titles in Active Development &amp; Live Service
           </span>
-
         </div>
 
         {/* Master-Detail Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-8">
           
           {/* Left: Game List Selection (5 cols) */}
           <div className="lg:col-span-5 flex flex-col space-y-3">
@@ -82,9 +73,15 @@ export default function Slide2Multiverse() {
             })}
           </div>
 
-          {/* Right: Selected Game Presentation Card (7 cols) */}
-          <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-2xl border border-slate-200 bg-[#FAFAFA] space-y-6">
+          {/* Right: Selected Game Presentation Card (7 cols) with Shinobi Battle Arena along the Marked Red Roof */}
+          <div className="lg:col-span-7 relative">
+            
+            {/* Naruto vs Sasuke Shinobi War Battle Stage on the Card Roof */}
+            <div className="absolute -top-[68px] left-0 right-0 h-[76px] pointer-events-none overflow-visible z-20">
+              <ShinobiBattleStage />
+            </div>
+
+            <div className="p-8 sm:p-10 rounded-2xl border border-slate-200 bg-[#FAFAFA] space-y-6 relative z-10 shadow-sm">
               
               <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#FF2A5F]">

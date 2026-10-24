@@ -10,8 +10,16 @@ export default function App() {
   const [activeSlide, setActiveSlide] = useState('hero');
   const [activeJobModal, setActiveJobModal] = useState(null);
 
-  // Highlight active nav item on scroll
+  // Highlight active nav item on scroll & handle hash navigation
   useEffect(() => {
+    if (window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      const el = document.getElementById(targetId);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'auto' }), 100);
+      }
+    }
+
     const sectionIds = ['hero', 'games', 'engine', 'culture', 'careers'];
     const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
