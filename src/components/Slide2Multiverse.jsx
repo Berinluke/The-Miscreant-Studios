@@ -45,7 +45,7 @@ export default function Slide2Multiverse() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left: Game List Selection (5 cols) */}
-          <div ref={tabsRef} className="lg:col-span-5 flex flex-col space-y-3">
+          <div className="lg:col-span-5 flex flex-col space-y-3">
             {gameUniverse.map((game) => {
               const isSelected = selectedGame.id === game.id;
               return (
@@ -83,7 +83,7 @@ export default function Slide2Multiverse() {
           </div>
 
           {/* Right: Selected Game Presentation Card (7 cols) */}
-          <div ref={cardRef} className="lg:col-span-7">
+          <div className="lg:col-span-7">
             <div className="p-8 sm:p-10 rounded-2xl border border-slate-200 bg-[#FAFAFA] space-y-6">
               
               <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
