@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 /**
  * StickmanFighterSprite
@@ -8,6 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
  * - Blue Bot: Cobalt Shinobi with flowing headband ribbons & blue ink Bo-Staff.
  * - Dynamic poses: Idle guard, punch rush, flying dragon kick, katana slash,
  *   bo-staff spin, block shield, hurt/knockback, and 360-flip.
+ * - Completely clean: No text bubbles, no dialogue, no labels.
  */
 function StickmanFighterSprite({ team, pose, facing = 'right', isJumping = false }) {
   const isRed = team === 'red';
@@ -167,13 +168,12 @@ function StickmanFighterSprite({ team, pose, facing = 'right', isJumping = false
  * Choreography:
  * 1. Entry: Fighter Jet enters from top-left and flies directly to the area above the 'T' in MISCREANT.
  * 2. Drop: 2 Stickmen troops eject from the jet and drop straight down onto the 'T'.
- * 3. Land: They stick the landing right on top of the 'T' with impact puff. Jet departs with afterburners.
- * 4. BOT FIGHT ENGINE (AUTOPLAYING VIDEOGAME ACTION MOVIE):
+ * 3. Land: They stick the landing right on top of the 'T'. Jet departs with afterburners.
+ * 4. BOT FIGHT ENGINE (AUTOPLAYING VIDEOGAME ACTION MOVIE - ZERO DIALOGUE / TEXT):
  *    - The two stickmen are OPPONENTS (Red Bot vs Blue Bot).
- *    - They brawl on top of the 'T' (jabs, parries, sweeps).
+ *    - Pure visual combat: jabs, parries, sweeps, flying kicks, slashes, and acrobatics.
  *    - They launch into the air together!
- *    - WHILE FALLING IN THE AIR down the marked channel between title and monitor, they fight furiously:
- *      mid-air kicks, katana slashes, bo-staff spins, hit sparks, and comic combos!
+ *    - WHILE FALLING IN THE AIR down the marked channel between title and monitor, they fight furiously.
  *    - They hit the desk near the controller, clash in a rapid ground duel, and somersault back up to 'T' in an endless epic fight!
  *    - On scroll, the battle expands across the words and down into Slide 2!
  */
@@ -187,7 +187,6 @@ export default function JetMissionScrollytelling({
   // 'entering' (0-1100ms) -> 'dropping' (1100-2100ms) -> 'landed_fighting' (2100ms+)
   const [missionPhase, setMissionPhase] = useState('entering');
   const [jetVanished, setJetVanished] = useState(false);
-  const [impactPuff, setImpactPuff] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   // Measured coordinates relative to hero container
@@ -201,7 +200,6 @@ export default function JetMissionScrollytelling({
 
   // Combat State Machine for 60 FPS Bot Fight
   const [fightCycle, setFightCycle] = useState(0);
-  const [combatEvent, setCombatEvent] = useState(null); // { text: '💥 CLASH!', x: 0, y: 0 }
   const [redPose, setRedPose] = useState('idle');
   const [bluePose, setBluePose] = useState('idle');
   const [redFacing, setRedFacing] = useState('right');
@@ -262,8 +260,6 @@ export default function JetMissionScrollytelling({
 
     const landTimer = setTimeout(() => {
       setMissionPhase('landed_fighting');
-      setImpactPuff(true);
-      setTimeout(() => setImpactPuff(false), 900);
     }, 2100);
 
     const jetDepartTimer = setTimeout(() => {
@@ -309,7 +305,7 @@ export default function JetMissionScrollytelling({
       const cycleTime = elapsed % 10.5; // 10.5-second choreographed anime duel cycle
       setFightCycle(cycleTime);
 
-      // --- COMBAT MOVE POSE & HIT EFFECTS SCHEDULER ---
+      // --- COMBAT MOVE POSE SCHEDULER (PURE ACTIONS, ZERO TEXT) ---
       if (cycleTime < 2.0) {
         // Phase 1: Fight on 'T'
         setRedFacing('right');
@@ -317,23 +313,18 @@ export default function JetMissionScrollytelling({
         if (cycleTime < 0.6) {
           setRedPose('idle');
           setBluePose('idle');
-          setCombatEvent(null);
         } else if (cycleTime < 1.1) {
           setRedPose('punch');
           setBluePose('block');
-          setCombatEvent({ text: '⚔️ PARRY!', offset: 0 });
         } else if (cycleTime < 1.6) {
           setRedPose('block');
           setBluePose('kick');
-          setCombatEvent({ text: '💥 BAM!', offset: 4 });
         } else {
           setRedPose('slash');
           setBluePose('hurt');
-          setCombatEvent({ text: 'POW! x2', offset: -4 });
         }
       } else if (cycleTime < 3.8) {
         // Phase 2: Launch into Air
-        setCombatEvent({ text: '⚡ AIR LAUNCH!', offset: 0 });
         setRedFacing('right');
         setBlueFacing('left');
         setRedPose('slash');
@@ -344,19 +335,15 @@ export default function JetMissionScrollytelling({
         if (sub < 0.8) {
           setRedPose('air_kick');
           setBluePose('slash');
-          setCombatEvent({ text: '⚔️ MID-AIR CLASH!', offset: 0 });
         } else if (sub < 1.6) {
           setRedPose('slash');
           setBluePose('block');
-          setCombatEvent({ text: '💥 CRIT x3!', offset: 6 });
         } else if (sub < 2.4) {
           setRedPose('block');
           setBluePose('air_kick');
-          setCombatEvent({ text: '⚡ AERIAL STRIKE!', offset: -6 });
         } else {
           setRedPose('slash');
           setBluePose('slash');
-          setCombatEvent({ text: '💥 DUAL CLASH!', offset: 0 });
         }
       } else if (cycleTime < 9.0) {
         // Phase 4: Desk / Controller Landing & Duel
@@ -364,15 +351,12 @@ export default function JetMissionScrollytelling({
         if (sub < 0.6) {
           setRedPose('idle');
           setBluePose('idle');
-          setCombatEvent({ text: '💨 DUST LANDING!', offset: 0 });
         } else if (sub < 1.2) {
           setRedPose('punch');
           setBluePose('hurt');
-          setCombatEvent({ text: '💥 WHAM!', offset: 8 });
         } else {
           setRedPose('hurt');
           setBluePose('kick');
-          setCombatEvent({ text: '⚡ COUNTER!', offset: -8 });
         }
       } else {
         // Phase 5: Ninja Leap Return back to 'T'
@@ -380,7 +364,6 @@ export default function JetMissionScrollytelling({
         setBlueFacing('left');
         setRedPose('air_kick');
         setBluePose('slash');
-        setCombatEvent({ text: '💨 AIR-DASH!', offset: 0 });
       }
 
       animId = requestAnimationFrame(fightLoop);
@@ -587,18 +570,11 @@ export default function JetMissionScrollytelling({
             <line x1="112" y1="25" x2="119" y2="25" stroke="#0F172A" strokeWidth="1.8" />
           </svg>
 
-          {/* Mission Alert Bubble */}
-          {missionPhase === 'dropping' && !isJetDeparting && (
-            <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-900 text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md border border-slate-700 animate-bounce">
-              EJECT! BOT DUEL INCOMING! ⚔️
-            </div>
-          )}
-
         </div>
       </div>
 
 
-      {/* 2. RED BOT FIGHTER (CRIMSON NINJA) */}
+      {/* 2. RED BOT FIGHTER (CRIMSON NINJA - PURE COMBAT ACTION) */}
       {redVisible && (
         <div
           className="absolute z-50 pointer-events-none"
@@ -624,18 +600,6 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Arcade Retro Health Bar (When Fighting) */}
-            {missionPhase === 'landed_fighting' && scrollProgress <= 0.05 && (
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
-                <span className="font-mono text-[8px] font-black text-[#FF2A5F] tracking-tighter">
-                  RED BOT
-                </span>
-                <div className="w-9 h-1.5 bg-slate-200 border border-slate-700 rounded-sm overflow-hidden">
-                  <div className="h-full bg-[#FF2A5F] w-[85%]" />
-                </div>
-              </div>
-            )}
-
             {/* Animated Sprite */}
             <StickmanFighterSprite 
               team="red" 
@@ -649,7 +613,7 @@ export default function JetMissionScrollytelling({
       )}
 
 
-      {/* 3. BLUE BOT FIGHTER (COBALT SHINOBI) */}
+      {/* 3. BLUE BOT FIGHTER (COBALT SHINOBI - PURE COMBAT ACTION) */}
       {blueVisible && (
         <div
           className="absolute z-50 pointer-events-none"
@@ -673,18 +637,6 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Arcade Retro Health Bar (When Fighting) */}
-            {missionPhase === 'landed_fighting' && scrollProgress <= 0.05 && (
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
-                <span className="font-mono text-[8px] font-black text-[#2563EB] tracking-tighter">
-                  BLUE BOT
-                </span>
-                <div className="w-9 h-1.5 bg-slate-200 border border-slate-700 rounded-sm overflow-hidden">
-                  <div className="h-full bg-[#2563EB] w-[90%]" />
-                </div>
-              </div>
-            )}
-
             {/* Animated Sprite */}
             <StickmanFighterSprite 
               team="blue" 
@@ -693,40 +645,6 @@ export default function JetMissionScrollytelling({
               isJumping={missionPhase === 'dropping' || fightCycle > 2.0}
             />
 
-          </div>
-        </div>
-      )}
-
-
-      {/* 4. DYNAMIC COMBAT IMPACT POPUPS (POW! CLASH! PARRY!) */}
-      {combatEvent && missionPhase === 'landed_fighting' && (
-        <div 
-          className="absolute z-50 pointer-events-none"
-          style={{
-            left: `${(redX + blueX) / 2 + (combatEvent.offset || 0)}px`,
-            top: `${(redY + blueY) / 2 - 38}px`,
-            transform: 'translate(-50%, -50%)'
-          }}
-        >
-          <div className="flex items-center gap-1 font-mono text-[10px] font-black text-slate-900 bg-white/95 px-2 py-0.5 rounded-full border border-blue-500 shadow-md animate-bounce whitespace-nowrap">
-            <span>{combatEvent.text}</span>
-          </div>
-        </div>
-      )}
-
-      {/* 5. INITIAL LANDING IMPACT PUFF */}
-      {impactPuff && (
-        <div 
-          className="absolute z-50 pointer-events-none animate-ping"
-          style={{
-            left: `${anchors.letterT.x}px`,
-            top: `${anchors.letterT.y - 14}px`,
-            transform: 'translate(-50%, -50%)'
-          }}
-        >
-          <div className="flex items-center gap-1 font-mono text-[11px] font-black text-[#FF2A5F]">
-            <span>💥</span>
-            <span>BOT DUEL BEGINS!</span>
           </div>
         </div>
       )}
