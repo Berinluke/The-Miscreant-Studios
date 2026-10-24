@@ -14,7 +14,6 @@ export default function TopNavbar({ activeSlide, onNavigate }) {
 
   const navLinks = [
     { id: 'games', label: 'Games', target: '#games' },
-    { id: 'engine', label: '128Hz Engine', target: '#engine' },
     { id: 'culture', label: 'Studio', target: '#culture' },
     { id: 'careers', label: 'Careers', target: '#careers' },
   ];

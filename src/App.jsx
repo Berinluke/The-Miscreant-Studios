@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Slide1HeroSkyDeck from './components/Slide1HeroSkyDeck';
 import Slide2Multiverse from './components/Slide2Multiverse';
-import Slide3SiliconEngine from './components/Slide3SiliconEngine';
 import Slide4ChennaiWarRoom from './components/Slide4ChennaiWarRoom';
 import Slide5DispatchCareers from './components/Slide5DispatchCareers';
 import QuickApplyModal from './components/QuickApplyModal';
@@ -20,7 +19,7 @@ export default function App() {
       }
     }
 
-    const sectionIds = ['hero', 'games', 'engine', 'culture', 'careers'];
+    const sectionIds = ['hero', 'games', 'culture', 'careers'];
     const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
     const observer = new IntersectionObserver(
@@ -58,13 +57,10 @@ export default function App() {
       {/* Slide 2: Games Showcase */}
       <Slide2Multiverse />
 
-      {/* Slide 3: 128Hz Engine */}
-      <Slide3SiliconEngine />
-
-      {/* Slide 4: Studio Culture & Team */}
+      {/* Slide 3: Studio Culture & Team */}
       <Slide4ChennaiWarRoom />
 
-      {/* Slide 5: Careers & Contact */}
+      {/* Slide 4: Careers & Contact */}
       <Slide5DispatchCareers 
         onSelectJob={(job) => setActiveJobModal(job)} 
       />
