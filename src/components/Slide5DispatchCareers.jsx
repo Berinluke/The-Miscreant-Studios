@@ -29,7 +29,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
       <div className="max-w-7xl mx-auto w-full space-y-16 pl-6 sm:pl-12">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-200 pb-8">
+        <div className="border-b border-slate-200 pb-8">
           <div className="space-y-4 max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF2A5F]">
               Careers
@@ -40,10 +40,6 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
             <p className="text-slate-600 text-lg sm:text-xl font-normal leading-relaxed">
               We actively welcome ambitious freshers and junior developers. If you have raw drive and want to build great games without corporate red tape, we want to hear from you.
             </p>
-          </div>
-
-          <div className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-full">
-            Freshers &amp; Juniors Welcome • Zero-Crunch Policy
           </div>
         </div>
 
@@ -61,7 +57,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                    <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
                       {job.level}
                     </span>
                     <span className="text-xs text-slate-400">
@@ -127,7 +123,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
               <a 
                 href={`mailto:${studioInfo.emails.careers}?subject=Application%20for%20The%20Miscreant%20Studios`}
                 onClick={triggerConfetti}
-                className="px-6 py-3.5 rounded-full bg-[#FF2A5F] hover:bg-[#e01e4f] text-white text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-[#FF2A5F] hover:bg-[#e01e4f] text-white text-xs font-bold uppercase tracking-wider transition-all active:scale-95 flex items-center gap-2"
               >
                 <Mail className="w-4 h-4" />
                 <span>Email Us</span>
@@ -135,7 +131,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
 
               <button
                 onClick={() => handleCopyEmail(studioInfo.emails.careers)}
-                className="px-5 py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-bold uppercase tracking-wider border border-slate-700 transition-all flex items-center gap-2"
+                className="px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-bold uppercase tracking-wider border border-slate-700 transition-all flex items-center gap-2"
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 <span>{copiedEmail ? 'Copied' : 'Copy Email'}</span>

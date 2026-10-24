@@ -61,7 +61,7 @@ export default function Slide2Multiverse() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${
+                    <span className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded ${
                       isSelected ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-600'
                     }`}>
                       {game.stats.tick || game.stats.fps || 'Active'}
