@@ -76,8 +76,8 @@ export default function Slide2Multiverse() {
           {/* Right: Selected Game Presentation Card (7 cols) with Shinobi Battle Arena along the Marked Red Roof */}
           <div className="lg:col-span-7 relative">
             
-            {/* Naruto vs Sasuke Shinobi War Battle Stage on the Card Roof */}
-            <div className="absolute -top-[68px] left-0 right-0 h-[76px] pointer-events-none overflow-visible z-20">
+            {/* Naruto vs Sasuke Shinobi War Battle Stage on the Card Roof (60 FPS Native Canvas) */}
+            <div className="absolute -top-[108px] left-0 right-0 h-[110px] pointer-events-none overflow-visible z-20">
               <ShinobiBattleStage />
             </div>
 
