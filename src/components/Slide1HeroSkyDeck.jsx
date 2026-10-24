@@ -12,6 +12,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
   const letterTRef = useRef(null);
   const studiosRef = useRef(null);
   const btnRef = useRef(null);
+  const monitorRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -37,6 +38,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
         letterTRef={letterTRef}
         studiosRef={studiosRef}
         btnRef={btnRef}
+        monitorRef={monitorRef}
       />
 
       {/* Main Hero Stage */}
@@ -104,7 +106,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
         </div>
 
         {/* Right: Big Hand-Drawn Blue Pen Joystick (Sticky & completely stationary) */}
-        <div className="lg:col-span-5 relative flex items-center justify-center sticky top-20">
+        <div ref={monitorRef} className="lg:col-span-5 relative flex items-center justify-center sticky top-20">
           <BluePenDoodleJoystick />
         </div>
 

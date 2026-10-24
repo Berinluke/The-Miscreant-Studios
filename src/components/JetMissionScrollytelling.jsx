@@ -6,155 +6,184 @@ import React, { useState, useEffect } from 'react';
  * High-character authentic ballpoint pen stickman combat sprite:
  * - Red Bot: Crimson Ninja with flowing headband ribbons & red ink Katana.
  * - Blue Bot: Cobalt Shinobi with flowing headband ribbons & blue ink Bo-Staff.
- * - Dynamic poses: Idle guard, punch rush, flying dragon kick, katana slash,
- *   bo-staff spin, block shield, hurt/knockback, and 360-flip.
- * - Completely clean: No text bubbles, no dialogue, no labels.
+ * - Dynamic Kung-Fu Poses:
+ *   - idle: wide balanced horse stance with martial arts guard.
+ *   - dash: aggressive forward sprint stride.
+ *   - flying_kick: horizontal airborne dropkick with pointed foot.
+ *   - wall_perch: feet planted on vertical wall/bezel, deep spring crouch.
+ *   - wall_spring: explosive leap springing away from the wall.
+ *   - slash: dynamic weapon strike with curved ink contrail.
+ *   - sweep: low crouch sweeping kick.
+ *   - matrix_dodge: arched backward dodging strike.
+ *   - recoil_hit: pushed back from collision.
+ * - Zero dialogue, zero text, pure martial arts cinema!
  */
-function StickmanFighterSprite({ team, pose, facing = 'right', isJumping = false }) {
+function StickmanFighterSprite({ team, pose, facing = 'right', rotation = 0 }) {
   const isRed = team === 'red';
   const primaryColor = isRed ? '#FF2A5F' : '#2563EB';
   const weaponColor = isRed ? '#DC2626' : '#1D4ED8';
   const inkColor = '#0F172A';
 
-  // Flip horizontally if facing left
-  const flipTransform = facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)';
+  // Base flip for horizontal direction
+  const scaleX = facing === 'left' ? -1 : 1;
 
   return (
     <div 
-      className="relative select-none pointer-events-none"
-      style={{ transform: flipTransform, transformOrigin: 'center center' }}
+      className="relative select-none pointer-events-none transition-transform duration-75"
+      style={{ 
+        transform: `scaleX(${scaleX}) rotate(${rotation}deg)`, 
+        transformOrigin: 'center center' 
+      }}
     >
       <svg 
-        width="46" 
-        height="52" 
-        viewBox="0 0 46 52" 
+        width="48" 
+        height="54" 
+        viewBox="0 0 48 54" 
         fill="none" 
         stroke={inkColor} 
-        strokeWidth="2.5" 
+        strokeWidth="2.6" 
         strokeLinecap="round" 
         strokeLinejoin="round"
-        className="overflow-visible drop-shadow-[0_4px_8px_rgba(15,23,42,0.18)]"
+        className="overflow-visible drop-shadow-[0_4px_10px_rgba(15,23,42,0.22)]"
       >
         {/* Animated Headband Ribbons Fluttering in the Wind */}
-        <g stroke={primaryColor} strokeWidth="2.4">
-          <path d="M 12 11 Q 5 7, 0 11 Q -5 15, -12 12" className="animate-pulse" />
-          <path d="M 12 13 Q 6 11, 2 17 Q -2 21, -8 20" />
+        <g stroke={primaryColor} strokeWidth="2.5">
+          <path d="M 12 11 Q 5 6, -2 10 Q -8 15, -14 12" className="animate-pulse" />
+          <path d="M 12 13 Q 5 11, 0 17 Q -5 22, -10 20" />
         </g>
 
         {/* Head */}
-        <circle cx="20" cy="12" r="7" fill="#FAF8F2" />
+        <circle cx="21" cy="12" r="7" fill="#FAF8F2" />
         
         {/* Headband / Cap */}
-        <path d="M 13 11 L 27 11" stroke={primaryColor} strokeWidth="3" />
+        <path d="M 14 11 L 28 11" stroke={primaryColor} strokeWidth="3.2" />
         
         {/* Fierce Anime Combat Eyes */}
-        <path d="M 17 11 L 20 13" stroke={inkColor} strokeWidth="1.6" />
-        <path d="M 23 11 L 20 13" stroke={inkColor} strokeWidth="1.6" />
-        <circle cx="21" cy="13" r="0.9" fill={primaryColor} />
+        <path d="M 18 11 L 21 13" stroke={inkColor} strokeWidth="1.6" />
+        <path d="M 24 11 L 21 13" stroke={inkColor} strokeWidth="1.6" />
+        <circle cx="22" cy="13" r="0.9" fill={primaryColor} />
 
         {/* Torso Spine */}
-        <line x1="20" y1="19" x2="20" y2="33" />
+        <line x1="21" y1="19" x2="21" y2="34" />
 
         {/* --- DYNAMIC POSES & WEAPONS --- */}
-        {pose === 'punch' && (
+        
+        {/* 1. WALL PERCH (Feet planted firmly against vertical wall / PC bezel) */}
+        {pose === 'wall_perch' && (
           <>
-            {/* Punching Arm Extended with Speed Contrails */}
-            <line x1="20" y1="23" x2="38" y2="21" strokeWidth="2.8" stroke={weaponColor} />
-            <circle cx="38" cy="21" r="2.5" fill={primaryColor} />
-            <line x1="20" y1="23" x2="14" y2="28" />
-            <line x1="14" y1="28" x2="11" y2="23" />
-            {/* Speed Lines */}
-            <line x1="40" y1="18" x2="46" y2="18" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="2 2" />
-            <line x1="41" y1="24" x2="47" y2="24" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="2 2" />
-            {/* Stance Legs */}
-            <path d="M 20 33 L 14 42 L 8 50" />
-            <path d="M 20 33 L 28 41 L 34 49" />
+            {/* Clinging Hands touching the wall */}
+            <path d="M 21 23 L 12 20 L 4 22" strokeWidth="2.8" />
+            <path d="M 21 23 L 28 18 L 34 14" stroke={weaponColor} strokeWidth="2.6" />
+            {/* Knees deeply bent in high-tension wall spring */}
+            <path d="M 21 34 L 11 38 L 2 34" strokeWidth="3" />
+            <path d="M 21 34 L 14 44 L 2 48" strokeWidth="3" stroke={primaryColor} />
+            {/* Wall contact dots */}
+            <circle cx="2" cy="34" r="2" fill={primaryColor} />
+            <circle cx="2" cy="48" r="2" fill={primaryColor} />
           </>
         )}
 
-        {pose === 'kick' && (
+        {/* 2. WALL SPRING (Exploding off the wall towards opponent) */}
+        {pose === 'wall_spring' && (
           <>
-            {/* Guard Arms */}
-            <path d="M 20 23 L 13 20 L 10 25" />
-            <path d="M 20 23 L 26 21 L 28 27" />
-            {/* High Flying Roundhouse Kick */}
-            <line x1="20" y1="33" x2="38" y2="19" strokeWidth="3" stroke={primaryColor} />
-            <path d="M 38 19 L 44 16" stroke={weaponColor} strokeWidth="3" />
-            {/* Standing / Pivoting Leg */}
-            <path d="M 20 33 L 15 41 L 12 50" />
+            {/* Arms lunging forward */}
+            <line x1="21" y1="23" x2="42" y2="21" strokeWidth="3" stroke={weaponColor} />
+            <circle cx="42" cy="21" r="2.5" fill={primaryColor} />
+            <path d="M 21 23 L 13 18 L 8 14" />
+            {/* Legs kicked completely back springing from the wall */}
+            <line x1="21" y1="34" x2="2" y2="40" strokeWidth="3.2" />
+            <line x1="21" y1="34" x2="6" y2="46" strokeWidth="3.2" />
+            {/* Spring Thrust Lines */}
+            <line x1="-3" y1="38" x2="-10" y2="38" stroke={primaryColor} strokeWidth="1.8" strokeDasharray="3 3" />
+            <line x1="-1" y1="44" x2="-8" y2="44" stroke={primaryColor} strokeWidth="1.8" strokeDasharray="3 3" />
           </>
         )}
 
-        {pose === 'air_kick' && (
+        {/* 3. FLYING KICK (Airborne horizontal dropkick) */}
+        {pose === 'flying_kick' && (
           <>
-            {/* Aerodynamic Dive Kick */}
-            <path d="M 20 22 L 10 16 L 4 18" />
-            <path d="M 20 22 L 28 17 L 34 14" stroke={weaponColor} strokeWidth="2.5" />
-            {/* Front Dropkick Leg */}
-            <line x1="20" y1="33" x2="42" y2="40" strokeWidth="3.2" stroke={primaryColor} />
-            <circle cx="42" cy="40" r="2.5" fill={weaponColor} />
+            {/* Aerodynamic Guard Arms */}
+            <path d="M 21 22 L 11 16 L 5 18" />
+            <path d="M 21 22 L 30 17 L 36 13" stroke={weaponColor} strokeWidth="2.6" />
+            {/* Front Dropkick Leg Extended with Wind Trail */}
+            <line x1="21" y1="34" x2="44" y2="32" strokeWidth="3.4" stroke={primaryColor} />
+            <circle cx="44" cy="32" r="2.6" fill={weaponColor} />
             {/* Tucked Back Leg */}
-            <path d="M 20 33 L 10 37 L 16 45" />
+            <path d="M 21 34 L 11 38 L 17 46" />
           </>
         )}
 
+        {/* 4. DASH FORWARD (Sprinting attack) */}
+        {pose === 'dash' && (
+          <>
+            <line x1="21" y1="23" x2="38" y2="21" strokeWidth="2.8" stroke={weaponColor} />
+            <circle cx="38" cy="21" r="2.5" fill={primaryColor} />
+            <path d="M 21 23 L 13 28 L 10 23" />
+            <path d="M 21 34 L 13 43 L 6 51" />
+            <path d="M 21 34 L 30 42 L 37 49" strokeWidth="3" />
+          </>
+        )}
+
+        {/* 5. WEAPON SLASH (Katana or Staff strike) */}
         {pose === 'slash' && (
           <>
-            {/* Katana / Blade Slash */}
-            <path d="M 20 22 L 29 16 L 36 10" strokeWidth="2.8" />
+            <path d="M 21 22 L 31 16 L 38 10" strokeWidth="2.8" />
             {/* Glowing Weapon Arc */}
             {isRed ? (
-              <path d="M 36 10 L 46 2 C 48 16, 44 28, 30 38" stroke={weaponColor} strokeWidth="3" strokeLinecap="round" />
+              <path d="M 38 10 L 48 3 C 50 17, 46 30, 32 40" stroke={weaponColor} strokeWidth="3.2" strokeLinecap="round" />
             ) : (
-              <line x1="12" y1="38" x2="42" y2="6" stroke={weaponColor} strokeWidth="3.2" strokeLinecap="round" />
+              <line x1="10" y1="40" x2="44" y2="6" stroke={weaponColor} strokeWidth="3.4" strokeLinecap="round" />
             )}
-            <path d="M 20 22 L 14 26 L 10 24" />
-            {/* Combat Stride Legs */}
-            <path d="M 20 33 L 13 41 L 7 49" />
-            <path d="M 20 33 L 29 40 L 37 47" />
+            <path d="M 21 22 L 14 26 L 10 24" />
+            <path d="M 21 34 L 13 42 L 7 50" />
+            <path d="M 21 34 L 30 41 L 38 48" />
           </>
         )}
 
-        {pose === 'block' && (
+        {/* 6. MATRIX DODGE (Arched back under incoming strike) */}
+        {pose === 'matrix_dodge' && (
           <>
-            {/* Defensive X-Guard */}
-            <line x1="20" y1="23" x2="28" y2="16" strokeWidth="2.8" />
-            <line x1="28" y1="16" x2="34" y2="24" strokeWidth="2.8" stroke={weaponColor} />
-            <line x1="20" y1="23" x2="28" y2="24" strokeWidth="2.8" />
-            <line x1="28" y1="24" x2="34" y2="16" strokeWidth="2.8" stroke={weaponColor} />
-            {/* Energy Shield Spark */}
-            <circle cx="33" cy="20" r="5" fill="none" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="3 3" />
-            {/* Braced Legs */}
-            <path d="M 20 33 L 12 41 L 8 49" />
-            <path d="M 20 33 L 26 41 L 30 49" />
+            <path d="M 21 23 L 11 18 L 6 12" />
+            <path d="M 21 23 L 30 20 L 36 24" stroke={weaponColor} strokeWidth="2.6" />
+            {/* Deep bent stance */}
+            <path d="M 21 34 L 10 40 L 4 48" />
+            <path d="M 21 34 L 32 41 L 39 48" />
           </>
         )}
 
-        {pose === 'hurt' && (
+        {/* 7. LOW SWEEP */}
+        {pose === 'sweep' && (
           <>
-            {/* Arched Knockback Body */}
-            <path d="M 20 23 L 12 16 L 6 19" />
-            <path d="M 20 23 L 14 28 L 8 32" />
-            <path d="M 20 33 L 14 39 L 10 47" />
-            <path d="M 20 33 L 22 41 L 20 49" />
+            <path d="M 21 24 L 13 20 L 9 25" />
+            <path d="M 21 24 L 28 22 L 32 28" />
+            {/* Sweeping leg flat along ground */}
+            <line x1="21" y1="34" x2="44" y2="48" strokeWidth="3.2" stroke={primaryColor} />
+            <path d="M 21 34 L 13 41 L 8 49" />
           </>
         )}
 
-        {/* DEFAULT / IDLE COMBAT STANCE */}
+        {/* 8. RECOIL / KNOCKBACK */}
+        {pose === 'recoil' && (
+          <>
+            <path d="M 21 23 L 12 16 L 6 19" />
+            <path d="M 21 23 L 14 28 L 8 32" />
+            <path d="M 21 34 L 13 39 L 9 47" />
+            <path d="M 21 34 L 22 41 L 20 49" />
+          </>
+        )}
+
+        {/* 9. DEFAULT / IDLE COMBAT STANCE (Wide, athletic horse guard) */}
         {pose === 'idle' && (
           <>
-            {/* Martial Arts Bouncing Guard with Held Weapon */}
-            <path d="M 20 22 L 13 25 L 11 20" />
-            <path d="M 20 22 L 28 20 L 32 16" />
-            {/* Weapon resting in hand */}
+            <path d="M 21 22 L 13 25 L 11 20" />
+            <path d="M 21 22 L 29 20 L 33 16" />
             {isRed ? (
-              <line x1="32" y1="16" x2="42" y2="4" stroke={weaponColor} strokeWidth="2.8" strokeLinecap="round" />
+              <line x1="33" y1="16" x2="44" y2="4" stroke={weaponColor} strokeWidth="2.8" strokeLinecap="round" />
             ) : (
-              <line x1="24" y1="30" x2="36" y2="6" stroke={weaponColor} strokeWidth="2.6" strokeLinecap="round" />
+              <line x1="24" y1="30" x2="38" y2="6" stroke={weaponColor} strokeWidth="2.6" strokeLinecap="round" />
             )}
-            {/* Ready Legs */}
-            <path d="M 20 33 L 15 42 L 12 50" />
-            <path d="M 20 33 L 25 41 L 28 49" />
+            <path d="M 21 34 L 14 43 L 9 51" strokeWidth="2.8" />
+            <path d="M 21 34 L 28 42 L 33 50" strokeWidth="2.8" />
           </>
         )}
       </svg>
@@ -169,22 +198,24 @@ function StickmanFighterSprite({ team, pose, facing = 'right', isJumping = false
  * 1. Entry: Fighter Jet enters from top-left and flies directly to the area above the 'T' in MISCREANT.
  * 2. Drop: 2 Stickmen troops eject from the jet and drop straight down onto the 'T'.
  * 3. Land: They stick the landing right on top of the 'T'. Jet departs with afterburners.
- * 4. BOT FIGHT ENGINE (AUTOPLAYING VIDEOGAME ACTION MOVIE - ZERO DIALOGUE / TEXT):
- *    - The two stickmen are OPPONENTS (Red Bot vs Blue Bot).
- *    - Pure visual combat: jabs, parries, sweeps, flying kicks, slashes, and acrobatics.
- *    - They launch into the air together!
- *    - WHILE FALLING IN THE AIR down the marked channel between title and monitor, they fight furiously.
- *    - They hit the desk near the controller, clash in a rapid ground duel, and somersault back up to 'T' in an endless epic fight!
- *    - On scroll, the battle expands across the words and down into Slide 2!
+ * 4. BOT FIGHT & PARKOUR WALL-JUMP ENGINE:
+ *    - The Text ('THE MISCREANT STUDIOS') and the PC Monitor are SOLID WALLS in their arena!
+ *    - They spar on 'T' with clean spacing (no overlapping!).
+ *    - Blue gets kicked towards the PC monitor, plants feet on the PC monitor bezel (wall-perch),
+ *      and springs off the PC monitor with massive force!
+ *    - Red rebounds off the vertical letter 'T', kicks off the letters, and dives into combat!
+ *    - Down in the chasm between Text and PC, they wall-jump back and forth while falling!
+ *    - They spar on the desk near the controller, and wall-run vertically back up to 'T'!
+ *    - 100% clean: Zero text badges, zero dialogue, pure kung-fu movie physics!
  */
 export default function JetMissionScrollytelling({ 
   containerRef, 
   letterTRef, 
   studiosRef, 
-  btnRef 
+  btnRef,
+  monitorRef
 }) {
   const [mounted, setMounted] = useState(false);
-  // 'entering' (0-1100ms) -> 'dropping' (1100-2100ms) -> 'landed_fighting' (2100ms+)
   const [missionPhase, setMissionPhase] = useState('entering');
   const [jetVanished, setJetVanished] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -195,15 +226,19 @@ export default function JetMissionScrollytelling({
     letterT: { x: 500, y: 200 },
     studios: { x: 260, y: 320 },
     button: { x: 220, y: 460 },
-    exitNextPage: { x: 260, y: 780 }
+    exitNextPage: { x: 260, y: 780 },
+    monitorLeft: 660,
+    monitorTop: 160
   });
 
-  // Combat State Machine for 60 FPS Bot Fight
+  // Combat State
   const [fightCycle, setFightCycle] = useState(0);
   const [redPose, setRedPose] = useState('idle');
   const [bluePose, setBluePose] = useState('idle');
   const [redFacing, setRedFacing] = useState('right');
   const [blueFacing, setBlueFacing] = useState('left');
+  const [redRotation, setRedRotation] = useState(0);
+  const [blueRotation, setBlueRotation] = useState(0);
 
   const updateAnchors = () => {
     if (!containerRef?.current) return;
@@ -237,12 +272,23 @@ export default function JetMissionScrollytelling({
       bY = rect.top - cRect.top;
     }
 
+    // Measure PC Monitor position for accurate wall-jumping!
+    let mLeft = tX + 140;
+    let mTop = tY - 30;
+    if (monitorRef?.current) {
+      const mRect = monitorRef.current.getBoundingClientRect();
+      mLeft = mRect.left - cRect.left + 50; // Left bezel edge of PC monitor
+      mTop = mRect.top - cRect.top;
+    }
+
     setAnchors({
       jetCenter: { x: jetTargetX, y: jetTargetY },
       letterT: { x: tX, y: tY },
       studios: { x: sX, y: sY },
       button: { x: bX, y: bY },
-      exitNextPage: { x: bX + 30, y: cRect.height + 40 }
+      exitNextPage: { x: bX + 30, y: cRect.height + 40 },
+      monitorLeft: mLeft,
+      monitorTop: mTop
     });
   };
 
@@ -253,7 +299,6 @@ export default function JetMissionScrollytelling({
     const handleResize = () => updateAnchors();
     window.addEventListener('resize', handleResize);
 
-    // Initial Drop Timeline:
     const dropTimer = setTimeout(() => {
       setMissionPhase('dropping');
     }, 1100);
@@ -266,7 +311,6 @@ export default function JetMissionScrollytelling({
       setJetVanished(true);
     }, 2600);
 
-    // Scroll tracker
     const handleScroll = () => {
       if (!containerRef?.current) return;
       const cRect = containerRef.current.getBoundingClientRect();
@@ -292,7 +336,7 @@ export default function JetMissionScrollytelling({
     return () => clearTimeout(t);
   }, [mounted]);
 
-  // 60 FPS FIGHTING ENGINE LOOP (WHEN LANDED)
+  // 60 FPS CONTINUOUS BOT FIGHT & PARKOUR WALL ENGINE
   useEffect(() => {
     if (missionPhase !== 'landed_fighting') return;
 
@@ -301,69 +345,121 @@ export default function JetMissionScrollytelling({
 
     const fightLoop = () => {
       const now = Date.now();
-      const elapsed = (now - startTime) / 1000; // in seconds
-      const cycleTime = elapsed % 10.5; // 10.5-second choreographed anime duel cycle
+      const elapsed = (now - startTime) / 1000;
+      const cycleTime = elapsed % 11.5; // 11.5s infinite parkour fight movie
       setFightCycle(cycleTime);
 
-      // --- COMBAT MOVE POSE SCHEDULER (PURE ACTIONS, ZERO TEXT) ---
+      // --- CHOREOGRAPHED MARTIAL ARTS & WALL-JUMP MOVES ---
       if (cycleTime < 2.0) {
-        // Phase 1: Fight on 'T'
+        // Phase 1: Sparring on 'T' with wide combat spacing
         setRedFacing('right');
         setBlueFacing('left');
-        if (cycleTime < 0.6) {
+        setRedRotation(0);
+        setBlueRotation(0);
+
+        if (cycleTime < 0.8) {
           setRedPose('idle');
           setBluePose('idle');
-        } else if (cycleTime < 1.1) {
-          setRedPose('punch');
-          setBluePose('block');
-        } else if (cycleTime < 1.6) {
-          setRedPose('block');
-          setBluePose('kick');
+        } else if (cycleTime < 1.4) {
+          setRedPose('dash');
+          setBluePose('matrix_dodge');
         } else {
-          setRedPose('slash');
-          setBluePose('hurt');
+          setRedPose('flying_kick');
+          setBluePose('recoil');
         }
       } else if (cycleTime < 3.8) {
-        // Phase 2: Launch into Air
-        setRedFacing('right');
-        setBlueFacing('left');
-        setRedPose('slash');
-        setBluePose('air_kick');
-      } else if (cycleTime < 7.2) {
-        // Phase 3: FALLING AIR BATTLE (MID-AIR COMBAT DOWN THE MARKED CHANNEL)
-        const sub = cycleTime - 3.8;
-        if (sub < 0.8) {
-          setRedPose('air_kick');
-          setBluePose('slash');
-        } else if (sub < 1.6) {
-          setRedPose('slash');
-          setBluePose('block');
-        } else if (sub < 2.4) {
-          setRedPose('block');
-          setBluePose('air_kick');
+        // Phase 2: Blue gets kicked to PC Monitor wall -> plants feet on PC bezel -> springs off!
+        const sub = cycleTime - 2.0;
+        if (sub < 0.9) {
+          // Blue flying towards PC monitor wall
+          setBlueFacing('left');
+          setBluePose('recoil');
+          setBlueRotation(15);
+          setRedFacing('right');
+          setRedPose('dash');
+          setRedRotation(0);
+        } else if (sub < 1.3) {
+          // Blue PLANTS FEET ON THE PC MONITOR BEZEL (Wall Perch!)
+          setBlueFacing('left');
+          setBluePose('wall_perch');
+          setBlueRotation(0);
+          setRedFacing('right');
+          setRedPose('flying_kick');
         } else {
+          // Blue EXPLODES OFF PC MONITOR WALL!
+          setBlueFacing('left');
+          setBluePose('wall_spring');
+          setBlueRotation(-10);
+          setRedFacing('right');
+          setRedPose('slash');
+        }
+      } else if (cycleTime < 5.8) {
+        // Phase 3: Clash in mid-air -> Red rebounds off the vertical letter 'T'!
+        const sub = cycleTime - 3.8;
+        if (sub < 0.7) {
+          // Mid-air collision
+          setRedFacing('right');
+          setBlueFacing('left');
+          setRedPose('recoil');
+          setBluePose('slash');
+        } else if (sub < 1.3) {
+          // Red plants feet on the vertical letter 'T' (Text Wall Perch!)
+          setRedFacing('right');
+          setRedPose('wall_perch');
+          setRedRotation(0);
+          setBlueFacing('left');
+          setBluePose('flying_kick');
+        } else {
+          // Red springs off the letter 'T'!
+          setRedFacing('right');
+          setRedPose('wall_spring');
+          setBlueFacing('left');
+          setBluePose('matrix_dodge');
+        }
+      } else if (cycleTime < 8.6) {
+        // Phase 4: FALLING CHASM DUEL (Wall-jumping between Text and PC Monitor!)
+        const sub = cycleTime - 5.8;
+        if (sub < 0.9) {
+          // Red kicking off PC monitor at lower height
+          setRedFacing('left');
+          setRedPose('wall_spring');
+          setBlueFacing('right');
+          setBluePose('flying_kick');
+        } else if (sub < 1.8) {
+          // Blue kicks off the word STUDIOS (Text Wall)
+          setBlueFacing('right');
+          setBluePose('wall_spring');
+          setRedFacing('left');
+          setRedPose('slash');
+        } else {
+          // Mid-air spin flurry while falling
+          setRedFacing('right');
+          setBlueFacing('left');
           setRedPose('slash');
           setBluePose('slash');
         }
-      } else if (cycleTime < 9.0) {
-        // Phase 4: Desk / Controller Landing & Duel
-        const sub = cycleTime - 7.2;
+      } else if (cycleTime < 10.2) {
+        // Phase 5: Desk / Controller Floor Duel
+        const sub = cycleTime - 8.6;
         if (sub < 0.6) {
-          setRedPose('idle');
-          setBluePose('idle');
-        } else if (sub < 1.2) {
-          setRedPose('punch');
-          setBluePose('hurt');
+          setRedFacing('right');
+          setBlueFacing('left');
+          setRedPose('sweep');
+          setBluePose('matrix_dodge');
         } else {
-          setRedPose('hurt');
-          setBluePose('kick');
+          setRedFacing('right');
+          setBlueFacing('left');
+          setRedPose('slash');
+          setBluePose('flying_kick');
         }
       } else {
-        // Phase 5: Ninja Leap Return back to 'T'
+        // Phase 6: Vertical Ninja Wall-Run Climb back to 'T'
         setRedFacing('left');
         setBlueFacing('left');
-        setRedPose('air_kick');
-        setBluePose('slash');
+        setRedPose('dash');
+        setBluePose('flying_kick');
+        setRedRotation(-25);
+        setBlueRotation(-25);
       }
 
       animId = requestAnimationFrame(fightLoop);
@@ -393,16 +489,19 @@ export default function JetMissionScrollytelling({
   const jetRotation = isJetDeparting ? -18 : 0;
   const jetOpacity = isJetDeparting ? 0 : 1;
 
-  // --- 2 BOT FIGHTERS TRAJECTORY COMPUTATION ---
-  const tX = anchors.letterT.x;
-  const tY = anchors.letterT.y; // Feet rest on top bar of the 'T'
+  // --- PARKOUR ARENA DIMENSIONS & WALLS ---
+  const wallLeft = anchors.letterT.x;        // Left wall = Right edge of 'MISCREANT' text
+  const wallRight = anchors.monitorLeft;      // Right wall = Left bezel edge of PC monitor
+  const chasmSpan = Math.max(130, wallRight - wallLeft);
+  const perchY = anchors.letterT.y;           // Platform = Top stroke of letter 'T'
+  const floorY = perchY + 250;               // Floor = Desk level near controller
   const sProgress = scrollProgress;
 
   // Coordinates when in initial entry / drop
-  let redX = tX - 16;
-  let redY = tY;
-  let blueX = tX + 16;
-  let blueY = tY;
+  let redX = wallLeft - 32;
+  let redY = perchY;
+  let blueX = wallLeft + 32;
+  let blueY = perchY;
   let redParachute = false;
   let blueParachute = false;
   let redVisible = missionPhase !== 'entering';
@@ -410,108 +509,161 @@ export default function JetMissionScrollytelling({
   let dropTransition = 'none';
 
   if (missionPhase === 'entering') {
-    redX = anchors.jetCenter.x - 10;
+    redX = anchors.jetCenter.x - 12;
     redY = anchors.jetCenter.y + 10;
-    blueX = anchors.jetCenter.x + 10;
+    blueX = anchors.jetCenter.x + 12;
     blueY = anchors.jetCenter.y + 10;
   } else if (missionPhase === 'dropping') {
-    redX = tX - 16;
-    redY = tY;
-    blueX = tX + 16;
-    blueY = tY;
+    redX = wallLeft - 32;
+    redY = perchY;
+    blueX = wallLeft + 32;
+    blueY = perchY;
     redParachute = true;
     blueParachute = true;
     dropTransition = 'transform 1.05s cubic-bezier(0.22, 1, 0.36, 1)';
   } else if (missionPhase === 'landed_fighting') {
-    // If user is scrolled, follow scroll journey
+    // Scroll handling
     if (sProgress > 0.05) {
       if (sProgress <= 0.35) {
         const p = (sProgress - 0.05) / 0.30;
         const jumpArc = Math.sin(p * Math.PI) * 45;
-        redX = tX - 16 + (anchors.studios.x - tX) * p;
-        redY = tY + (anchors.studios.y - tY) * p - jumpArc;
-        blueX = tX + 16 + (anchors.studios.x - tX) * p;
-        blueY = tY + (anchors.studios.y - tY) * p - jumpArc;
+        redX = wallLeft - 32 + (anchors.studios.x - wallLeft) * p;
+        redY = perchY + (anchors.studios.y - perchY) * p - jumpArc;
+        blueX = wallLeft + 32 + (anchors.studios.x - wallLeft) * p;
+        blueY = perchY + (anchors.studios.y - perchY) * p - jumpArc;
       } else if (sProgress <= 0.70) {
         const p = (sProgress - 0.35) / 0.35;
         const jumpArc = Math.sin(p * Math.PI) * 35;
-        redX = anchors.studios.x - 16 + (anchors.button.x - anchors.studios.x) * p;
+        redX = anchors.studios.x - 32 + (anchors.button.x - anchors.studios.x) * p;
         redY = anchors.studios.y + (anchors.button.y - anchors.studios.y) * p - jumpArc;
-        blueX = anchors.studios.x + 16 + (anchors.button.x - anchors.studios.x) * p;
+        blueX = anchors.studios.x + 32 + (anchors.button.x - anchors.studios.x) * p;
         blueY = anchors.studios.y + (anchors.button.y - anchors.studios.y) * p - jumpArc;
       } else {
         const p = Math.min((sProgress - 0.70) / 0.35, 1.2);
-        redX = anchors.button.x - 16 + (anchors.exitNextPage.x - anchors.button.x) * p;
+        redX = anchors.button.x - 32 + (anchors.exitNextPage.x - anchors.button.x) * p;
         redY = anchors.button.y + (anchors.exitNextPage.y - anchors.button.y) * p;
-        blueX = anchors.button.x + 16 + (anchors.exitNextPage.x - anchors.button.x) * p;
+        blueX = anchors.button.x + 32 + (anchors.exitNextPage.x - anchors.button.x) * p;
         blueY = anchors.button.y + (anchors.exitNextPage.y - anchors.button.y) * p;
         redParachute = true;
         blueParachute = true;
       }
     } else {
-      // --- AUTOPLAYING VIDEOGAME BOT FIGHT (MATCHING THE USER'S MARKED PATH) ---
+      // --- CONTINUOUS PARKOUR WALL-JUMP DUEL ENGINE ---
       const t = fightCycle;
 
       if (t < 2.0) {
-        // Phase 1: Duel on the 'T'
-        const hop = Math.abs(Math.sin(t * 12)) * 5;
-        redX = tX - 18;
-        redY = tY - (redPose === 'kick' ? hop : 0);
-        blueX = tX + 18;
-        blueY = tY - (bluePose === 'kick' ? hop : 0);
+        // Phase 1: Sparring on the 'T' with clean 65px combat spacing
+        if (t < 0.8) {
+          redX = wallLeft - 32;
+          redY = perchY;
+          blueX = wallLeft + 32;
+          blueY = perchY;
+        } else if (t < 1.4) {
+          // Red rushes forward, Blue ducks back
+          redX = wallLeft - 10;
+          redY = perchY;
+          blueX = wallLeft + 42;
+          blueY = perchY;
+        } else {
+          // Red kicks Blue towards the PC Monitor
+          redX = wallLeft;
+          redY = perchY - 8;
+          blueX = wallLeft + 65;
+          blueY = perchY - 4;
+        }
       } else if (t < 3.8) {
-        // Phase 2: Launch into Air towards the marked diagonal channel
-        const p = (t - 2.0) / 1.8;
-        const jumpApex = Math.sin(p * Math.PI) * 65;
-        const targetX = tX + 45 * p;
-        const targetY = tY + 40 * p - jumpApex;
+        // Phase 2: Blue travels to PC Monitor wall -> plants feet on PC bezel -> springs off!
+        const sub = t - 2.0;
+        if (sub < 0.9) {
+          const p = sub / 0.9;
+          blueX = wallLeft + 65 + (wallRight - (wallLeft + 65)) * p;
+          blueY = perchY + 15 * p;
+          redX = wallLeft + 25 * p;
+          redY = perchY - 5;
+        } else if (sub < 1.3) {
+          // Blue is PLANTED ON PC MONITOR BEZEL (Wall Perch!)
+          blueX = wallRight - 4;
+          blueY = perchY + 15;
+          redX = wallLeft + 35;
+          redY = perchY;
+        } else {
+          // Blue SPRINGS OFF PC MONITOR WALL back towards Red!
+          const p = (sub - 1.3) / 0.5;
+          blueX = wallRight - 4 - (chasmSpan * 0.45) * p;
+          blueY = perchY + 15 - Math.sin(p * Math.PI) * 25;
+          redX = wallLeft + 35 + (chasmSpan * 0.15) * p;
+          redY = perchY;
+        }
+      } else if (t < 5.8) {
+        // Phase 3: Clash & Red rebounds onto the Text (Letter 'T' Wall!)
+        const sub = t - 3.8;
+        if (sub < 0.7) {
+          const p = sub / 0.7;
+          redX = (wallLeft + 50) - (chasmSpan * 0.45) * p;
+          redY = perchY + 10;
+          blueX = (wallRight - chasmSpan * 0.35) + 15 * p;
+          blueY = perchY + 5;
+        } else if (sub < 1.3) {
+          // Red is PLANTED ON LETTER 'T' (Text Wall Perch!)
+          redX = wallLeft - 16;
+          redY = perchY + 10;
+          blueX = wallLeft + chasmSpan * 0.5;
+          blueY = perchY - 12;
+        } else {
+          // Red SPRINGS OFF LETTER 'T' into the chasm!
+          const p = (sub - 1.3) / 0.7;
+          redX = wallLeft - 16 + (chasmSpan * 0.35) * p;
+          redY = perchY + 10 + 20 * p;
+          blueX = wallLeft + chasmSpan * 0.5 + 20 * p;
+          blueY = perchY + 25 * p;
+        }
+      } else if (t < 8.6) {
+        // Phase 4: FALLING CHASM DUEL (Wall-jumping between Text and PC Monitor down the gap)
+        const sub = t - 5.8;
+        const p = sub / 2.8;
+        const currentY = (perchY + 30) + (floorY - (perchY + 30)) * p;
 
-        redX = targetX - 16;
-        redY = targetY;
-        blueX = targetX + 16;
-        blueY = targetY - 6;
-      } else if (t < 7.2) {
-        // Phase 3: FALLING AIR BATTLE (MID-AIR CLASH DOWN THE MARKED PATH)
-        // User marked: from 'T' down through the channel between text and monitor (x: 520 to 670, y: 200 to 450)
-        const p = (t - 3.8) / 3.4;
-        const startX = tX + 45;
-        const startY = tY + 40;
-        const endX = tX + 145;
-        const endY = tY + 245;
+        if (sub < 0.9) {
+          // Red kicks off PC Monitor wall
+          redX = wallRight - 8;
+          redY = currentY;
+          blueX = wallLeft + chasmSpan * 0.35;
+          blueY = currentY - 15;
+        } else if (sub < 1.8) {
+          // Blue kicks off the Text wall (STUDIOS)
+          blueX = wallLeft + 12;
+          blueY = currentY;
+          redX = wallLeft + chasmSpan * 0.65;
+          redY = currentY - 10;
+        } else {
+          // Mid-air dual strike in center of chasm
+          const osc = Math.sin((sub - 1.8) * 8) * 20;
+          redX = wallLeft + chasmSpan * 0.5 - 24 + osc;
+          redY = currentY;
+          blueX = wallLeft + chasmSpan * 0.5 + 24 - osc;
+          blueY = currentY;
+        }
+      } else if (t < 10.2) {
+        // Phase 5: Desk / Controller Floor Duel
+        const sub = t - 8.6;
+        const floorCenter = wallLeft + chasmSpan * 0.5;
+        const sway = Math.sin(sub * 8) * 15;
 
-        const curX = startX + (endX - startX) * p;
-        const curY = startY + (endY - startY) * p;
-
-        // Dynamic aerial combat orbit/oscillation
-        const orbit = Math.sin(p * 8 * Math.PI) * 16;
-        redX = curX - 18 + orbit;
-        redY = curY;
-        blueX = curX + 18 - orbit;
-        blueY = curY - 5;
-      } else if (t < 9.0) {
-        // Phase 4: Desk / Controller Area Ground Duel
-        const deskX = tX + 145;
-        const deskY = tY + 250;
-        const recoil = Math.sin((t - 7.2) * 8) * 8;
-
-        redX = deskX - 22 + recoil;
-        redY = deskY;
-        blueX = deskX + 22 - recoil;
-        blueY = deskY;
+        redX = floorCenter - 32 + sway;
+        redY = floorY;
+        blueX = floorCenter + 32 - sway;
+        blueY = floorY;
       } else {
-        // Phase 5: Acrobatic Ninja Wall-Jump Return back to 'T'
-        const p = (t - 9.0) / 1.5;
-        const startX = tX + 145;
-        const startY = tY + 250;
-        const jumpApex = Math.sin(p * Math.PI) * 105;
+        // Phase 6: Vertical Ninja Wall-Run Climb back to 'T'
+        const p = (t - 10.2) / 1.3;
+        const jumpApex = Math.sin(p * Math.PI) * 90;
 
-        const curX = startX + (tX - startX) * p;
-        const curY = startY + (tY - startY) * p - jumpApex;
+        // Running up along the walls back to top of 'T'
+        redX = (wallLeft + 30) + ((wallLeft - 32) - (wallLeft + 30)) * p;
+        redY = floorY + (perchY - floorY) * p - jumpApex;
 
-        redX = curX - 16;
-        redY = curY;
-        blueX = curX + 16;
-        blueY = curY;
+        blueX = (wallRight - 20) + ((wallLeft + 32) - (wallRight - 20)) * p;
+        blueY = floorY + (perchY - floorY) * p - jumpApex;
       }
     }
   }
@@ -542,7 +694,7 @@ export default function JetMissionScrollytelling({
             <div className={`h-[2px] bg-blue-500 rounded-full transition-all duration-300 ${isJetDeparting ? 'w-28 animate-pulse' : 'w-14'}`} />
           </div>
 
-          {/* Afterburner Thruster Flame (ignites on departure) */}
+          {/* Afterburner Thruster Flame */}
           {isJetDeparting && (
             <div className="absolute right-[92%] top-1/2 -translate-y-1/2 flex items-center">
               <div className="w-12 h-3.5 bg-gradient-to-l from-orange-500 via-amber-300 to-transparent rounded-full blur-[1px] animate-pulse" />
@@ -574,7 +726,7 @@ export default function JetMissionScrollytelling({
       </div>
 
 
-      {/* 2. RED BOT FIGHTER (CRIMSON NINJA - PURE COMBAT ACTION) */}
+      {/* 2. RED BOT FIGHTER (CRIMSON NINJA - PARKOUR WALL RUNNER) */}
       {redVisible && (
         <div
           className="absolute z-50 pointer-events-none"
@@ -600,12 +752,12 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Animated Sprite */}
+            {/* Dynamic Sprite with Rotation */}
             <StickmanFighterSprite 
               team="red" 
               pose={redPose} 
               facing={redFacing}
-              isJumping={missionPhase === 'dropping' || fightCycle > 2.0}
+              rotation={redRotation}
             />
 
           </div>
@@ -613,7 +765,7 @@ export default function JetMissionScrollytelling({
       )}
 
 
-      {/* 3. BLUE BOT FIGHTER (COBALT SHINOBI - PURE COMBAT ACTION) */}
+      {/* 3. BLUE BOT FIGHTER (COBALT SHINOBI - PARKOUR WALL RUNNER) */}
       {blueVisible && (
         <div
           className="absolute z-50 pointer-events-none"
@@ -637,12 +789,12 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Animated Sprite */}
+            {/* Dynamic Sprite with Rotation */}
             <StickmanFighterSprite 
               team="blue" 
               pose={bluePose} 
               facing={blueFacing}
-              isJumping={missionPhase === 'dropping' || fightCycle > 2.0}
+              rotation={blueRotation}
             />
 
           </div>
