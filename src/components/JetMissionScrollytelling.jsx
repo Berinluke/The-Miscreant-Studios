@@ -1,14 +1,181 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+/**
+ * StickmanFighterSprite
+ * 
+ * High-character authentic ballpoint pen stickman combat sprite:
+ * - Red Bot: Crimson Ninja with flowing headband ribbons & red ink Katana.
+ * - Blue Bot: Cobalt Shinobi with flowing headband ribbons & blue ink Bo-Staff.
+ * - Dynamic poses: Idle guard, punch rush, flying dragon kick, katana slash,
+ *   bo-staff spin, block shield, hurt/knockback, and 360-flip.
+ */
+function StickmanFighterSprite({ team, pose, facing = 'right', isJumping = false }) {
+  const isRed = team === 'red';
+  const primaryColor = isRed ? '#FF2A5F' : '#2563EB';
+  const weaponColor = isRed ? '#DC2626' : '#1D4ED8';
+  const inkColor = '#0F172A';
+
+  // Flip horizontally if facing left
+  const flipTransform = facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)';
+
+  return (
+    <div 
+      className="relative select-none pointer-events-none"
+      style={{ transform: flipTransform, transformOrigin: 'center center' }}
+    >
+      <svg 
+        width="46" 
+        height="52" 
+        viewBox="0 0 46 52" 
+        fill="none" 
+        stroke={inkColor} 
+        strokeWidth="2.5" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+        className="overflow-visible drop-shadow-[0_4px_8px_rgba(15,23,42,0.18)]"
+      >
+        {/* Animated Headband Ribbons Fluttering in the Wind */}
+        <g stroke={primaryColor} strokeWidth="2.4">
+          <path d="M 12 11 Q 5 7, 0 11 Q -5 15, -12 12" className="animate-pulse" />
+          <path d="M 12 13 Q 6 11, 2 17 Q -2 21, -8 20" />
+        </g>
+
+        {/* Head */}
+        <circle cx="20" cy="12" r="7" fill="#FAF8F2" />
+        
+        {/* Headband / Cap */}
+        <path d="M 13 11 L 27 11" stroke={primaryColor} strokeWidth="3" />
+        
+        {/* Fierce Anime Combat Eyes */}
+        <path d="M 17 11 L 20 13" stroke={inkColor} strokeWidth="1.6" />
+        <path d="M 23 11 L 20 13" stroke={inkColor} strokeWidth="1.6" />
+        <circle cx="21" cy="13" r="0.9" fill={primaryColor} />
+
+        {/* Torso Spine */}
+        <line x1="20" y1="19" x2="20" y2="33" />
+
+        {/* --- DYNAMIC POSES & WEAPONS --- */}
+        {pose === 'punch' && (
+          <>
+            {/* Punching Arm Extended with Speed Contrails */}
+            <line x1="20" y1="23" x2="38" y2="21" strokeWidth="2.8" stroke={weaponColor} />
+            <circle cx="38" cy="21" r="2.5" fill={primaryColor} />
+            <line x1="20" y1="23" x2="14" y2="28" />
+            <line x1="14" y1="28" x2="11" y2="23" />
+            {/* Speed Lines */}
+            <line x1="40" y1="18" x2="46" y2="18" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="2 2" />
+            <line x1="41" y1="24" x2="47" y2="24" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="2 2" />
+            {/* Stance Legs */}
+            <path d="M 20 33 L 14 42 L 8 50" />
+            <path d="M 20 33 L 28 41 L 34 49" />
+          </>
+        )}
+
+        {pose === 'kick' && (
+          <>
+            {/* Guard Arms */}
+            <path d="M 20 23 L 13 20 L 10 25" />
+            <path d="M 20 23 L 26 21 L 28 27" />
+            {/* High Flying Roundhouse Kick */}
+            <line x1="20" y1="33" x2="38" y2="19" strokeWidth="3" stroke={primaryColor} />
+            <path d="M 38 19 L 44 16" stroke={weaponColor} strokeWidth="3" />
+            {/* Standing / Pivoting Leg */}
+            <path d="M 20 33 L 15 41 L 12 50" />
+          </>
+        )}
+
+        {pose === 'air_kick' && (
+          <>
+            {/* Aerodynamic Dive Kick */}
+            <path d="M 20 22 L 10 16 L 4 18" />
+            <path d="M 20 22 L 28 17 L 34 14" stroke={weaponColor} strokeWidth="2.5" />
+            {/* Front Dropkick Leg */}
+            <line x1="20" y1="33" x2="42" y2="40" strokeWidth="3.2" stroke={primaryColor} />
+            <circle cx="42" cy="40" r="2.5" fill={weaponColor} />
+            {/* Tucked Back Leg */}
+            <path d="M 20 33 L 10 37 L 16 45" />
+          </>
+        )}
+
+        {pose === 'slash' && (
+          <>
+            {/* Katana / Blade Slash */}
+            <path d="M 20 22 L 29 16 L 36 10" strokeWidth="2.8" />
+            {/* Glowing Weapon Arc */}
+            {isRed ? (
+              <path d="M 36 10 L 46 2 C 48 16, 44 28, 30 38" stroke={weaponColor} strokeWidth="3" strokeLinecap="round" />
+            ) : (
+              <line x1="12" y1="38" x2="42" y2="6" stroke={weaponColor} strokeWidth="3.2" strokeLinecap="round" />
+            )}
+            <path d="M 20 22 L 14 26 L 10 24" />
+            {/* Combat Stride Legs */}
+            <path d="M 20 33 L 13 41 L 7 49" />
+            <path d="M 20 33 L 29 40 L 37 47" />
+          </>
+        )}
+
+        {pose === 'block' && (
+          <>
+            {/* Defensive X-Guard */}
+            <line x1="20" y1="23" x2="28" y2="16" strokeWidth="2.8" />
+            <line x1="28" y1="16" x2="34" y2="24" strokeWidth="2.8" stroke={weaponColor} />
+            <line x1="20" y1="23" x2="28" y2="24" strokeWidth="2.8" />
+            <line x1="28" y1="24" x2="34" y2="16" strokeWidth="2.8" stroke={weaponColor} />
+            {/* Energy Shield Spark */}
+            <circle cx="33" cy="20" r="5" fill="none" stroke={primaryColor} strokeWidth="1.5" strokeDasharray="3 3" />
+            {/* Braced Legs */}
+            <path d="M 20 33 L 12 41 L 8 49" />
+            <path d="M 20 33 L 26 41 L 30 49" />
+          </>
+        )}
+
+        {pose === 'hurt' && (
+          <>
+            {/* Arched Knockback Body */}
+            <path d="M 20 23 L 12 16 L 6 19" />
+            <path d="M 20 23 L 14 28 L 8 32" />
+            <path d="M 20 33 L 14 39 L 10 47" />
+            <path d="M 20 33 L 22 41 L 20 49" />
+          </>
+        )}
+
+        {/* DEFAULT / IDLE COMBAT STANCE */}
+        {pose === 'idle' && (
+          <>
+            {/* Martial Arts Bouncing Guard with Held Weapon */}
+            <path d="M 20 22 L 13 25 L 11 20" />
+            <path d="M 20 22 L 28 20 L 32 16" />
+            {/* Weapon resting in hand */}
+            {isRed ? (
+              <line x1="32" y1="16" x2="42" y2="4" stroke={weaponColor} strokeWidth="2.8" strokeLinecap="round" />
+            ) : (
+              <line x1="24" y1="30" x2="36" y2="6" stroke={weaponColor} strokeWidth="2.6" strokeLinecap="round" />
+            )}
+            {/* Ready Legs */}
+            <path d="M 20 33 L 15 42 L 12 50" />
+            <path d="M 20 33 L 25 41 L 28 49" />
+          </>
+        )}
+      </svg>
+    </div>
+  );
+}
 
 /**
  * JetMissionScrollytelling
  * 
  * Choreography:
- * 1. Entry: Fighter Jet enters from top-left and flies directly to the green box area above the 'T' in MISCREANT.
- * 2. Drop: 2 Stickmen troops eject from the jet and drop straight down onto the 'T' in MISCREANT.
- * 3. Land: They stick the landing right on top of the 'T' with impact puff and stand ready.
- * 4. Scroll Out: When user scrolls down, the jet accelerates towards top-right corner with afterburners and vanishes.
- * 5. Scroll Journey: Stickmen jump from the 'T' down onto 'STUDIOS', then down onto 'Explore Our Games', and leap into page 2!
+ * 1. Entry: Fighter Jet enters from top-left and flies directly to the area above the 'T' in MISCREANT.
+ * 2. Drop: 2 Stickmen troops eject from the jet and drop straight down onto the 'T'.
+ * 3. Land: They stick the landing right on top of the 'T' with impact puff. Jet departs with afterburners.
+ * 4. BOT FIGHT ENGINE (AUTOPLAYING VIDEOGAME ACTION MOVIE):
+ *    - The two stickmen are OPPONENTS (Red Bot vs Blue Bot).
+ *    - They brawl on top of the 'T' (jabs, parries, sweeps).
+ *    - They launch into the air together!
+ *    - WHILE FALLING IN THE AIR down the marked channel between title and monitor, they fight furiously:
+ *      mid-air kicks, katana slashes, bo-staff spins, hit sparks, and comic combos!
+ *    - They hit the desk near the controller, clash in a rapid ground duel, and somersault back up to 'T' in an endless epic fight!
+ *    - On scroll, the battle expands across the words and down into Slide 2!
  */
 export default function JetMissionScrollytelling({ 
   containerRef, 
@@ -17,7 +184,7 @@ export default function JetMissionScrollytelling({
   btnRef 
 }) {
   const [mounted, setMounted] = useState(false);
-  // 'entering' (0-1100ms) -> 'dropping' (1100-2100ms) -> 'landed' (2100ms+)
+  // 'entering' (0-1100ms) -> 'dropping' (1100-2100ms) -> 'landed_fighting' (2100ms+)
   const [missionPhase, setMissionPhase] = useState('entering');
   const [jetVanished, setJetVanished] = useState(false);
   const [impactPuff, setImpactPuff] = useState(false);
@@ -32,23 +199,27 @@ export default function JetMissionScrollytelling({
     exitNextPage: { x: 260, y: 780 }
   });
 
+  // Combat State Machine for 60 FPS Bot Fight
+  const [fightCycle, setFightCycle] = useState(0);
+  const [combatEvent, setCombatEvent] = useState(null); // { text: '💥 CLASH!', x: 0, y: 0 }
+  const [redPose, setRedPose] = useState('idle');
+  const [bluePose, setBluePose] = useState('idle');
+  const [redFacing, setRedFacing] = useState('right');
+  const [blueFacing, setBlueFacing] = useState('left');
+
   const updateAnchors = () => {
     if (!containerRef?.current) return;
     const cRect = containerRef.current.getBoundingClientRect();
 
-    // Default fallbacks
     let tX = 500;
     let tY = 200;
 
-    // MEASURE THE EXACT 'T' in MISCREANT (TARGET MARKED BY USER)
     if (letterTRef?.current) {
       const rect = letterTRef.current.getBoundingClientRect();
       tX = rect.left - cRect.left + (rect.width * 0.48);
-      // Top bar of the letter T stroke (accounting for Bebas Neue font ascent)
       tY = rect.top - cRect.top + Math.max(rect.height * 0.08, 6);
     }
 
-    // Jet target stops right above the letter T (as marked in green box)
     const jetTargetX = Math.max(tX + 10, 360);
     const jetTargetY = 35;
 
@@ -84,20 +255,17 @@ export default function JetMissionScrollytelling({
     const handleResize = () => updateAnchors();
     window.addEventListener('resize', handleResize);
 
-    // Timeline:
-    // 1. Jet flies in (0ms -> 1100ms)
+    // Initial Drop Timeline:
     const dropTimer = setTimeout(() => {
       setMissionPhase('dropping');
     }, 1100);
 
-    // 2. Troops touch down on the 'T' (2100ms)
     const landTimer = setTimeout(() => {
-      setMissionPhase('landed');
+      setMissionPhase('landed_fighting');
       setImpactPuff(true);
-      setTimeout(() => setImpactPuff(false), 800);
+      setTimeout(() => setImpactPuff(false), 900);
     }, 2100);
 
-    // 3. Right after troops land, jet takes off to top-right corner and vanishes! (2600ms)
     const jetDepartTimer = setTimeout(() => {
       setJetVanished(true);
     }, 2600);
@@ -123,16 +291,108 @@ export default function JetMissionScrollytelling({
     };
   }, []);
 
-  // Recalculate after web fonts settle
   useEffect(() => {
     const t = setTimeout(updateAnchors, 250);
     return () => clearTimeout(t);
   }, [mounted]);
 
+  // 60 FPS FIGHTING ENGINE LOOP (WHEN LANDED)
+  useEffect(() => {
+    if (missionPhase !== 'landed_fighting') return;
+
+    let animId;
+    const startTime = Date.now();
+
+    const fightLoop = () => {
+      const now = Date.now();
+      const elapsed = (now - startTime) / 1000; // in seconds
+      const cycleTime = elapsed % 10.5; // 10.5-second choreographed anime duel cycle
+      setFightCycle(cycleTime);
+
+      // --- COMBAT MOVE POSE & HIT EFFECTS SCHEDULER ---
+      if (cycleTime < 2.0) {
+        // Phase 1: Fight on 'T'
+        setRedFacing('right');
+        setBlueFacing('left');
+        if (cycleTime < 0.6) {
+          setRedPose('idle');
+          setBluePose('idle');
+          setCombatEvent(null);
+        } else if (cycleTime < 1.1) {
+          setRedPose('punch');
+          setBluePose('block');
+          setCombatEvent({ text: '⚔️ PARRY!', offset: 0 });
+        } else if (cycleTime < 1.6) {
+          setRedPose('block');
+          setBluePose('kick');
+          setCombatEvent({ text: '💥 BAM!', offset: 4 });
+        } else {
+          setRedPose('slash');
+          setBluePose('hurt');
+          setCombatEvent({ text: 'POW! x2', offset: -4 });
+        }
+      } else if (cycleTime < 3.8) {
+        // Phase 2: Launch into Air
+        setCombatEvent({ text: '⚡ AIR LAUNCH!', offset: 0 });
+        setRedFacing('right');
+        setBlueFacing('left');
+        setRedPose('slash');
+        setBluePose('air_kick');
+      } else if (cycleTime < 7.2) {
+        // Phase 3: FALLING AIR BATTLE (MID-AIR COMBAT DOWN THE MARKED CHANNEL)
+        const sub = cycleTime - 3.8;
+        if (sub < 0.8) {
+          setRedPose('air_kick');
+          setBluePose('slash');
+          setCombatEvent({ text: '⚔️ MID-AIR CLASH!', offset: 0 });
+        } else if (sub < 1.6) {
+          setRedPose('slash');
+          setBluePose('block');
+          setCombatEvent({ text: '💥 CRIT x3!', offset: 6 });
+        } else if (sub < 2.4) {
+          setRedPose('block');
+          setBluePose('air_kick');
+          setCombatEvent({ text: '⚡ AERIAL STRIKE!', offset: -6 });
+        } else {
+          setRedPose('slash');
+          setBluePose('slash');
+          setCombatEvent({ text: '💥 DUAL CLASH!', offset: 0 });
+        }
+      } else if (cycleTime < 9.0) {
+        // Phase 4: Desk / Controller Landing & Duel
+        const sub = cycleTime - 7.2;
+        if (sub < 0.6) {
+          setRedPose('idle');
+          setBluePose('idle');
+          setCombatEvent({ text: '💨 DUST LANDING!', offset: 0 });
+        } else if (sub < 1.2) {
+          setRedPose('punch');
+          setBluePose('hurt');
+          setCombatEvent({ text: '💥 WHAM!', offset: 8 });
+        } else {
+          setRedPose('hurt');
+          setBluePose('kick');
+          setCombatEvent({ text: '⚡ COUNTER!', offset: -8 });
+        }
+      } else {
+        // Phase 5: Ninja Leap Return back to 'T'
+        setRedFacing('left');
+        setBlueFacing('left');
+        setRedPose('air_kick');
+        setBluePose('slash');
+        setCombatEvent({ text: '💨 AIR-DASH!', offset: 0 });
+      }
+
+      animId = requestAnimationFrame(fightLoop);
+    };
+
+    animId = requestAnimationFrame(fightLoop);
+    return () => cancelAnimationFrame(animId);
+  }, [missionPhase]);
+
   if (!mounted) return null;
 
   // --- JET POSITION ---
-  // The jet departs automatically to top-right as soon as stickmen land, or on scroll!
   const isJetDeparting = jetVanished || scrollProgress > 0.01;
 
   const jetCurrentX = missionPhase === 'entering'
@@ -150,103 +410,128 @@ export default function JetMissionScrollytelling({
   const jetRotation = isJetDeparting ? -18 : 0;
   const jetOpacity = isJetDeparting ? 0 : 1;
 
-  // --- 2 STICKMEN COORDINATES ---
+  // --- 2 BOT FIGHTERS TRAJECTORY COMPUTATION ---
+  const tX = anchors.letterT.x;
+  const tY = anchors.letterT.y; // Feet rest on top bar of the 'T'
   const sProgress = scrollProgress;
 
-  const getTroopCoords = (offset = 0) => {
-    const tX = anchors.letterT.x + offset;
-    const tY = anchors.letterT.y; // FEET REST DIRECTLY ON THE TOP BAR OF 'T' (NO FLOATING!)
+  // Coordinates when in initial entry / drop
+  let redX = tX - 16;
+  let redY = tY;
+  let blueX = tX + 16;
+  let blueY = tY;
+  let redParachute = false;
+  let blueParachute = false;
+  let redVisible = missionPhase !== 'entering';
+  let blueVisible = missionPhase !== 'entering';
+  let dropTransition = 'none';
 
-    // 1. Entering (tucked inside the jet as it flies in)
-    if (missionPhase === 'entering') {
-      return {
-        x: anchors.jetCenter.x + offset * 0.5,
-        y: anchors.jetCenter.y + 10,
-        visible: false,
-        jumping: false,
-        parachute: false,
-        transition: 'none'
-      };
+  if (missionPhase === 'entering') {
+    redX = anchors.jetCenter.x - 10;
+    redY = anchors.jetCenter.y + 10;
+    blueX = anchors.jetCenter.x + 10;
+    blueY = anchors.jetCenter.y + 10;
+  } else if (missionPhase === 'dropping') {
+    redX = tX - 16;
+    redY = tY;
+    blueX = tX + 16;
+    blueY = tY;
+    redParachute = true;
+    blueParachute = true;
+    dropTransition = 'transform 1.05s cubic-bezier(0.22, 1, 0.36, 1)';
+  } else if (missionPhase === 'landed_fighting') {
+    // If user is scrolled, follow scroll journey
+    if (sProgress > 0.05) {
+      if (sProgress <= 0.35) {
+        const p = (sProgress - 0.05) / 0.30;
+        const jumpArc = Math.sin(p * Math.PI) * 45;
+        redX = tX - 16 + (anchors.studios.x - tX) * p;
+        redY = tY + (anchors.studios.y - tY) * p - jumpArc;
+        blueX = tX + 16 + (anchors.studios.x - tX) * p;
+        blueY = tY + (anchors.studios.y - tY) * p - jumpArc;
+      } else if (sProgress <= 0.70) {
+        const p = (sProgress - 0.35) / 0.35;
+        const jumpArc = Math.sin(p * Math.PI) * 35;
+        redX = anchors.studios.x - 16 + (anchors.button.x - anchors.studios.x) * p;
+        redY = anchors.studios.y + (anchors.button.y - anchors.studios.y) * p - jumpArc;
+        blueX = anchors.studios.x + 16 + (anchors.button.x - anchors.studios.x) * p;
+        blueY = anchors.studios.y + (anchors.button.y - anchors.studios.y) * p - jumpArc;
+      } else {
+        const p = Math.min((sProgress - 0.70) / 0.35, 1.2);
+        redX = anchors.button.x - 16 + (anchors.exitNextPage.x - anchors.button.x) * p;
+        redY = anchors.button.y + (anchors.exitNextPage.y - anchors.button.y) * p;
+        blueX = anchors.button.x + 16 + (anchors.exitNextPage.x - anchors.button.x) * p;
+        blueY = anchors.button.y + (anchors.exitNextPage.y - anchors.button.y) * p;
+        redParachute = true;
+        blueParachute = true;
+      }
+    } else {
+      // --- AUTOPLAYING VIDEOGAME BOT FIGHT (MATCHING THE USER'S MARKED PATH) ---
+      const t = fightCycle;
+
+      if (t < 2.0) {
+        // Phase 1: Duel on the 'T'
+        const hop = Math.abs(Math.sin(t * 12)) * 5;
+        redX = tX - 18;
+        redY = tY - (redPose === 'kick' ? hop : 0);
+        blueX = tX + 18;
+        blueY = tY - (bluePose === 'kick' ? hop : 0);
+      } else if (t < 3.8) {
+        // Phase 2: Launch into Air towards the marked diagonal channel
+        const p = (t - 2.0) / 1.8;
+        const jumpApex = Math.sin(p * Math.PI) * 65;
+        const targetX = tX + 45 * p;
+        const targetY = tY + 40 * p - jumpApex;
+
+        redX = targetX - 16;
+        redY = targetY;
+        blueX = targetX + 16;
+        blueY = targetY - 6;
+      } else if (t < 7.2) {
+        // Phase 3: FALLING AIR BATTLE (MID-AIR CLASH DOWN THE MARKED PATH)
+        // User marked: from 'T' down through the channel between text and monitor (x: 520 to 670, y: 200 to 450)
+        const p = (t - 3.8) / 3.4;
+        const startX = tX + 45;
+        const startY = tY + 40;
+        const endX = tX + 145;
+        const endY = tY + 245;
+
+        const curX = startX + (endX - startX) * p;
+        const curY = startY + (endY - startY) * p;
+
+        // Dynamic aerial combat orbit/oscillation
+        const orbit = Math.sin(p * 8 * Math.PI) * 16;
+        redX = curX - 18 + orbit;
+        redY = curY;
+        blueX = curX + 18 - orbit;
+        blueY = curY - 5;
+      } else if (t < 9.0) {
+        // Phase 4: Desk / Controller Area Ground Duel
+        const deskX = tX + 145;
+        const deskY = tY + 250;
+        const recoil = Math.sin((t - 7.2) * 8) * 8;
+
+        redX = deskX - 22 + recoil;
+        redY = deskY;
+        blueX = deskX + 22 - recoil;
+        blueY = deskY;
+      } else {
+        // Phase 5: Acrobatic Ninja Wall-Jump Return back to 'T'
+        const p = (t - 9.0) / 1.5;
+        const startX = tX + 145;
+        const startY = tY + 250;
+        const jumpApex = Math.sin(p * Math.PI) * 105;
+
+        const curX = startX + (tX - startX) * p;
+        const curY = startY + (tY - startY) * p - jumpApex;
+
+        redX = curX - 16;
+        redY = curY;
+        blueX = curX + 16;
+        blueY = curY;
+      }
     }
-
-    // 2. Dropping from jet down to the letter T
-    if (missionPhase === 'dropping') {
-      return {
-        x: tX,
-        y: tY, // smoothly drops down to the top bar of the T
-        visible: true,
-        jumping: true,
-        parachute: offset < 0,
-        transition: 'transform 1.05s cubic-bezier(0.22, 1, 0.36, 1)'
-      };
-    }
-
-    // 3. Landed on the 'T'
-    if (sProgress <= 0.05) {
-      return {
-        x: tX,
-        y: tY,
-        visible: true,
-        jumping: false,
-        parachute: false,
-        transition: 'transform 0.04s linear'
-      };
-    }
-
-    // 4. Scroll Stage 1 (0.05 -> 0.35): Jump from 'T' down onto 'STUDIOS'
-    if (sProgress <= 0.35) {
-      const p = (sProgress - 0.05) / 0.30;
-      const startX = tX;
-      const startY = tY;
-      const targetX = anchors.studios.x + offset;
-      const targetY = anchors.studios.y;
-      const jumpArc = Math.sin(p * Math.PI) * 40;
-      return {
-        x: startX + (targetX - startX) * p,
-        y: startY + (targetY - startY) * p - jumpArc,
-        visible: true,
-        jumping: true,
-        parachute: false,
-        transition: 'transform 0.04s linear'
-      };
-    }
-
-    // 5. Scroll Stage 2 (0.35 -> 0.70): Jump from 'STUDIOS' down onto 'Explore Our Games' button
-    if (sProgress <= 0.70) {
-      const p = (sProgress - 0.35) / 0.35;
-      const startX = anchors.studios.x + offset;
-      const startY = anchors.studios.y;
-      const targetX = anchors.button.x + offset;
-      const targetY = anchors.button.y;
-      const jumpArc = Math.sin(p * Math.PI) * 25;
-      return {
-        x: startX + (targetX - startX) * p,
-        y: startY + (targetY - startY) * p - jumpArc,
-        visible: true,
-        jumping: true,
-        parachute: p > 0.4 && offset < 0,
-        transition: 'transform 0.04s linear'
-      };
-    }
-
-    // 6. Scroll Stage 3 (0.70 -> 1.0+): Leap down into Slide 2 (Multiverse)
-    const p = Math.min((sProgress - 0.70) / 0.35, 1.2);
-    const startX = anchors.button.x + offset;
-    const startY = anchors.button.y - 36;
-    const targetX = anchors.exitNextPage.x + offset;
-    const targetY = anchors.exitNextPage.y;
-    return {
-      x: startX + (targetX - startX) * p,
-      y: startY + (targetY - startY) * p,
-      visible: true,
-      jumping: true,
-      parachute: true,
-      transition: 'transform 0.04s linear'
-    };
-  };
-
-  const troop1 = getTroopCoords(-12); // Scout (Leader with Red Headband)
-  const troop2 = getTroopCoords(12);  // Gunner (Acrobat)
+  }
 
   return (
     <div className="absolute inset-0 pointer-events-none z-30 overflow-visible select-none">
@@ -274,7 +559,7 @@ export default function JetMissionScrollytelling({
             <div className={`h-[2px] bg-blue-500 rounded-full transition-all duration-300 ${isJetDeparting ? 'w-28 animate-pulse' : 'w-14'}`} />
           </div>
 
-          {/* Afterburner Thruster Flame (ignites on scroll departure) */}
+          {/* Afterburner Thruster Flame (ignites on departure) */}
           {isJetDeparting && (
             <div className="absolute right-[92%] top-1/2 -translate-y-1/2 flex items-center">
               <div className="w-12 h-3.5 bg-gradient-to-l from-orange-500 via-amber-300 to-transparent rounded-full blur-[1px] animate-pulse" />
@@ -305,7 +590,7 @@ export default function JetMissionScrollytelling({
           {/* Mission Alert Bubble */}
           {missionPhase === 'dropping' && !isJetDeparting && (
             <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-900 text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md border border-slate-700 animate-bounce">
-              EJECT! DROP ON 'T'! 🪂
+              EJECT! BOT DUEL INCOMING! ⚔️
             </div>
           )}
 
@@ -313,20 +598,20 @@ export default function JetMissionScrollytelling({
       </div>
 
 
-      {/* 2. STICKMAN 1 ("SCOUT" - LANDING ON THE 'T') */}
-      {troop1.visible && (
+      {/* 2. RED BOT FIGHTER (CRIMSON NINJA) */}
+      {redVisible && (
         <div
-          className="absolute z-50 transition-transform"
+          className="absolute z-50 pointer-events-none"
           style={{
-            transform: `translate3d(${troop1.x}px, ${troop1.y}px, 0px)`,
-            transition: troop1.transition
+            transform: `translate3d(${redX}px, ${redY}px, 0px)`,
+            transition: dropTransition
           }}
         >
           <div className="relative -translate-x-1/2 -translate-y-full flex flex-col items-center">
             
-            {/* Parachute */}
-            {troop1.parachute && (
-              <div className="mb-[-2px] animate-pulse">
+            {/* Parachute during drop */}
+            {redParachute && (
+              <div className="mb-[-4px] animate-pulse">
                 <svg width="44" height="28" viewBox="0 0 44 28" fill="none">
                   <path d="M 4 22 C 4 6, 40 6, 40 22 Z" fill="#FAF8F2" stroke="#0F172A" strokeWidth="2" />
                   <path d="M 16 9 C 14 14, 13 22, 13 22" stroke="#FF2A5F" strokeWidth="2" />
@@ -339,60 +624,45 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Stickman Body */}
-            <svg 
-              width="32" 
-              height="42" 
-              viewBox="0 0 32 42" 
-              fill="none" 
-              stroke="#0F172A" 
-              strokeWidth="2.4" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <circle cx="16" cy="9" r="6" fill="#FAF8F2" />
-              <path d="M 10 8 L 22 8" stroke="#FF2A5F" strokeWidth="2.5" />
-              <path d="M 10 8 L 6 6" stroke="#FF2A5F" strokeWidth="2" />
-              <circle cx="14" cy="9" r="0.8" fill="#0F172A" />
+            {/* Arcade Retro Health Bar (When Fighting) */}
+            {missionPhase === 'landed_fighting' && scrollProgress <= 0.05 && (
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
+                <span className="font-mono text-[8px] font-black text-[#FF2A5F] tracking-tighter">
+                  RED BOT
+                </span>
+                <div className="w-9 h-1.5 bg-slate-200 border border-slate-700 rounded-sm overflow-hidden">
+                  <div className="h-full bg-[#FF2A5F] w-[85%]" />
+                </div>
+              </div>
+            )}
 
-              <line x1="16" y1="15" x2="16" y2="27" />
-
-              {troop1.jumping ? (
-                <>
-                  <path d="M 16 18 L 8 12 L 4 15" />
-                  <path d="M 16 18 L 24 12 L 28 8" />
-                  <path d="M 16 27 L 10 33 L 13 40" />
-                  <path d="M 16 27 L 22 33 L 20 40" />
-                </>
-              ) : (
-                <>
-                  <path d="M 16 18 L 9 22 L 5 26" />
-                  <path d="M 16 18 L 23 20 L 28 17" strokeWidth="2.8" stroke="#FF2A5F" />
-                  <path d="M 16 27 L 11 34 L 8 41" />
-                  <path d="M 16 27 L 21 34 L 24 41" />
-                </>
-              )}
-            </svg>
+            {/* Animated Sprite */}
+            <StickmanFighterSprite 
+              team="red" 
+              pose={redPose} 
+              facing={redFacing}
+              isJumping={missionPhase === 'dropping' || fightCycle > 2.0}
+            />
 
           </div>
         </div>
       )}
 
 
-      {/* 3. STICKMAN 2 ("GUNNER" - ACROBAT LANDING ON THE 'T') */}
-      {troop2.visible && (
+      {/* 3. BLUE BOT FIGHTER (COBALT SHINOBI) */}
+      {blueVisible && (
         <div
-          className="absolute z-50 transition-transform"
+          className="absolute z-50 pointer-events-none"
           style={{
-            transform: `translate3d(${troop2.x}px, ${troop2.y}px, 0px)`,
-            transition: troop2.transition
+            transform: `translate3d(${blueX}px, ${blueY}px, 0px)`,
+            transition: dropTransition
           }}
         >
           <div className="relative -translate-x-1/2 -translate-y-full flex flex-col items-center">
             
-            {/* Parachute */}
-            {troop2.parachute && (
-              <div className="mb-[-2px] animate-pulse">
+            {/* Parachute during drop */}
+            {blueParachute && (
+              <div className="mb-[-4px] animate-pulse">
                 <svg width="40" height="26" viewBox="0 0 40 26" fill="none">
                   <path d="M 4 20 C 4 5, 36 5, 36 20 Z" fill="#FAF8F2" stroke="#0F172A" strokeWidth="2" />
                   <path d="M 14 8 C 13 13, 12 20, 12 20" stroke="#3B82F6" strokeWidth="2" />
@@ -403,46 +673,48 @@ export default function JetMissionScrollytelling({
               </div>
             )}
 
-            {/* Stickman Body */}
-            <svg 
-              width="32" 
-              height="42" 
-              viewBox="0 0 32 42" 
-              fill="none" 
-              stroke="#0F172A" 
-              strokeWidth="2.4" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <circle cx="16" cy="9" r="6" fill="#FAF8F2" />
-              <path d="M 11 6 Q 16 3 22 6 L 25 8" stroke="#2563EB" strokeWidth="2.5" />
-              <circle cx="18" cy="9" r="0.8" fill="#0F172A" />
+            {/* Arcade Retro Health Bar (When Fighting) */}
+            {missionPhase === 'landed_fighting' && scrollProgress <= 0.05 && (
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
+                <span className="font-mono text-[8px] font-black text-[#2563EB] tracking-tighter">
+                  BLUE BOT
+                </span>
+                <div className="w-9 h-1.5 bg-slate-200 border border-slate-700 rounded-sm overflow-hidden">
+                  <div className="h-full bg-[#2563EB] w-[90%]" />
+                </div>
+              </div>
+            )}
 
-              <line x1="16" y1="15" x2="16" y2="27" />
-
-              {troop2.jumping ? (
-                <>
-                  <path d="M 16 18 L 6 14 L 3 8" />
-                  <path d="M 16 18 L 26 14 L 29 8" />
-                  <path d="M 16 27 L 8 32 L 6 39" />
-                  <path d="M 16 27 L 24 30 L 27 36" />
-                </>
-              ) : (
-                <>
-                  <path d="M 16 18 L 9 24 L 4 23" />
-                  <path d="M 16 18 L 22 13 L 26 13" />
-                  <path d="M 16 27 L 11 34 L 7 41" />
-                  <path d="M 16 27 L 22 34 L 25 41" />
-                </>
-              )}
-            </svg>
+            {/* Animated Sprite */}
+            <StickmanFighterSprite 
+              team="blue" 
+              pose={bluePose} 
+              facing={blueFacing}
+              isJumping={missionPhase === 'dropping' || fightCycle > 2.0}
+            />
 
           </div>
         </div>
       )}
 
 
-      {/* 4. LANDING IMPACT PUFF RIGHT ON THE 'T' */}
+      {/* 4. DYNAMIC COMBAT IMPACT POPUPS (POW! CLASH! PARRY!) */}
+      {combatEvent && missionPhase === 'landed_fighting' && (
+        <div 
+          className="absolute z-50 pointer-events-none"
+          style={{
+            left: `${(redX + blueX) / 2 + (combatEvent.offset || 0)}px`,
+            top: `${(redY + blueY) / 2 - 38}px`,
+            transform: 'translate(-50%, -50%)'
+          }}
+        >
+          <div className="flex items-center gap-1 font-mono text-[10px] font-black text-slate-900 bg-white/95 px-2 py-0.5 rounded-full border border-blue-500 shadow-md animate-bounce whitespace-nowrap">
+            <span>{combatEvent.text}</span>
+          </div>
+        </div>
+      )}
+
+      {/* 5. INITIAL LANDING IMPACT PUFF */}
       {impactPuff && (
         <div 
           className="absolute z-50 pointer-events-none animate-ping"
@@ -454,7 +726,7 @@ export default function JetMissionScrollytelling({
         >
           <div className="flex items-center gap-1 font-mono text-[11px] font-black text-[#FF2A5F]">
             <span>💥</span>
-            <span>LANDED!</span>
+            <span>BOT DUEL BEGINS!</span>
           </div>
         </div>
       )}
