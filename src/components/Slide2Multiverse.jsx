@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { gameUniverse } from '../data/studioData';
 import { ChevronRight } from 'lucide-react';
+import ShinobiBattleStage from './ShinobiBattleStage';
 
 export default function Slide2Multiverse() {
   const [selectedGame, setSelectedGame] = useState(gameUniverse[0]);
+  const containerRef = useRef(null);
+  const headerRef = useRef(null);
+  const tabsRef = useRef(null);
+  const cardRef = useRef(null);
 
   return (
     <section 
+      ref={containerRef}
       id="games" 
-      className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 bg-transparent flex flex-col justify-center select-none border-t border-slate-200"
+      className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 bg-transparent flex flex-col justify-center select-none border-t border-slate-200 overflow-hidden"
     >
+      {/* Naruto vs Sasuke Shinobi Stickman Jutsu Battle */}
+      <ShinobiBattleStage 
+        containerRef={containerRef}
+        headerRef={headerRef}
+        tabsRef={tabsRef}
+        cardRef={cardRef}
+      />
       <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12 pl-6 sm:pl-12">
         
         {/* Section Header */}
@@ -18,7 +31,7 @@ export default function Slide2Multiverse() {
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF2A5F]">
               Portfolio
             </span>
-            <h2 className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none">
+            <h2 ref={headerRef} className="font-bebas text-6xl sm:text-7xl md:text-8xl text-slate-950 tracking-tight leading-none inline-block">
               OUR GAMES
             </h2>
             <p className="text-slate-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed">
@@ -35,7 +48,7 @@ export default function Slide2Multiverse() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left: Game List Selection (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col space-y-3">
+          <div ref={tabsRef} className="lg:col-span-5 flex flex-col space-y-3">
             {gameUniverse.map((game) => {
               const isSelected = selectedGame.id === game.id;
               return (
@@ -73,7 +86,7 @@ export default function Slide2Multiverse() {
           </div>
 
           {/* Right: Selected Game Presentation Card (7 cols) */}
-          <div className="lg:col-span-7">
+          <div ref={cardRef} className="lg:col-span-7">
             <div className="p-8 sm:p-10 rounded-2xl border border-slate-200 bg-[#FAFAFA] space-y-6">
               
               <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
