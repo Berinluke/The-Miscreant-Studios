@@ -1,0 +1,342 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------------------------
+   ROUGH NOTEBOOK LAST PAGE CRAFT: THE MISCREANT STUDIOS
+   Living, moving, jumping, shooting 2D doodle stickman warzone
+   ------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF8F2;
+    color: #0F172A;
+  }
+  
+  body {
+    overflow-x: hidden;
+    background-color: #FAF8F2;
+    color: #0F172A;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* School Notebook Ruled Horizontal Lines (Blue Ink) */
+.notebook-ruled-bg {
+  background-color: #FAF8F2;
+  background-image: linear-gradient(#E2E8F0 1px, transparent 1px);
+  background-size: 100% 34px;
+}
+
+/* Red Margin Line on the left */
+.notebook-margin-line {
+  position: relative;
+}
+
+.notebook-margin-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 64px;
+  width: 2px;
+  background-color: rgba(239, 68, 68, 0.4); /* Faded red margin line */
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .notebook-margin-line::before {
+    left: 88px;
+  }
+}
+
+/* Handwriting Fonts */
+.font-hand {
+  font-family: 'Caveat', cursive;
+}
+
+.font-marker {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Ballpoint Pen Colors */
+.text-pen-blue {
+  color: #1E3A8A; /* Reynolds classical ballpoint blue */
+}
+
+.text-pen-red {
+  color: #DC2626; /* Teacher red correction pen */
+}
+
+.text-pencil {
+  color: #475569; /* 2B Graphite pencil */
+}
+
+/* ===================================================================
+   DYNAMIC REAL-TIME TROUPE MOVEMENT ANIMATIONS
+   =================================================================== */
+
+/* 1. Fighter Jet Screeching Across the Sky (Continuous Flight) */
+@keyframes jet-screech {
+  0% {
+    transform: translateX(180px) translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(-40px) translateY(-14px) rotate(2deg);
+  }
+  100% {
+    transform: translateX(180px) translateY(0) rotate(-2deg);
+  }
+}
+
+.animate-jet-flight {
+  animation: jet-screech 12s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+/* Jet Afterburner Pulsing Flame */
+@keyframes afterburner-pulse {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scaleX(1.4);
+    opacity: 1;
+  }
+}
+
+.animate-afterburner {
+  animation: afterburner-pulse 0.2s ease-in-out infinite;
+  transform-origin: right center;
+}
+
+/* 2. Freefall Diving Squad (Air Flutter & Wind Resistance) */
+@keyframes freefall-plunge {
+  0% {
+    transform: translateY(0) translateX(0) rotate(40deg);
+  }
+  25% {
+    transform: translateY(18px) translateX(12px) rotate(48deg);
+  }
+  50% {
+    transform: translateY(32px) translateX(4px) rotate(42deg);
+  }
+  75% {
+    transform: translateY(14px) translateX(-8px) rotate(38deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(40deg);
+  }
+}
+
+.animate-squad-dive {
+  animation: freefall-plunge 3.6s ease-in-out infinite;
+}
+
+/* Individual Skydivers Limb Movement */
+@keyframes diver-flutter-1 {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg) translateY(-4px); }
+}
+
+@keyframes diver-flutter-2 {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg) translateY(6px); }
+}
+
+.animate-diver-1 {
+  animation: diver-flutter-1 1.8s ease-in-out infinite;
+}
+
+.animate-diver-2 {
+  animation: diver-flutter-2 2.2s ease-in-out infinite 0.4s;
+}
+
+/* Wind Streaks Rushing Past Skydivers */
+@keyframes wind-rush-past {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}
+
+.animate-wind-rush {
+  animation: wind-rush-past 0.8s linear infinite;
+}
+
+/* 3. Enemy Flak Drone (Hover, Bob, and Laser Blasts) */
+@keyframes flak-hover-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(4deg);
+  }
+}
+
+.animate-flak-hover {
+  animation: flak-hover-bob 3s ease-in-out infinite;
+}
+
+/* Laser Tracer Shooting UP */
+@keyframes laser-shoot-up {
+  0% {
+    transform: translateY(20px) scaleY(0.2);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-40px) scaleY(1.2);
+  }
+  100% {
+    transform: translateY(-160px) scaleY(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-laser-up {
+  animation: laser-shoot-up 1.4s ease-out infinite;
+}
+
+/* 4. Mid-Air Drop-Kick Combat Loop */
+@keyframes dropkick-impact-loop {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+  40% {
+    transform: translateX(-15px) scale(0.95);
+  }
+  50% {
+    /* Impact Strike! */
+    transform: translateX(20px) scale(1.08);
+  }
+  60% {
+    transform: translateX(14px) scale(1.02);
+  }
+}
+
+.animate-kick-strike {
+  animation: dropkick-impact-loop 2.4s ease-in-out infinite;
+}
+
+/* 5. 60Hz Lag Monster Writhe & Crawl */
+@keyframes lag-spider-writhe {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-3deg) scale(1.03) translateY(-4px);
+  }
+  75% {
+    transform: rotate(3deg) scale(0.97) translateY(4px);
+  }
+}
+
+.animate-lag-writhe {
+  animation: lag-spider-writhe 3.2s ease-in-out infinite;
+}
+
+/* 128Hz Laser Slicer Wave Pulse */
+@keyframes laser-slice-beam {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scaleX(1.3) translateX(12px);
+    opacity: 1;
+  }
+}
+
+.animate-laser-slice {
+  animation: laser-slice-beam 0.8s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+/* 6. Corporate Suit Coffee Knockout Wobble */
+@keyframes suit-wobble-knockout {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(-8deg) translateX(-6px);
+  }
+  45% {
+    /* Splat hit! */
+    transform: rotate(24deg) translateX(14px);
+  }
+  60% {
+    transform: rotate(18deg) translateX(10px);
+  }
+}
+
+.animate-suit-knockout {
+  animation: suit-wobble-knockout 3.5s ease-in-out infinite;
+}
+
+/* 7. Superhero Ground Impact Shockwave Pulse */
+@keyframes ground-shockwave {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ground-shock {
+  animation: ground-shockwave 2.2s ease-out infinite;
+  transform-origin: center;
+}
+
+/* Flag Waving in the Wind */
+@keyframes flag-wave {
+  0%, 100% {
+    transform: skewY(0deg) scaleX(1);
+  }
+  50% {
+    transform: skewY(-6deg) scaleX(0.94);
+  }
+}
+
+.animate-flag-wave {
+  animation: flag-wave 1.6s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+/* Paratrooper Drift */
+@keyframes paratrooper-drift {
+  0% {
+    transform: translateY(-24px) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(20px) rotate(6deg);
+  }
+  100% {
+    transform: translateY(-24px) rotate(-6deg);
+  }
+}
+
+.animate-parachute {
+  animation: paratrooper-drift 4s ease-in-out infinite;
+}

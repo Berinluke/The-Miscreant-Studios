@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE MISCREANT STUDIOS — Official Content Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #111116;
+      --border: #27272a;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #8b5cf6;
+      --accent-light: #c084fc;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Print Toolbar */
+    .toolbar {
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--emerald);
+      font-weight: 600;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-print:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Header */
+    .archive-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--accent-light);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--accent-light);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .meta-pills span {
+      background: #18181b;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      margin-bottom: 20px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    blockquote {
+      background: rgba(139, 92, 246, 0.08);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #e4e4e7;
+      margin-bottom: 16px;
+      font-size: 1.05rem;
+    }
+
+    /* Grid layout */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-box {
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.88rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: left;
+    }
+    th {
+      background: #18181b;
+      color: #fff;
+      font-weight: 600;
+    }
+    td {
+      background: var(--card-bg);
+      color: #d4d4d8;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background-color: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+      }
+      .toolbar {
+        display: none !important;
+      }
+      .card, table, blockquote, .stat-box {
+        border-color: #ccc !important;
+        background: #fafafa !important;
+        color: #111 !important;
+        page-break-inside: avoid;
+      }
+      th {
+        background: #eee !important;
+        color: #000 !important;
+      }
+      td {
+        background: #fff !important;
+        color: #222 !important;
+      }
+      h1, h2, h3, .subtitle {
+        color: #000 !important;
+      }
+      .stat-val {
+        color: #5b21b6 !important;
+      }
+      .badge, .tag {
+        border: 1px solid #777 !important;
+        color: #000 !important;
+        background: #eee !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Print / Export Bar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="status-dot"></div>
+        <span>ARCHIVE STATE: READ-ONLY PRESERVED FOR REBUILD</span>
+      </div>
+      <button class="btn-print" onclick="window.print()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Save / Print to PDF (Ctrl + P)
+      </button>
+    </div>
+
+    <!-- Header -->
+    <header class="archive-header">
+      <span class="badge">Permanent Reference Document</span>
+      <h1>THE MISCREANT STUDIOS</h1>
+      <div class="subtitle">Digital Chaos Simulator • Master Content Archive</div>
+      <div class="meta-pills">
+        <span>📍 Chennai, Tamil Nadu, India (13.0827° N, 80.2707° E)</span>
+        <span>⚡ Estd: 2026</span>
+        <span>📧 themiscreantstudios@gmail.com</span>
+        <span>🎯 Status: Archived for Rebuild</span>
+      </div>
+    </header>
+
+    <!-- 1. Studio Manifesto & Philosophy -->
+    <section>
+      <h2>01 • Studio Manifesto & Philosophy</h2>
+      <div class="card">
+        <blockquote>
+          "We reject predictable corporate formulas. We build for the players who hunger for unscripted chaos, physics that bite back, and combat loops where mastery is earned, never bought."
+        </blockquote>
+        <p style="margin-bottom: 20px;">
+          Born out of frustration with sterile, risk-averse releases, our team combines low-level systems engineering with radical artistic freedom. Every mechanic is stress-tested in daily combat arenas, tuning milliseconds off input queues and turning gameplay loops into pure adrenaline.
+        </p>
+
+        <div class="grid-3">
+          <div class="stat-box">
+            <div class="stat-val">100%</div>
+            <div class="stat-label">Indie Sovereignty</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">0%</div>
+            <div class="stat-label">Corporate Bloat</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">128 Hz</div>
+            <div class="stat-label">Combat Tick Rate</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">0.4 ms</div>
+            <div class="stat-label">Physics Tick Step</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">3.4M+</div>
+            <div class="stat-label">Playtest Hours</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">120+</div>
+            <div class="stat-label">Target FPS</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Studio Culture & War Room -->
+    <section>
+      <h2>02 • Studio Culture & Non-Negotiable Pillars</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>01. CREATE — No Safe Ideas</h3>
+          <p>If a game concept doesn't feel slightly dangerous or computationally insane, it is simply not ambitious enough for our studio.</p>
+        </div>
+        <div class="card">
+          <h3>02. EXPERIMENT — Prototype Relentlessly</h3>
+          <p>Every Friday our engineers and artists test wild gameplay loops. 90% are discarded, but the 10% that survive define our games.</p>
+        </div>
+        <div class="card">
+          <h3>03. BREAK — Stress-Test Past the Redline</h3>
+          <p>We intentionally overload UDP packets and trigger 50,000 physics fragments to find every breaking point before players do.</p>
+        </div>
+        <div class="card">
+          <h3>04. REBUILD — Polish into Obsidian</h3>
+          <p>We rebuild the survivors with ruthless care, polishing micro-animations, audio punch, and 120 FPS consistency until it's undeniable.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 16px;">
+        <h3>The War Room • Chennai HQ</h3>
+        <p>An open creative crucible where titles are forged without corporate interference. Flat hierarchy, code ownership without ego, and daily playtests fueled by South Indian filter coffee, pizza, and synthwave.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">Zero Crunch Culture</span>
+          <span class="tag">Open Design Reviews</span>
+          <span class="tag">Creative Autonomy</span>
+          <span class="tag">Studio Profit Share</span>
+          <span class="tag">RTX 4090/5090 Rigs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Games Portfolio -->
+    <section>
+      <h2>03 • Operational Game Titles & Universe</h2>
+      
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span class="tag">MMORPG FLAGSHIP EXPANSION</span>
+            <h3 style="font-size:1.3rem;">DEEP VOID</h3>
+          </div>
+          <span class="badge">STATUS: LIVE • EXPANSION 2.4</span>
+        </div>
+        <p>Ascend into the celestial void. Traverse shattered planetary rings, wield luminous void blades, and conquer dynamic 64-player multi-phase cosmic raids with zero instancing lag.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">64 Hz Tick Rate</span>
+          <span class="tag">UE5.5 Lumen & Nanite</span>
+          <span class="tag">64-Player Raids</span>
+          <span class="tag">Zero-Lag Server Mesh</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span class="tag">TACTICAL BATTLE ROYALE</span>
+            <h3 style="font-size:1.3rem;">PROJECT OMEGA</h3>
+          </div>
+          <span class="badge">STATUS: CLOSED BETA WAVE 03</span>
+        </div>
+        <p>100-player tactical warfare with hypersonic air-drops, realistic ballistics, destructible urban sectors, and automated global ranked matchmaking powered by Chaos Physics and 128Hz bare-metal servers.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">128 Hz Tick Rate</span>
+          <span class="tag">420K+ Concurrents</span>
+          <span class="tag">Vanguard++ Anti-Cheat</span>
+          <span class="tag">&lt; 2.1ms Latency</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span class="tag">HIGH-VELOCITY 4V4 CLASH</span>
+            <h3 style="font-size:1.3rem;">NEON GRIND</h3>
+          </div>
+          <span class="badge">STATUS: ACTIVE OPERATIONS</span>
+        </div>
+        <p>Hyper-fast squad gunplay featuring vertical jetpack maneuvers, customizable cyber streetwear arsenals, and instant respawn adrenaline arenas.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">4v4 Blitz Mode</span>
+          <span class="tag">4.5 Min Match Length</span>
+          <span class="tag">Cross-Play</span>
+          <span class="tag">99.99% Uptime</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span class="tag">R&D LAB • HYPERSPEED PARKOUR</span>
+            <h3 style="font-size:1.3rem;">PROJECT VELOCITY</h3>
+          </div>
+          <span class="badge">STATUS: STEAM NEXT FEST</span>
+        </div>
+        <p>Break the sound barrier through procedurally generated cyberpunk megacities. Fluid wall-runs, grapple chains, and zero-gravity rail grinds tuned for competitive speedrunners.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">120+ FPS Target</span>
+          <span class="tag">Sub-Stepped Physics (&lt; 2.1ms)</span>
+          <span class="tag">Global Leaderboards</span>
+          <span class="tag">WebGPU Shaders</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span class="tag">DERELICT FRIGATE EXTRACTION</span>
+            <h3 style="font-size:1.3rem;">PROJECT NEBULA</h3>
+          </div>
+          <span class="badge" style="border-color:#f43f5e; color:#f43f5e;">STATUS: CLASSIFIED R&D</span>
+        </div>
+        <p>Deep-space derelict frigate raids. Salvage ancient alien reactor cores under zero-gravity depressurization, oxygen deprivation hazards, and roving synthetic hunters.</p>
+        <div style="margin-top: 12px;">
+          <span class="tag">Zero-G Extraction</span>
+          <span class="tag">Voxel Hull Breach</span>
+          <span class="tag">Spatial 3D Audio</span>
+          <span class="tag">Late 2026 Reveal</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Leadership & Team -->
+    <section>
+      <h2>04 • Core Leadership & Architects</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>Berin Luke</h3>
+            <span class="badge">FOUNDER &amp; CEO</span>
+          </div>
+          <p style="font-size:0.9rem; margin-bottom:12px;">
+            Founder and CEO spearheading the strategic direction, engineering excellence, and creative universe of The Miscreant Studios. Passionate about real-time simulation, raw player agency, zero-compromise framerates, and building games that leave an indelible mark.
+          </p>
+          <div style="margin-bottom:12px;">
+            <span class="tag">Studio Leadership</span>
+            <span class="tag">Game Architecture</span>
+            <span class="tag">Systems Direction</span>
+            <span class="tag">Realtime Tech</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            GitHub: <a href="https://github.com/Berinluke" target="_blank" style="color:var(--cyan);">github.com/Berinluke</a>
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3>Sai Sabareesh</h3>
+            <span class="badge">2D DESIGNER</span>
+          </div>
+          <p style="font-size:0.9rem; margin-bottom:12px;">
+            Visual craftsman and concept artist defining the aesthetic identity, character design, and evocative 2D worldbuilding across The Miscreant Studios. Dedicated to bold cyberpunk stylization, striking silhouettes, and rich visual storytelling.
+          </p>
+          <div style="margin-bottom:12px;">
+            <span class="tag">2D Concept Art</span>
+            <span class="tag">Character Design</span>
+            <span class="tag">Visual Identity</span>
+            <span class="tag">Digital Illustration</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Portfolio: ArtStation • Behance • LinkedIn
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Open Careers -->
+    <section>
+      <h2>05 • Careers & Open Positions (Freshers & Juniors Welcome)</h2>
+      <p style="color:var(--text-muted); margin-bottom:16px;">
+        Policy: We are open to ambitious freshers and juniors. Contact: <code>career.themiscreantstudios@gmail.com</code>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Role Title</th>
+            <th>Level</th>
+            <th>Key Requirements / Stack</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Unity Programmer (2D & 3D)</strong></td>
+            <td>Fresher / Junior</td>
+            <td>C#, Unity 2D & 3D Engine, Game Physics, Game Math</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>2D Artist</strong></td>
+            <td>Fresher / Junior</td>
+            <td>Sprite Craft, Environment Art, Digital Painting, Photoshop</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>UI/UX Designer</strong></td>
+            <td>Fresher / Junior</td>
+            <td>Figma, Cyberpunk Game HUD, Wireframing, Interaction Flow</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>Concept Artist</strong></td>
+            <td>Fresher / Junior</td>
+            <td>Character & World Ideation, Moodboards, Photoshop</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>Story Writer</strong></td>
+            <td>Fresher / Junior</td>
+            <td>World Lore, Narrative Design, Dialogue Writing</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>Song Artist</strong></td>
+            <td>Fresher / Junior</td>
+            <td>OST Production, Cyberpunk Beats, Atmosphere & Synth</td>
+            <td>Chennai / Remote</td>
+          </tr>
+          <tr>
+            <td><strong>3D Designer</strong></td>
+            <td>Fresher / Junior</td>
+            <td>Blender, Low & High Poly Modeling, Texturing</td>
+            <td>Chennai / Remote</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 6. Technical Stack & Transmissions -->
+    <section>
+      <h2>06 • Technical Engine Stack & Transmissions</h2>
+      <div class="card">
+        <h3>Core Engine Stack</h3>
+        <p><strong>Unreal Engine 5.5:</strong> Lumen Dynamic Global Illumination, Nanite Virtualized Geometry, Chaos Physics.</p>
+        <p><strong>Unity 6 & DOTS:</strong> High-concurrency burst threads, WebGPU engine, sub-2ms frametimes.</p>
+        <p><strong>Bare-Metal C++ / C#:</strong> SIMD AVX-512 vectorization, lock-free queues, custom memory arenas, 0.4ms physics tick.</p>
+        <p><strong>DCC & Audio:</strong> Blender 4.x, Houdini FX, Wwise Spatial Audio DSP.</p>
+      </div>
+
+      <div class="card">
+        <h3>Transmissions & Patch History</h3>
+        <p><strong>OCT 2026 • PATCH 2.4:</strong> Deep Void — Major Expansion "Voidbreaker" Deployed to Live Clusters.</p>
+        <p><strong>SEP 2026 • DEV DIARY:</strong> Project Omega — Inside the 128Hz High-Tick Netcode Architecture.</p>
+        <p><strong>AUG 2026 • INSIDE STUDIO:</strong> The Miscreant Studios — Building Without Corporate Shackles.</p>
+        <p><strong>JUL 2026 • EVENT:</strong> Project Velocity — Steam Next Fest Public Playtest Announced.</p>
+      </div>
+    </section>
+
+    <!-- 7. Contact Endpoints -->
+    <section>
+      <h2>07 • Communication & Dispatch Endpoints</h2>
+      <div class="card">
+        <p><strong>General Operations & Inquiries:</strong> <a href="mailto:themiscreantstudios@gmail.com" style="color:var(--cyan);">themiscreantstudios@gmail.com</a></p>
+        <p><strong>Publishing & Partnerships:</strong> <a href="mailto:themiscreantstudios@gmail.com" style="color:var(--cyan);">themiscreantstudios@gmail.com</a></p>
+        <p><strong>Recruitment & Talent Transmission:</strong> <a href="mailto:career.themiscreantstudios@gmail.com" style="color:var(--cyan);">career.themiscreantstudios@gmail.com</a></p>
+        <p><strong>Chennai Headquarters:</strong> Cyber Corridor, Chennai, Tamil Nadu, India (13.0827° N, 80.2707° E)</p>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

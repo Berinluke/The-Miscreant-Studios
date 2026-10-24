@@ -1,93 +1,59 @@
-# THE MISCREANT STUDIOS | Digital Chaos Simulator
+# THE MISCREANT STUDIOS 🎮⚡
 
-> Next-generation competitive game development studio web experience. Engineered with modular frontend architecture, WebGL ember physics, kinetic typography, and procedural Web Audio synthesis.
-
----
-
-## 🏛️ Repository Architecture
-
-Organized under enterprise-grade principal engineer standards with strict domain segregation:
-
-```text
-The-Miscreant-Studios/
-├── .gitignore                      # Operating system, IDE & build ignore definitions
-├── README.md                       # Studio architecture & development documentation
-├── index.html                      # Root entry point & semantic HTML structure
-├── netlify.toml                    # Netlify CI/CD build & static deployment rules
-├── favicon.ico                     # Root legacy favicon fallback
-├── app-ads.txt                     # Publisher authentication & ad verification
-│
-└── assets/
-    ├── brand/                      # Brand identity, vectors & application icons
-    │   ├── logo.png                # Primary studio badge
-    │   ├── favicon.png             # Modern 128x128 PNG icon
-    │   └── favicon-192.png         # High-DPI PWA / mobile touch icon
-    │
-    ├── images/                     # Categorized production visual media
-    │   ├── hero/                   # Full-bleed 3D scene elements & controllers
-    │   │   ├── hero-full-bg.jpg
-    │   │   ├── hero-foreground-controller.png
-    │   │   └── cyber-stage-bg.png
-    │   ├── games/                  # Studio titles & operations key art
-    │   │   ├── game-battleroyale.jpg   # Project Omega
-    │   │   ├── game-deepvoid.jpg       # Deep Void
-    │   │   ├── game-freefire.jpg       # Neon Grind
-    │   │   └── game-runner.jpg         # Project Velocity
-    │   └── tech/                   # Studio arsenal engine & tooling badges
-    │       ├── tech-ue5.jpg        # Unreal Engine 5 Nanite/Lumen
-    │       ├── tech-unity.jpg      # Unity 6 DOTS/URP
-    │       ├── tech-cpp.jpg        # Bare-metal C++ / C#
-    │       ├── tech-blender.jpg    # Blender 4.x Hard Surface & Geo Nodes
-    │       ├── tech-houdini.jpg    # Houdini FX Procedural Sim
-    │       └── tech-wwise.jpg      # Wwise Spatial Audio DSP
-    │
-    ├── css/                        # Scalable modular styling hierarchy
-    │   ├── core/                   # Design tokens, variables & responsive breakpoints
-    │   │   ├── main.css            # Base styles, color tokens & typography
-    │   │   └── responsive.css      # Viewport adaptability & safe-area margins
-    │   ├── fx/                     # Visual effects, shaders & interactive cursors
-    │   │   ├── cyberpunk.css       # Neon glow, stage framing & ghosting
-    │   │   ├── glitch.css          # Kinetic text scramble & chromatic split
-    │   │   └── cursor.css          # Magnetic spotlight & follower physics
-    │   └── sections/               # Page feature components
-    │       ├── games-showcase.css  # 3D operations carousel stage
-    │       ├── arsenal.css         # Tech stack telemetry & spec grids
-    │       └── studio-universe.css # Studio lore & operational terminal
-    │
-    └── js/                         # Decoupled ES runtime engine
-        ├── core/                   # Application bootstrap & event bus
-        │   └── main.js             # Navigation, smooth scroll & command palette
-        ├── fx/                     # Kinetic effects & WebGL shaders
-        │   ├── three-scene.js      # Three.js floating ember particle system
-        │   ├── cursor.js           # Sub-pixel lerp custom cursor engine
-        │   ├── glitch.js           # Random matrix text decoders
-        │   └── audio.js            # Web Audio API procedural sound synthesizer
-        └── sections/               # Specialized telemetry & component scripts
-            └── studio-sections.js  # Interactive terminal & universe controls
-```
+> **Built for Players. Designed for Chaos.**  
+> Official web portal and interactive scrollytelling experience for The Miscreant Studios, an independent game studio based in Chennai, Tamil Nadu, India.
 
 ---
 
-## ⚡ Local Development
+## 🚀 Features
 
-To run the studio experience locally with zero configuration:
+- **Interactive Jet Mission Scrollytelling**: Supersonic jet infiltration dropping 2 stickmen paratroopers directly onto the letter `T` in `MISCREANT`, who then hop across the typography into the game showcase as you scroll.
+- **In-Screen 60 FPS Playable Racing Game**: Authentic blue ballpoint pen racing mini-game (*Project Velocity*) embedded inside a desktop gaming battlestation with Autopilot demo and manual user steering via keyboard arrows, on-screen touch zones, or the drawn gamepad's D-Pad and analog thumbsticks.
+- **Human-Crafted Notebook Aesthetic**: Styled on school rough-notebook paper with ruled blue lines (`#FAF8F2`) and red left margin line.
+- **Games Multiverse**: Interactive showcase of all 5 studio titles:
+  - *Deep Void* (Cosmic Horror Extraction)
+  - *Project Omega* (Tactical Movement Arena)
+  - *Neon Grind* (Cyberpunk Combat Parkour)
+  - *Project Velocity* (128Hz Raw Reflex Racing)
+  - *Project Nebula* (Space Sim Dogfighting)
+- **128Hz Bare-Metal Netcode Engine**: Real-time interactive waveform telemetry visualizer comparing standard 60Hz tick rates against Miscreant 128Hz raw netcode.
+- **Chennai War Room & Careers**: Studio culture manifesto, leadership roster (Berin Luke & Sai Sabareesh), and 1-click apply modal for 7 open junior/fresher roles.
 
-### Option 1: Python 3
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [React 18](https://react.dev/) + [Vite 6](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS 3](https://tailwindcss.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Graphics**: HTML5 60 FPS Canvas Engine + Hand-crafted SVG Ballpoint Pen Illustrations
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+---
+
+## 💻 Local Development
+
 ```bash
-python -m http.server 3000
-```
-Then visit `http://localhost:3000`.
+# Install dependencies
+npm install
 
-### Option 2: Node.js (npx)
-```bash
-npx serve -l 3000
+# Start local development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
 ---
 
-## 🚀 Deployment (Netlify)
+## 🏢 Studio Information
 
-This project is configured for instantaneous static deployment via `netlify.toml`:
-- **Publish directory**: `.` (Root)
-- **Build command**: None required (Zero-build static runtime)
-- **Headers**: Custom security headers and cache policies applied automatically.
+- **Studio**: The Miscreant Studios
+- **Location**: Chennai, Tamil Nadu, India (13.0827° N, 80.2707° E)
+- **Founder & CEO**: Berin Luke
+- **2D Lead Designer**: Sai Sabareesh
+- **Contact**: `themiscreantstudios@gmail.com`
+- **Careers**: `career.themiscreantstudios@gmail.com`
