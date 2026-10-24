@@ -250,25 +250,6 @@ export default function BluePenDoodleJoystick() {
 
           </g>
 
-          {/* Technical Blueprint Labels */}
-          <path d="M 540 180 L 585 180 L 595 195" stroke="#1D4ED8" strokeWidth="1.4" fill="none" />
-          <circle cx="540" cy="180" r="2.5" fill="#1D4ED8" />
-          <text x="598" y="198" fontSize="8" fontFamily="monospace" fontWeight="bold" fill="#1E3A8A">
-            // PLAYABLE ENGINE
-          </text>
-          <text x="598" y="208" fontSize="7" fontFamily="monospace" fill="#2563EB">
-            128Hz REAL-TIME CANVAS
-          </text>
-
-          <path d="M 125 540 L 75 540 L 65 525" stroke="#1D4ED8" strokeWidth="1.4" fill="none" />
-          <circle cx="125" cy="540" r="2.5" fill="#1D4ED8" />
-          <text x="60" y="520" textAnchor="end" fontSize="8" fontFamily="monospace" fontWeight="bold" fill="#1E3A8A">
-            // LIVE CONTROLLER
-          </text>
-          <text x="60" y="530" textAnchor="end" fontSize="7" fontFamily="monospace" fill="#2563EB">
-            CLICK D-PAD TO STEER
-          </text>
-
         </svg>
       </div>
 
