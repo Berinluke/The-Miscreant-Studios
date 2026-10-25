@@ -28,7 +28,7 @@ export default function Slide2Multiverse() {
           </div>
 
           <span className="text-xs font-semibold text-slate-500 whitespace-nowrap self-end pb-1">
-            5 Titles in Active Development &amp; Live Service
+            4 Titles • 1 Released &amp; 3 in Active Development
           </span>
         </div>
 
@@ -39,6 +39,7 @@ export default function Slide2Multiverse() {
           <div className="lg:col-span-5 flex flex-col space-y-3">
             {gameUniverse.map((game) => {
               const isSelected = selectedGame.id === game.id;
+              const isReleased = game.status === 'Released';
               return (
                 <button
                   key={game.id}
@@ -62,9 +63,13 @@ export default function Slide2Multiverse() {
 
                   <div className="flex items-center gap-3">
                     <span className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded ${
-                      isSelected ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-600'
+                      isSelected 
+                        ? 'bg-white/15 text-white' 
+                        : isReleased 
+                          ? 'bg-emerald-100 text-emerald-800' 
+                          : 'bg-slate-100 text-slate-600'
                     }`}>
-                      {game.stats.tick || game.stats.fps || 'Active'}
+                      {game.status}
                     </span>
                     <ChevronRight className={`w-4 h-4 transition-transform ${isSelected ? 'translate-x-0.5 text-[#FF2A5F]' : 'text-slate-400'}`} />
                   </div>

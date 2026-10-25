@@ -31,104 +31,88 @@ export const studioInfo = {
 
 export const gameUniverse = [
   {
-    id: "deep-void",
-    title: "DEEP VOID",
-    tagline: "Cinematic Narrative Sci-Fi Odyssey",
-    badge: "STORY CAMPAIGN",
-    genre: "Story-Based Adventure",
-    engine: "Unreal Engine 5.5 (Lumen & Nanite)",
-    players: "Single-Player & Co-op Story",
-    color: "#2563EB", // Hyper Cobalt Blue
-    bgTint: "bg-blue-50/60",
-    borderTint: "border-blue-200",
-    description: "Immerse yourself in a gripping narrative through shattered planetary rings, wielding ancient void relics and uncovering deep forgotten lore.",
-    stats: {
-      story: "12 Chapters",
-      engine: "UE 5.5",
-      lore: "Rich Narrative",
-      audio: "Full Voiceover"
-    },
-    keyFeatures: ["Branching narrative choices", "Lumen dynamic cinematics", "Emotional orchestral score"]
-  },
-  {
-    id: "neon-grind",
-    title: "NEON GRIND",
-    tagline: "Instant-Action 1-Tap Reflex Brawler",
-    badge: "HYPER-CASUAL HIT",
-    genre: "Hyper-Casual Action",
-    engine: "Unity 6 & Instant-Play Engine",
-    players: "Instant Pick-Up & Play",
-    color: "#FFA000", // Solar Amber
-    bgTint: "bg-amber-50/60",
-    borderTint: "border-amber-200",
-    description: "Lightning-fast, bite-sized arcade reflex combat with smooth one-tap controls, vibrant neon aesthetics, and endless addictive progression.",
-    stats: {
-      session: "60 Seconds",
-      mode: "Endless Blitz",
-      controls: "1-Tap Reflex",
-      platforms: "Mobile & Web"
-    },
-    keyFeatures: ["Instant 1-tap mechanics", "Addictive progression loop", "Smooth 60 FPS mobile performance"]
-  },
-  {
-    id: "project-omega",
-    title: "PROJECT OMEGA",
-    tagline: "High-Stakes Narrative Mystery Thriller",
-    badge: "EPISODIC STORY",
-    genre: "Story-Based Thriller",
-    engine: "Custom Cinematic Engine",
-    players: "Story Driven",
-    color: "#FF2A5F", // Electric Coral
-    bgTint: "bg-rose-50/60",
-    borderTint: "border-rose-200",
-    description: "A dark, suspenseful narrative adventure where every dialogue choice alters the survival outcome of an elite crew stranded in hostile territory.",
-    stats: {
-      endings: "8 Unique Paths",
-      script: "40K Words",
-      cinematics: "4K Motion Capture",
-      tempo: "Tense Narrative"
-    },
-    keyFeatures: ["Multiple story endings", "Moral choice system", "High-fidelity facial capture"]
-  },
-  {
-    id: "project-velocity",
-    title: "PROJECT VELOCITY",
-    tagline: "Hyperspeed Tap-to-Dash Reflex Runner",
-    badge: "HYPER-CASUAL RUNNER",
-    genre: "Hyper-Casual Speedrun",
-    engine: "Ultra-Light 2D/3D Solver",
-    players: "Global Leaderboards",
-    color: "#059669", // Emerald Speed
+    id: "master-the-wrap",
+    title: "MASTER THE WRAP",
+    tagline: "Addictive 2D Casual Mobile Arcade",
+    badge: "RELEASED",
+    genre: "2D Casual Mobile Game",
+    status: "Released",
+    engine: "Unity 2D Mobile",
+    players: "Single-Player",
+    color: "#10B981", // Emerald
     bgTint: "bg-emerald-50/60",
     borderTint: "border-emerald-200",
-    description: "Dash, dodge, and slide at Mach speed through stylized neon tracks with effortless swipe controls and satisfying physics feedback.",
+    description: "A delightfully addictive 2D casual mobile game featuring intuitive touch controls, satisfying wrapping puzzle mechanics, and snappy arcade levels designed for quick pick-up-and-play sessions.",
     stats: {
-      mechanics: "Swipe & Tap",
-      fps: "120 FPS",
-      levels: "100+ Quick Stages",
-      boards: "Global Speedrun"
+      status: "Released",
+      platform: "Mobile",
+      genre: "2D Casual",
+      controls: "Touch / Tap"
     },
-    keyFeatures: ["Zero-friction swipe controls", "Dynamic synthwave beats", "Bite-sized micro challenges"]
+    keyFeatures: ["Intuitive one-touch mechanics", "Satisfying wrapping puzzle loops", "Quick bite-sized mobile stages"]
   },
   {
-    id: "project-nebula",
-    title: "PROJECT NEBULA",
-    tagline: "Atmospheric Derelict Narrative Odyssey",
-    badge: "STORY EXPLORATION",
-    genre: "Story-Based Sci-Fi Mystery",
-    engine: "Spatial 3D Audio & Narrative Solvers",
-    players: "Solo Narrative",
-    color: "#7C3AED", // Violet Energy
+    id: "tethered-territories",
+    title: "TETHERED TERRITORIES",
+    tagline: "Strategic 2D Tether & Expand Mobile Game",
+    badge: "IN PROGRESS",
+    genre: "2D Casual Mobile Game",
+    status: "In Progress",
+    engine: "Unity 2D & Physics",
+    players: "Single & Versus",
+    color: "#3B82F6", // Cobalt Blue
+    bgTint: "bg-blue-50/60",
+    borderTint: "border-blue-200",
+    description: "Capture and defend zones using dynamic tethering mechanics. Expand your territory, outmaneuver rivals, and dominate the map in this engaging 2D casual mobile experience.",
+    stats: {
+      status: "In Progress",
+      platform: "Mobile",
+      genre: "2D Casual",
+      mechanic: "Tether & Expand"
+    },
+    keyFeatures: ["Dynamic tether mechanics", "Territory expansion strategy", "Smooth touch responsiveness"]
+  },
+  {
+    id: "world-kneel",
+    title: "WORLD KNEEL",
+    tagline: "Atmospheric 2D Story-Driven Platformer",
+    badge: "IN PROGRESS",
+    genre: "2D Platformer Story-Based Game",
+    status: "In Progress",
+    engine: "Custom 2D Engine",
+    players: "Story Campaign",
+    color: "#F59E0B", // Amber
+    bgTint: "bg-amber-50/60",
+    borderTint: "border-amber-200",
+    description: "Journey through a ruined, majestic world in this deep narrative-driven 2D platformer. Uncover lost histories, master acrobatic traversal, and shape the destiny of a falling kingdom.",
+    stats: {
+      status: "In Progress",
+      type: "2D Platformer",
+      story: "Story-Based",
+      art: "Hand-Crafted"
+    },
+    keyFeatures: ["Fluid precision platforming", "Emotional narrative campaign", "Atmospheric world exploration"]
+  },
+  {
+    id: "the-ghost",
+    title: "THE GHOST",
+    tagline: "Psychological 3D Horror & Thriller Narrative",
+    badge: "IN PROGRESS",
+    genre: "3D Horror Thriller Story-Based Game",
+    status: "In Progress",
+    engine: "Unreal Engine 5 (Lumen & Nanite)",
+    players: "Solo Horror Experience",
+    color: "#7C3AED", // Violet
     bgTint: "bg-purple-50/60",
     borderTint: "border-purple-200",
-    description: "A hauntingly beautiful environmental narrative game exploring derelict spacecraft across the cosmos to piece together the history of a lost civilization.",
+    description: "A bone-chilling 3D psychological horror and thriller story-based game. Navigate terrifying hyper-realistic environments, evade supernatural horrors, and unravel a harrowing mystery where every sound matters.",
     stats: {
-      chapters: "Story Prologue",
-      audio: "Binaural 3D Audio",
-      style: "Atmospheric",
-      puzzles: "Story Puzzles"
+      status: "In Progress",
+      visuals: "3D Hyper-Real",
+      genre: "Horror Thriller",
+      audio: "Binaural 3D"
     },
-    keyFeatures: ["Deep lore & audio logs", "Atmospheric environmental storytelling", "Zero-G puzzle mechanics"]
+    keyFeatures: ["Atmospheric psychological tension", "Binaural spatial horror soundscape", "Branching investigative storyline"]
   }
 ];
 
