@@ -37,26 +37,26 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
             ============================================================== */}
         <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
           
-          {/* Main Scraped Chalk Studio Title (Authentic Chalk Stick on Slate) */}
+          {/* Main Scraped Chalk Studio Title (Authentic Cursive Chalk Handwriting matching user reference) */}
           <div className="relative">
             <h1 
               ref={letterTRef}
-              className="chalk-piece-title text-6xl sm:text-7xl md:text-8xl lg:text-[7.4rem] font-black leading-[0.88] select-none"
+              className="chalk-handwritten-title text-6xl sm:text-7xl md:text-8xl lg:text-[6.4rem] font-normal leading-[1.06] select-none text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
             >
-              THE MISCREANT<br />STUDIOS
+              The Miscreant<br />Studios
             </h1>
 
             {/* Hand-drawn chalk highlight smudge underline */}
-            <div className="w-48 sm:w-64 h-1.5 bg-white/20 rounded-full blur-[1px] mt-3 ml-1" />
+            <div className="w-56 sm:w-72 h-1.5 bg-white/25 rounded-full blur-[1px] mt-3 ml-2" />
           </div>
 
-          {/* Tagline in Coral Chalk Piece Lettering */}
-          <div className="chalk-piece-coral text-2xl sm:text-3xl md:text-4xl tracking-wide mt-5 select-none">
-            BUILT FOR PLAYERS. DESIGNED FOR CHAOS.
+          {/* Tagline in Coral Chalk Cursive Script */}
+          <div className="chalk-handwritten-coral text-2xl sm:text-3xl md:text-4xl tracking-wide mt-4 select-none drop-shadow-[0_2px_10px_rgba(251,113,133,0.35)]">
+            Built for Players. Designed for Chaos.
           </div>
 
           {/* Description written in authentic classroom chalk font */}
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed mt-4 sm:mt-5 select-none chalk-text">
+          <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-xl font-hand font-bold tracking-wide leading-relaxed mt-4 sm:mt-5 select-none chalk-text">
             Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
 
@@ -95,7 +95,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   opacity="0.6" 
                 />
               </svg>
-              <span className="relative z-10 chalk-title font-bebas text-lg sm:text-xl tracking-wider group-hover:text-amber-100 transition-colors">
+              <span className="relative z-10 chalk-handwritten-title text-xl sm:text-2xl tracking-wide group-hover:text-amber-100 transition-colors">
                 Explore Our Games
               </span>
             </a>
@@ -124,7 +124,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   className="group-hover:stroke-emerald-300 group-hover:fill-white/10 transition-all duration-200" 
                 />
               </svg>
-              <span className="relative z-10 chalk-text font-bebas text-lg sm:text-xl tracking-wider group-hover:text-white transition-colors">
+              <span className="relative z-10 chalk-text font-hand text-xl sm:text-2xl font-bold tracking-wide group-hover:text-white transition-colors">
                 Studio Story ↗
               </span>
             </a>
