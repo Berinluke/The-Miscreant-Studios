@@ -25,18 +25,25 @@ export default function ShinobiBattleStage() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     let animId;
     let width = 0;
     let height = 0;
 
     const resize = () => {
+      if (!canvas || !ctx) return;
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
+      if (!width || !height) return;
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
-      ctx.resetTransform();
+      if (typeof ctx.resetTransform === 'function') {
+        ctx.resetTransform();
+      } else {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
       ctx.scale(dpr, dpr);
     };
 
