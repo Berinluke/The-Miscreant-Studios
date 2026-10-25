@@ -39,7 +39,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
       />
 
       {/* Main Hero Stage */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pl-6 sm:pl-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center px-4 sm:px-6">
         
         {/* Left: Typography & Story Narrative */}
         <div className="lg:col-span-7 flex flex-col items-start space-y-6">
@@ -109,38 +109,51 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
 
       </div>
 
-      {/* Hand-Drawn Chalkboard Mathematics & Physics Doodles Layer */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-40">
+      {/* Authentic Hand-Drawn Chalkboard Mathematics & Physics Doodles Layer */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-55">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          {/* Top-Right Chalk Stars & Formulas */}
-          <g stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.6">
-            <path d="M 120 180 L 126 195 L 142 195 L 129 204 L 134 220 L 120 210 L 106 220 L 111 204 L 98 195 L 114 195 Z" strokeDasharray="3 2" />
-            <path d="M 60 320 C 80 300, 110 300, 130 320" strokeDasharray="2 3" />
-            <text x="140" y="325" fill="#FFFFFF" fontSize="13" fontFamily="Permanent Marker" opacity="0.7">F = m · a</text>
+          {/* Top-Right Formulas & Stars above Monitor */}
+          <g stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.75">
+            <path d="M 85% 15% L 85.5% 16.5% L 87% 16.5% L 85.8% 17.5% L 86.2% 19% L 85% 18% L 83.8% 19% L 84.2% 17.5% L 83% 16.5% L 84.5% 16.5% Z" strokeDasharray="3 2" />
+            <path d="M 88% 22% L 88.4% 23% L 89.5% 23% L 88.6% 23.8% L 89% 25% L 88% 24.2% L 87% 25% L 87.4% 23.8% L 86.5% 23% L 87.6% 23% Z" strokeDasharray="2 2" />
+            <text x="78%" y="14%" fill="#F8FAFC" fontSize="13" fontFamily="Permanent Marker" opacity="0.8">dx / dt = v</text>
+            <text x="82%" y="19%" fill="#93C5FD" fontSize="11" fontFamily="Caveat" opacity="0.7">x² + y² = r²</text>
           </g>
 
-          {/* Center-Right Physics Doodles */}
-          <g stroke="#93C5FD" strokeWidth="1" fill="none" opacity="0.5">
-            <circle cx="580" cy="180" r="35" strokeDasharray="4 4" />
-            <line x1="580" y1="140" x2="580" y2="220" />
-            <line x1="540" y1="180" x2="620" y2="180" />
-            <text x="590" y="170" fill="#93C5FD" fontSize="11" fontFamily="Caveat">θ = 45°</text>
+          {/* Curved Hand-Drawn Chalk Arrow pointing to 'Explore Our Games' */}
+          <g stroke="#FFFFFF" strokeWidth="1.4" fill="none" opacity="0.6">
+            <path d="M 160 520 C 140 560, 150 590, 185 600" strokeDasharray="4 3" />
+            <polyline points="175,595 186,600 182,588" strokeLinecap="round" strokeLinejoin="round" />
+            <text x="110" y="550" fill="#FDE047" fontSize="13" fontFamily="Caveat" transform="rotate(-15 110 550)">start here</text>
           </g>
 
-          {/* Bottom Chalk Formula & Chalk Piece */}
-          <g opacity="0.7">
-            <text x="75%" y="88%" fill="#FDE047" fontSize="14" fontFamily="Caveat" opacity="0.75">
-              E = mc² // 60 FPS
+          {/* Right Bottom Math Formulas (as in reference image) */}
+          <g opacity="0.85">
+            <text x="82%" y="67%" fill="#F8FAFC" fontSize="13" fontFamily="Permanent Marker" opacity="0.75">
+              ΔV = 2/(3L) · erctan(b²)
             </text>
-            <text x="68%" y="92%" fill="#FFFFFF" fontSize="12" fontFamily="Caveat" opacity="0.55">
-              v = u + a·t
+            <text x="84%" y="78%" fill="#93C5FD" fontSize="12" fontFamily="Caveat" opacity="0.8">
+              max(h) = 1/2
             </text>
-            {/* White Chalk Piece on the Bottom Slate Ledge */}
-            <g transform="translate(1020, 880) rotate(-14)">
-              <rect x="0" y="0" width="34" height="10" rx="3" fill="#FFFFFF" opacity="0.9" />
-              <rect x="2" y="2" width="30" height="6" rx="2" fill="#E2E8F0" opacity="0.6" />
-              <ellipse cx="40" cy="7" rx="8" ry="3" fill="#FFFFFF" opacity="0.25" />
-            </g>
+            <text x="86%" y="85%" fill="#FDE047" fontSize="14" fontFamily="Caveat" opacity="0.85">
+              (x - 5) / 2
+            </text>
+          </g>
+
+          {/* Realistic 3D White Chalk Piece on Bottom Slate Ledge */}
+          <g transform="translate(1000, 780) rotate(-18)" opacity="0.95">
+            {/* Powdery chalk dust smudge behind the chalk stick */}
+            <ellipse cx="25" cy="8" rx="28" ry="12" fill="#FFFFFF" opacity="0.12" filter="blur(4px)" />
+            {/* Chalk stick body */}
+            <rect x="0" y="0" width="46" height="13" rx="3.5" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.8" />
+            {/* Subtle cylinder chalk shadow */}
+            <rect x="0" y="7" width="46" height="6" rx="2" fill="#CBD5E1" opacity="0.5" />
+            {/* Chalk stick tip */}
+            <ellipse cx="46" cy="6.5" rx="3.5" ry="6.5" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.8" />
+            <ellipse cx="0" cy="6.5" rx="3.5" ry="6.5" fill="#E2E8F0" />
+            {/* Small chalk broken fragment */}
+            <circle cx="-12" cy="14" r="3" fill="#FFFFFF" opacity="0.8" />
+            <circle cx="-16" cy="18" r="1.5" fill="#FFFFFF" opacity="0.6" />
           </g>
         </svg>
       </div>

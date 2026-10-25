@@ -26,7 +26,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
       id="careers" 
       className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 bg-transparent flex flex-col justify-center select-none border-t border-slate-800"
     >
-      <div className="max-w-7xl mx-auto w-full space-y-16 pl-6 sm:pl-12">
+      <div className="max-w-7xl mx-auto w-full space-y-16 px-4 sm:px-6">
         
         {/* Header */}
         <div className="border-b border-slate-800 pb-8">

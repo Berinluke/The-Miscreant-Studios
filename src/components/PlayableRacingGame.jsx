@@ -251,12 +251,30 @@ export default function PlayableRacingGame({ externalControl = null }) {
         ctx.fillStyle = enemy.color;
         ctx.fillRect(-4, -26, 8, 10);
 
-        // Headlight Bulbs
-        ctx.fillStyle = '#F59E0B';
+        // Headlight Beams (Glowing light cone shining ahead onto chalkboard asphalt)
+        ctx.save();
+        const lightGrad = ctx.createLinearGradient(0, 24, 0, 95);
+        lightGrad.addColorStop(0, 'rgba(253, 224, 71, 0.45)');
+        lightGrad.addColorStop(1, 'rgba(253, 224, 71, 0.0)');
+        ctx.fillStyle = lightGrad;
         ctx.beginPath();
-        ctx.arc(-10, 24, 3, 0, Math.PI * 2);
-        ctx.arc(10, 24, 3, 0, Math.PI * 2);
+        ctx.moveTo(-10, 24);
+        ctx.lineTo(-26, 95);
+        ctx.lineTo(26, 95);
+        ctx.lineTo(10, 24);
+        ctx.closePath();
         ctx.fill();
+        ctx.restore();
+
+        // Headlight Bulbs
+        ctx.fillStyle = '#FDE047';
+        ctx.shadowColor = '#FDE047';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(-10, 24, 3.5, 0, Math.PI * 2);
+        ctx.arc(10, 24, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
 
         // Wide Racing Wheels
         ctx.fillStyle = '#0F172A';
@@ -332,22 +350,23 @@ export default function PlayableRacingGame({ externalControl = null }) {
       ctx.ellipse(0, 3, 22, 34, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Main Aerodynamic Chassis
-      ctx.fillStyle = '#FFFFFF';
-      ctx.strokeStyle = '#1E3A8A';
-      ctx.lineWidth = 3;
+      // Main Aerodynamic Chassis (Chalkboard Racer)
+      ctx.fillStyle = '#1E293B';
+      ctx.strokeStyle = '#F8FAFC';
+      ctx.lineWidth = 2.6;
       ctx.beginPath();
       ctx.roundRect(-18, -30, 36, 60, 8);
       ctx.fill();
       ctx.stroke();
 
-      // Cockpit Roof & Windshield (Cobalt Cyan Pen Ink)
+      // Cockpit Roof & Windshield (Cobalt Cyan Glow)
       ctx.fillStyle = '#38BDF8';
-      ctx.strokeStyle = '#1E40AF';
-      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = '#F8FAFC';
+      ctx.lineWidth = 1.4;
       ctx.beginPath();
       ctx.roundRect(-12, -12, 24, 20, 5);
       ctx.fill();
+      ctx.stroke();
       ctx.stroke();
 
       // Miscreant Red Racing Stripe

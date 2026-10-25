@@ -11,7 +11,7 @@ export default function Slide2Multiverse() {
       id="games" 
       className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 bg-transparent flex flex-col justify-center select-none border-t border-slate-800 overflow-hidden"
     >
-      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12 pl-6 sm:pl-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-12 px-4 sm:px-6">
         
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-slate-800 pb-6">
