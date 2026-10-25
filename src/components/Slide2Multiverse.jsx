@@ -23,7 +23,7 @@ export default function Slide2Multiverse() {
               OUR GAMES
             </h2>
             <p className="text-slate-600 text-base sm:text-lg font-normal leading-relaxed">
-              Every title is built from scratch around fluid player controls, destructible physics, and high-tick multiplayer netcode.
+              From instant-fun hyper-casual reflex mechanics to rich, cinematic story-based narrative journeys.
             </p>
           </div>
 

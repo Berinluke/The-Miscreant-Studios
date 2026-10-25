@@ -66,7 +66,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
           </div>
 
           <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-xl font-normal leading-relaxed">
-            Independent game studio based in Chennai, India. We forge living digital battlegrounds and bare-metal engine systems that push human reflexes to their limits.
+            Independent game studio based in Chennai, India. We forge addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
 
           {/* Action Links */}

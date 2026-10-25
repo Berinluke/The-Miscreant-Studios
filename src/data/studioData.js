@@ -33,102 +33,102 @@ export const gameUniverse = [
   {
     id: "deep-void",
     title: "DEEP VOID",
-    tagline: "Celestial Void MMORPG Flagship",
-    badge: "EXPANSION 2.4 VOIDBREAKER",
-    genre: "Space MMORPG",
+    tagline: "Cinematic Narrative Sci-Fi Odyssey",
+    badge: "STORY CAMPAIGN",
+    genre: "Story-Based Adventure",
     engine: "Unreal Engine 5.5 (Lumen & Nanite)",
-    players: "64-Player Cosmic Raids",
+    players: "Single-Player & Co-op Story",
     color: "#2563EB", // Hyper Cobalt Blue
     bgTint: "bg-blue-50/60",
     borderTint: "border-blue-200",
-    description: "Explore shattered planetary rings, wield glowing void blades, and battle through massive 64-player raids with zero lag.",
+    description: "Immerse yourself in a gripping narrative through shattered planetary rings, wielding ancient void relics and uncovering deep forgotten lore.",
     stats: {
-      tick: "64 Hz",
+      story: "12 Chapters",
       engine: "UE 5.5",
-      raids: "64 Players",
-      mesh: "Zero-Lag Mesh"
+      lore: "Rich Narrative",
+      audio: "Full Voiceover"
     },
-    keyFeatures: ["Zero-lag server mesh", "Lumen dynamic raytracing", "Dynamic celestial bosses"]
-  },
-  {
-    id: "project-omega",
-    title: "PROJECT OMEGA",
-    tagline: "Tactical Warfare with Hypersonic Air-Drops",
-    badge: "CLOSED BETA WAVE 03",
-    genre: "Tactical Battle Royale",
-    engine: "Bare-Metal C++ & Chaos Physics",
-    players: "100 Players Concurrent",
-    color: "#FF2A5F", // Electric Coral
-    bgTint: "bg-rose-50/60",
-    borderTint: "border-rose-200",
-    description: "100-player tactical warfare with supersonic drops, realistic weapon recoil, and fully destructible buildings running on 128Hz bare-metal servers.",
-    stats: {
-      tick: "128 Hz",
-      capacity: "420K+ Tested",
-      latency: "< 2.1 ms",
-      antiCheat: "Vanguard++"
-    },
-    keyFeatures: ["128Hz high-tick rate", "Voxel destruction physics", "Sub-2.1ms hit registration"]
+    keyFeatures: ["Branching narrative choices", "Lumen dynamic cinematics", "Emotional orchestral score"]
   },
   {
     id: "neon-grind",
     title: "NEON GRIND",
-    tagline: "High-Velocity 4v4 Squad Clash",
-    badge: "LIVE OPERATIONS",
-    genre: "High-Speed Blitz Shooter",
-    engine: "Unity 6 & DOTS Engine",
-    players: "4v4 Cross-Play",
+    tagline: "Instant-Action 1-Tap Reflex Brawler",
+    badge: "HYPER-CASUAL HIT",
+    genre: "Hyper-Casual Action",
+    engine: "Unity 6 & Instant-Play Engine",
+    players: "Instant Pick-Up & Play",
     color: "#FFA000", // Solar Amber
     bgTint: "bg-amber-50/60",
     borderTint: "border-amber-200",
-    description: "Lightning-fast squad battles featuring vertical jetpack boosts, customizable streetwear styles, and non-stop respawn adrenaline matches.",
+    description: "Lightning-fast, bite-sized arcade reflex combat with smooth one-tap controls, vibrant neon aesthetics, and endless addictive progression.",
     stats: {
-      matchTime: "4.5 Min",
-      mode: "4v4 Blitz",
-      uptime: "99.99%",
-      crossplay: "PC & Console"
+      session: "60 Seconds",
+      mode: "Endless Blitz",
+      controls: "1-Tap Reflex",
+      platforms: "Mobile & Web"
     },
-    keyFeatures: ["Jetpack vertical mobility", "Dynamic streetwear arsenals", "Instant respawn pacing"]
+    keyFeatures: ["Instant 1-tap mechanics", "Addictive progression loop", "Smooth 60 FPS mobile performance"]
+  },
+  {
+    id: "project-omega",
+    title: "PROJECT OMEGA",
+    tagline: "High-Stakes Narrative Mystery Thriller",
+    badge: "EPISODIC STORY",
+    genre: "Story-Based Thriller",
+    engine: "Custom Cinematic Engine",
+    players: "Story Driven",
+    color: "#FF2A5F", // Electric Coral
+    bgTint: "bg-rose-50/60",
+    borderTint: "border-rose-200",
+    description: "A dark, suspenseful narrative adventure where every dialogue choice alters the survival outcome of an elite crew stranded in hostile territory.",
+    stats: {
+      endings: "8 Unique Paths",
+      script: "40K Words",
+      cinematics: "4K Motion Capture",
+      tempo: "Tense Narrative"
+    },
+    keyFeatures: ["Multiple story endings", "Moral choice system", "High-fidelity facial capture"]
   },
   {
     id: "project-velocity",
     title: "PROJECT VELOCITY",
-    tagline: "Break the Sound Barrier through Neo-Chennai",
-    badge: "STEAM NEXT FEST PROTOTYPE",
-    genre: "Hyperspeed Parkour & Speedrun",
-    engine: "Custom WebGPU & C# Solvers",
-    players: "Global Time-Trials",
+    tagline: "Hyperspeed Tap-to-Dash Reflex Runner",
+    badge: "HYPER-CASUAL RUNNER",
+    genre: "Hyper-Casual Speedrun",
+    engine: "Ultra-Light 2D/3D Solver",
+    players: "Global Leaderboards",
     color: "#059669", // Emerald Speed
     bgTint: "bg-emerald-50/60",
     borderTint: "border-emerald-200",
-    description: "Tear through futuristic Neo-Chennai at Mach 2 with fluid wall-runs, grapple chains, and zero-gravity rail grinds tuned for competitive speedrunners.",
+    description: "Dash, dodge, and slide at Mach speed through stylized neon tracks with effortless swipe controls and satisfying physics feedback.",
     stats: {
-      fps: "120+ FPS",
-      latency: "< 2.1 ms",
-      audio: "Synthwave Reactive",
-      boards: "Global Ladders"
+      mechanics: "Swipe & Tap",
+      fps: "120 FPS",
+      levels: "100+ Quick Stages",
+      boards: "Global Speedrun"
     },
-    keyFeatures: ["Mach-2 wall runs & grapples", "Synthwave audio-reactive world", "Rock-solid 120+ FPS"]
+    keyFeatures: ["Zero-friction swipe controls", "Dynamic synthwave beats", "Bite-sized micro challenges"]
   },
   {
     id: "project-nebula",
     title: "PROJECT NEBULA",
-    tagline: "Deep-Space Derelict Frigate Extraction",
-    badge: "INTERNAL R&D CLASSIFIED",
-    genre: "Zero-G Extraction Shooter",
-    engine: "Spatial 3D Audio & Voxel Breaches",
-    players: "Squad Extraction",
+    tagline: "Atmospheric Derelict Narrative Odyssey",
+    badge: "STORY EXPLORATION",
+    genre: "Story-Based Sci-Fi Mystery",
+    engine: "Spatial 3D Audio & Narrative Solvers",
+    players: "Solo Narrative",
     color: "#7C3AED", // Violet Energy
     bgTint: "bg-purple-50/60",
     borderTint: "border-purple-200",
-    description: "Raid abandoned alien space frigates in zero gravity. Salvage ancient glowing reactor cores while escaping oxygen loss and synthetic hunters.",
+    description: "A hauntingly beautiful environmental narrative game exploring derelict spacecraft across the cosmos to piece together the history of a lost civilization.",
     stats: {
-      hazard: "Zero-G Vacuum",
-      audio: "HRTF 3D Audio",
-      destruction: "Hull Breaches",
-      status: "Classified"
+      chapters: "Story Prologue",
+      audio: "Binaural 3D Audio",
+      style: "Atmospheric",
+      puzzles: "Story Puzzles"
     },
-    keyFeatures: ["Zero-G vacuum combat", "Hull breaches & oxygen hazards", "Binaural 3D directional sound"]
+    keyFeatures: ["Deep lore & audio logs", "Atmospheric environmental storytelling", "Zero-G puzzle mechanics"]
   }
 ];
 
