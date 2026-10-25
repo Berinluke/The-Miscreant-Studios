@@ -4,6 +4,7 @@ import Slide2Multiverse from './components/Slide2Multiverse';
 import Slide4StudioCulture from './components/Slide4StudioCulture';
 import Slide5DispatchCareers from './components/Slide5DispatchCareers';
 import QuickApplyModal from './components/QuickApplyModal';
+import ChalkboardFrame from './components/ChalkboardFrame';
 
 export default function App() {
   const [activeSlide, setActiveSlide] = useState('hero');
@@ -48,6 +49,9 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen chalkboard-bg text-slate-100 selection:bg-[#FB7185] selection:text-slate-950 flex flex-col font-sans relative overflow-x-hidden">
+
+      {/* 100% Pure Code & SVG Galvanized Steel Hardware Frame & 4 Corner Rivets */}
+      <ChalkboardFrame />
 
       {/* Slide 1: Hero */}
       <Slide1HeroSkyDeck 

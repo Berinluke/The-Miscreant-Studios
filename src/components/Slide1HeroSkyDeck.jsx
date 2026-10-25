@@ -1,22 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { ArrowDown } from 'lucide-react';
 import JetMissionScrollytelling from './JetMissionScrollytelling';
-import PlayableRacingGame from './PlayableRacingGame';
+import ChalkBattlestationSvg from './ChalkBattlestationSvg';
 
+/**
+ * Slide1HeroSkyDeck
+ * 
+ * 100% Pure Code & SVG Chalkboard Hero Stage:
+ * - High-character scraped chalk typography ("THE MISCREANT STUDIOS", coral tagline, description)
+ * - Hand-drawn SVG chalk pill buttons ("Explore Our Games", "Studio Story ↗")
+ * - Hand-drawn chalk arrows, formulas, and math doodles
+ * - Pure SVG Chalk Battlestation on fluted pedestal with live 60 FPS Canvas racing game
+ * - Zero raster screenshots used anywhere!
+ */
 export default function Slide1HeroSkyDeck({ onScrollDown }) {
   const containerRef = useRef(null);
   const letterTRef = useRef(null);
-  const [gamepadControl, setGamepadControl] = useState(null);
-
-  const handleGamepadPress = (dir) => {
-    setGamepadControl(dir);
-    setTimeout(() => setGamepadControl(null), 100);
-  };
 
   return (
     <section 
       ref={containerRef}
       id="hero" 
-      className="relative min-h-screen w-full flex flex-col justify-center items-center py-2 px-1 sm:px-4 bg-transparent overflow-hidden select-none"
+      className="relative min-h-screen w-full flex flex-col justify-between pt-10 sm:pt-14 pb-8 px-6 sm:px-10 lg:px-16 bg-transparent select-none overflow-hidden"
     >
       {/* Supersonic Fighter Jet Atmospheric Flyby */}
       <JetMissionScrollytelling
@@ -24,137 +29,160 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
         letterTRef={letterTRef}
       />
 
-      {/* Main Unified Chalkboard Hero Stage */}
-      <div className="relative w-full max-w-[1380px] aspect-[1024/486] mx-auto select-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center justify-center">
+      {/* Main Hero Stage (Two-Column Asymmetric Architectural Bento Layout) */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         
-        {/* Layer 1: Live Interactive 60 FPS HTML5 Canvas Racing Game */}
-        <div 
-          className="absolute z-0 overflow-hidden bg-black"
-          style={{
-            left: '62.4%',
-            top: '20.5%',
-            width: '26.2%',
-            height: '33.2%',
-          }}
-        >
-          <PlayableRacingGame externalControl={gamepadControl} />
+        {/* ==============================================================
+            LEFT COLUMN: Pure Code Chalk Typography & Hand-Drawn Buttons
+            ============================================================== */}
+        <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
+          
+          {/* Main Scraped Chalk Studio Title */}
+          <div className="relative">
+            <h1 
+              ref={letterTRef}
+              className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-black tracking-tight leading-[0.88] chalk-title text-white select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+            >
+              THE MISCREANT<br />STUDIOS
+            </h1>
+
+            {/* Hand-drawn chalk highlight smudge underline */}
+            <div className="w-48 sm:w-64 h-1 bg-white/20 rounded-full blur-[1px] mt-2 ml-1" />
+          </div>
+
+          {/* Tagline in Coral Chalk */}
+          <div className="font-bebas text-2xl sm:text-3xl md:text-4xl tracking-wide chalk-coral mt-5 select-none drop-shadow-[0_2px_8px_rgba(251,113,133,0.3)]">
+            BUILT FOR PLAYERS. DESIGNED FOR CHAOS.
+          </div>
+
+          {/* Description */}
+          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed mt-4 sm:mt-5 select-none">
+            Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
+          </p>
+
+          {/* Action Row: Real Hand-Drawn Chalk Pill Buttons & Doodles */}
+          <div className="relative flex flex-wrap items-center gap-5 sm:gap-6 mt-8 sm:mt-10">
+            
+            {/* Button 1: "Explore Our Games" (Pure SVG Rough Chalk Oval) */}
+            <a
+              href="#games"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onScrollDown) onScrollDown('games');
+              }}
+              className="group relative px-8 py-3.5 rounded-full cursor-pointer flex items-center justify-center font-sans font-bold text-sm sm:text-base tracking-wide text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              title="Explore Our Games"
+              aria-label="Explore Our Games"
+            >
+              {/* SVG Rough Chalk Oval Border & Dust Fill */}
+              <svg 
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" 
+                preserveAspectRatio="none" 
+                viewBox="0 0 180 52"
+              >
+                <rect 
+                  x="2" y="2" width="176" height="48" rx="24" 
+                  fill="#FFFFFF" fillOpacity="0.14" 
+                  stroke="#FFFFFF" strokeWidth="2.2" 
+                  strokeDasharray="40 2 80 3" 
+                  className="group-hover:fill-opacity-25 group-hover:stroke-amber-200 transition-all duration-200" 
+                />
+                <rect 
+                  x="5" y="5" width="170" height="42" rx="21" 
+                  fill="none" 
+                  stroke="#FFFFFF" strokeWidth="1" 
+                  strokeDasharray="25 3 50 2" 
+                  opacity="0.6" 
+                />
+              </svg>
+              <span className="relative z-10 chalk-title group-hover:text-amber-100 transition-colors">
+                Explore Our Games
+              </span>
+            </a>
+
+            {/* Button 2: "Studio Story ↗" (Pure SVG Chalk Capsule Outline) */}
+            <a
+              href="#culture"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onScrollDown) onScrollDown('culture');
+              }}
+              className="group relative px-7 py-3.5 rounded-full cursor-pointer flex items-center justify-center font-sans font-medium text-sm sm:text-base tracking-wide text-slate-200 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              title="Studio Story"
+              aria-label="Studio Story"
+            >
+              <svg 
+                className="absolute inset-0 w-full h-full pointer-events-none overflow-visible" 
+                preserveAspectRatio="none" 
+                viewBox="0 0 150 52"
+              >
+                <rect 
+                  x="2" y="2" width="146" height="48" rx="24" 
+                  fill="none" 
+                  stroke="#CBD5E1" strokeWidth="1.8" 
+                  strokeDasharray="35 3 65 2" 
+                  className="group-hover:stroke-emerald-300 group-hover:fill-white/10 transition-all duration-200" 
+                />
+              </svg>
+              <span className="relative z-10 chalk-text group-hover:text-white transition-colors">
+                Studio Story ↗
+              </span>
+            </a>
+
+            {/* Hand-Drawn Chalk Arrow pointing to 'Explore Our Games' */}
+            <div className="hidden sm:block absolute left-6 -top-9 pointer-events-none select-none">
+              <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+                <path d="M 8 6 C 18 16, 28 20, 38 28" stroke="#FFFFFF" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.75" />
+                <polyline points="32,27 39,29 37,22" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.75" />
+                <text x="4" y="12" fill="#FDE047" fontSize="13" fontFamily="Caveat" transform="rotate(-10 4 12)">start here</text>
+              </svg>
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Layer 2: Master Authentic Chalkboard Artwork with Transparent Screen Cutout */}
-        <img 
-          src="/assets/chalkboard-hero-master.png" 
-          alt="The Miscreant Studios - Built For Players. Designed For Chaos." 
-          className="absolute inset-0 w-full h-full object-fill pointer-events-none select-none z-10"
-        />
+        {/* ==============================================================
+            RIGHT COLUMN: Pure SVG Chalk Battlestation on Pedestal with Live Racing Game
+            ============================================================== */}
+        <div className="lg:col-span-5 relative flex items-center justify-center">
+          <ChalkBattlestationSvg />
+        </div>
 
-        {/* Layer 3: Interactive Click Targets Over Hand-Drawn Chalk Buttons & Controls */}
+      </div>
+
+      {/* ==============================================================
+          BOTTOM MINIMALIST CHALKBOARD FOOTER (100% Remote-First)
+          ============================================================== */}
+      <div className="relative z-20 w-full flex items-center justify-between max-w-7xl mx-auto pt-6 border-t border-slate-700/60 text-xs font-medium text-slate-400">
         
-        {/* Button 1: "Explore Our Games" (Chalk Oval) */}
-        <a
-          href="#games"
-          onClick={(e) => {
-            e.preventDefault();
-            if (onScrollDown) onScrollDown('games');
-          }}
-          className="absolute z-20 cursor-pointer rounded-full hover:bg-white/15 active:scale-95 transition-all duration-150 border-2 border-transparent hover:border-amber-300/40 shadow-none hover:shadow-[0_0_15px_rgba(253,224,71,0.3)]"
-          style={{
-            left: '10.55%',
-            top: '79.35%',
-            width: '12.5%',
-            height: '7.77%',
-          }}
-          title="Explore Our Games"
-          aria-label="Explore Our Games"
-        />
-
-        {/* Button 2: "Studio Story ↗" (Chalk Capsule) */}
-        <a
-          href="#culture"
-          onClick={(e) => {
-            e.preventDefault();
-            if (onScrollDown) onScrollDown('culture');
-          }}
-          className="absolute z-20 cursor-pointer rounded-full hover:bg-white/15 active:scale-95 transition-all duration-150 border-2 border-transparent hover:border-emerald-300/40 shadow-none hover:shadow-[0_0_15px_rgba(110,231,183,0.3)]"
-          style={{
-            left: '24.02%',
-            top: '79.35%',
-            width: '10.74%',
-            height: '7.77%',
-          }}
-          title="Studio Story"
-          aria-label="Studio Story"
-        />
-
-        {/* Gamepad Steering Targets (Clicking D-Pad or Action Buttons steers the car) */}
-        {/* D-Pad Left */}
-        <button
-          onClick={() => handleGamepadPress('left')}
-          className="absolute z-20 cursor-pointer rounded-full hover:bg-cyan-400/20 active:scale-90 transition-transform"
-          style={{
-            left: '69.2%',
-            top: '71.5%',
-            width: '2.8%',
-            height: '5.5%',
-          }}
-          title="Steer Left"
-          aria-label="Steer Left"
-        />
-
-        {/* D-Pad Right */}
-        <button
-          onClick={() => handleGamepadPress('right')}
-          className="absolute z-20 cursor-pointer rounded-full hover:bg-cyan-400/20 active:scale-90 transition-transform"
-          style={{
-            left: '72.4%',
-            top: '71.5%',
-            width: '2.8%',
-            height: '5.5%',
-          }}
-          title="Steer Right"
-          aria-label="Steer Right"
-        />
-
-        {/* Action Button Right */}
-        <button
-          onClick={() => handleGamepadPress('right')}
-          className="absolute z-20 cursor-pointer rounded-full hover:bg-rose-400/20 active:scale-90 transition-transform"
-          style={{
-            left: '79.2%',
-            top: '71.5%',
-            width: '2.8%',
-            height: '5.5%',
-          }}
-          title="Action Button"
-          aria-label="Action Button"
-        />
-
-        {/* Footer Left: Clean 100% Remote Studio Badge */}
-        <div 
-          className="absolute z-20 flex items-center gap-2 font-mono text-[11px] sm:text-xs text-slate-200 pointer-events-auto"
-          style={{ left: '7.5%', bottom: '3.6%' }}
-        >
+        {/* Left: Global & 100% Remote Badge */}
+        <span className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-semibold tracking-wider">Global &amp; 100% Remote Studio</span>
-        </div>
-
-        {/* Footer Center: Scroll to explore click target */}
-        <a
+          <span className="font-mono text-slate-300 font-semibold tracking-wider">
+            Global &amp; 100% Remote Studio
+          </span>
+        </span>
+        
+        {/* Center: Scroll to explore */}
+        <a 
           href="#games"
           onClick={(e) => {
-            e.preventDefault();
-            if (onScrollDown) onScrollDown('games');
+            if (onScrollDown) {
+              e.preventDefault();
+              onScrollDown('games');
+            }
           }}
-          className="absolute z-20 cursor-pointer rounded-md hover:bg-white/10 active:scale-95 transition-all"
-          style={{
-            left: '43%',
-            bottom: '2.5%',
-            width: '14%',
-            height: '6%',
-          }}
-          title="Scroll to explore"
-          aria-label="Scroll to explore"
-        />
+          className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors chalk-text"
+        >
+          <span>Scroll to explore</span>
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce text-slate-200" />
+        </a>
 
+        {/* Right: Technical Metadata */}
+        <span className="font-mono text-slate-400">
+          Independent &amp; Player-Owned
+        </span>
       </div>
 
     </section>
