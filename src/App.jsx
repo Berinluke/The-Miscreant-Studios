@@ -47,29 +47,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen chalkboard-bg text-slate-100 selection:bg-[#FB7185] selection:text-slate-950 flex flex-col font-sans chalkboard-hardware-frame relative">
-      
-      {/* 4 Galvanized Steel Corner Brackets with Heavy Bolted Rivets */}
-      <div className="fixed top-0 left-0 w-8 h-8 md:w-12 md:h-12 pointer-events-none z-50 flex items-center justify-center">
-        <div className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full bg-[#1A231E] border-2 border-[#52645B] shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-          <div className="w-2 md:w-2.5 h-0.5 bg-[#64748B] rotate-45"></div>
-        </div>
-      </div>
-      <div className="fixed top-0 right-0 w-8 h-8 md:w-12 md:h-12 pointer-events-none z-50 flex items-center justify-center">
-        <div className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full bg-[#1A231E] border-2 border-[#52645B] shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-          <div className="w-2 md:w-2.5 h-0.5 bg-[#64748B] -rotate-45"></div>
-        </div>
-      </div>
-      <div className="fixed bottom-0 left-0 w-8 h-8 md:w-12 md:h-12 pointer-events-none z-50 flex items-center justify-center">
-        <div className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full bg-[#1A231E] border-2 border-[#52645B] shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-          <div className="w-2 md:w-2.5 h-0.5 bg-[#64748B] -rotate-12"></div>
-        </div>
-      </div>
-      <div className="fixed bottom-0 right-0 w-8 h-8 md:w-12 md:h-12 pointer-events-none z-50 flex items-center justify-center">
-        <div className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full bg-[#1A231E] border-2 border-[#52645B] shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center">
-          <div className="w-2 md:w-2.5 h-0.5 bg-[#64748B] rotate-30"></div>
-        </div>
-      </div>
+    <div className="w-full min-h-screen chalkboard-bg text-slate-100 selection:bg-[#FB7185] selection:text-slate-950 flex flex-col font-sans relative overflow-x-hidden">
 
       {/* Slide 1: Hero */}
       <Slide1HeroSkyDeck 
