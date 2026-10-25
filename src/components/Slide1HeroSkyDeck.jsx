@@ -44,15 +44,15 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
         {/* Left: Typography & Story Narrative */}
         <div className="lg:col-span-7 flex flex-col items-start space-y-6">
           
-          <div className="space-y-2">
-            <h1 className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-slate-950 leading-[0.88] relative">
+          <div className="space-y-3">
+            <h1 className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight leading-[0.88] relative chalk-title">
               <span className="inline-block relative">
                 <span>THE</span>
               </span>{' '}
               <span className="inline-block relative">
                 <span>MISCREAN</span>
                 {/* TARGET LANDING PERCH: THE 'T' IN MISCREANT MARKED BY USER */}
-                <span ref={letterTRef} className="relative inline-block text-slate-950">
+                <span ref={letterTRef} className="relative inline-block text-white">
                   T
                 </span>
               </span>
@@ -60,12 +60,12 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
               <span ref={studiosRef} className="inline-block">STUDIOS</span>
             </h1>
 
-            <p className="font-bebas text-3xl sm:text-4xl md:text-5xl tracking-wide text-[#FF2A5F]">
+            <p className="font-bebas text-3xl sm:text-4xl md:text-5xl tracking-wide chalk-coral">
               {studioInfo.subTagline}
             </p>
           </div>
 
-          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-xl font-normal leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-xl font-normal leading-relaxed">
             Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
 
@@ -80,9 +80,9 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   onScrollDown('games');
                 }
               }}
-              className="px-7 py-3.5 rounded-full bg-slate-950 hover:bg-[#FF2A5F] text-white font-bold text-sm tracking-wide transition-all duration-200 shadow-sm active:scale-95 flex items-center gap-2"
+              className="chalk-btn-primary px-8 py-3.5 rounded-full font-bold text-sm tracking-wide flex items-center gap-2 active:scale-95"
             >
-              Explore Our Games
+              <span>Explore Our Games</span>
             </a>
 
             <a
@@ -93,10 +93,10 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   onScrollDown('culture');
                 }
               }}
-              className="px-7 py-3.5 rounded-full bg-white hover:bg-slate-100 text-slate-900 font-bold text-sm tracking-wide border border-slate-300 transition-all duration-200 shadow-sm active:scale-95 flex items-center gap-1.5"
+              className="chalk-btn-secondary px-7 py-3.5 rounded-full font-bold text-sm tracking-wide flex items-center gap-1.5 active:scale-95"
             >
               <span>Studio Story</span>
-              <ArrowUpRight className="w-4 h-4 text-slate-500" />
+              <ArrowUpRight className="w-4 h-4 text-slate-300" />
             </a>
           </div>
 
@@ -109,9 +109,48 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
 
       </div>
 
-      {/* Clean Minimalist Footer */}
-      <div className="relative z-10 w-full flex items-center justify-between max-w-7xl mx-auto pt-6 border-t border-slate-200 text-xs font-medium text-slate-500">
-        <span>Global &amp; 100% Remote Studio</span>
+      {/* Hand-Drawn Chalkboard Mathematics & Physics Doodles Layer */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-40">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          {/* Top-Right Chalk Stars & Formulas */}
+          <g stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.6">
+            <path d="M 120 180 L 126 195 L 142 195 L 129 204 L 134 220 L 120 210 L 106 220 L 111 204 L 98 195 L 114 195 Z" strokeDasharray="3 2" />
+            <path d="M 60 320 C 80 300, 110 300, 130 320" strokeDasharray="2 3" />
+            <text x="140" y="325" fill="#FFFFFF" fontSize="13" fontFamily="Permanent Marker" opacity="0.7">F = m · a</text>
+          </g>
+
+          {/* Center-Right Physics Doodles */}
+          <g stroke="#93C5FD" strokeWidth="1" fill="none" opacity="0.5">
+            <circle cx="580" cy="180" r="35" strokeDasharray="4 4" />
+            <line x1="580" y1="140" x2="580" y2="220" />
+            <line x1="540" y1="180" x2="620" y2="180" />
+            <text x="590" y="170" fill="#93C5FD" fontSize="11" fontFamily="Caveat">θ = 45°</text>
+          </g>
+
+          {/* Bottom Chalk Formula & Chalk Piece */}
+          <g opacity="0.7">
+            <text x="75%" y="88%" fill="#FDE047" fontSize="14" fontFamily="Caveat" opacity="0.75">
+              E = mc² // 60 FPS
+            </text>
+            <text x="68%" y="92%" fill="#FFFFFF" fontSize="12" fontFamily="Caveat" opacity="0.55">
+              v = u + a·t
+            </text>
+            {/* White Chalk Piece on the Bottom Slate Ledge */}
+            <g transform="translate(1020, 880) rotate(-14)">
+              <rect x="0" y="0" width="34" height="10" rx="3" fill="#FFFFFF" opacity="0.9" />
+              <rect x="2" y="2" width="30" height="6" rx="2" fill="#E2E8F0" opacity="0.6" />
+              <ellipse cx="40" cy="7" rx="8" ry="3" fill="#FFFFFF" opacity="0.25" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      {/* Clean Minimalist Chalkboard Footer */}
+      <div className="relative z-10 w-full flex items-center justify-between max-w-7xl mx-auto pt-6 border-t border-slate-700/60 text-xs font-medium text-slate-400">
+        <span className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Global &amp; 100% Remote Studio</span>
+        </span>
         
         <a 
           href="#games"
@@ -121,10 +160,10 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
               onScrollDown('games');
             }
           }}
-          className="flex items-center gap-2 text-slate-700 hover:text-slate-950 transition-colors"
+          className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors chalk-text"
         >
           <span>Scroll to explore</span>
-          <ArrowDown className="w-3.5 h-3.5 animate-bounce text-slate-900" />
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce text-slate-200" />
         </a>
 
         <span>Independent &amp; Player-Owned</span>

@@ -97,12 +97,12 @@ export default function PlayableRacingGame({ externalControl = null }) {
     const loop = (timestamp) => {
       const g = gRef.current;
 
-      // 1. CLEAR & FILL ENTIRE WIDESCREEN DISPLAY (NOTEBOOK PAPER CANVAS)
-      ctx.fillStyle = '#FAF8F2';
+      // 1. CLEAR & FILL ENTIRE WIDESCREEN DISPLAY (CHALKBOARD ASPHALT ROAD)
+      ctx.fillStyle = '#102217';
       ctx.fillRect(0, 0, 504, 298);
 
-      // Subtle engineering blueprint grid pattern on road
-      ctx.strokeStyle = 'rgba(30, 58, 138, 0.05)';
+      // Subtle chalk grid pattern on road
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
       ctx.lineWidth = 1;
       for (let x = 18; x < 486; x += 39) {
         ctx.beginPath();
@@ -123,21 +123,21 @@ export default function PlayableRacingGame({ externalControl = null }) {
         const isAlternate = (Math.floor((s * kerbSegmentH + g.roadOffset) / kerbSegmentH)) % 2 === 0;
 
         // Left Kerb (0 to 18px)
-        ctx.fillStyle = isAlternate ? '#EF4444' : '#1E40AF';
+        ctx.fillStyle = isAlternate ? '#EF4444' : '#0284C7';
         ctx.fillRect(0, y, 18, kerbSegmentH);
-        ctx.strokeStyle = '#FAF8F2';
+        ctx.strokeStyle = '#102217';
         ctx.lineWidth = 1;
         ctx.strokeRect(0, y, 18, kerbSegmentH);
 
         // Right Kerb (486 to 504px)
-        ctx.fillStyle = isAlternate ? '#1E40AF' : '#EF4444';
+        ctx.fillStyle = isAlternate ? '#0284C7' : '#EF4444';
         ctx.fillRect(486, y, 18, kerbSegmentH);
         ctx.strokeRect(486, y, 18, kerbSegmentH);
       }
 
-      // Solid Deep Blue Pen Barrier Edges
-      ctx.strokeStyle = '#1E3A8A';
-      ctx.lineWidth = 3;
+      // Solid White Chalk Barrier Edges
+      ctx.strokeStyle = '#F8FAFC';
+      ctx.lineWidth = 2.4;
       ctx.beginPath();
       ctx.moveTo(18, 0);
       ctx.lineTo(18, 298);
@@ -145,9 +145,9 @@ export default function PlayableRacingGame({ externalControl = null }) {
       ctx.lineTo(486, 298);
       ctx.stroke();
 
-      // 3. SCROLLING DASHED LANE DIVIDERS (AT 174px and 330px)
-      ctx.strokeStyle = '#2563EB';
-      ctx.lineWidth = 2.5;
+      // 3. SCROLLING DASHED LANE DIVIDERS (AT 174px and 330px in Chalk Yellow)
+      ctx.strokeStyle = '#FDE047';
+      ctx.lineWidth = 2.2;
       ctx.setLineDash([22, 18]);
       ctx.lineDashOffset = -g.roadOffset;
 
@@ -397,41 +397,41 @@ export default function PlayableRacingGame({ externalControl = null }) {
 
       // 9. DRAW FULL-WIDTH HUD TELEMETRY (EDGE-TO-EDGE)
       // Top HUD Background Banner Bar
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.strokeStyle = '#1E3A8A';
-      ctx.lineWidth = 1.5;
+      ctx.fillStyle = 'rgba(16, 34, 23, 0.94)';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.2;
       ctx.fillRect(18, 6, 468, 24);
       ctx.strokeRect(18, 6, 468, 24);
 
       // Left: Score & Distance
-      ctx.fillStyle = '#1E3A8A';
+      ctx.fillStyle = '#F8FAFC';
       ctx.font = '900 11px monospace';
       ctx.textAlign = 'left';
       ctx.fillText(`SCORE: ${g.score}m`, 26, 22);
 
       // Center: Miscreant Speedway
-      ctx.fillStyle = '#DC2626';
+      ctx.fillStyle = '#FB7185';
       ctx.font = '900 10px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('⚡ MISCREANT SPEEDWAY', 252, 22);
 
       // Right: Speed & High Score
-      ctx.fillStyle = '#1E3A8A';
+      ctx.fillStyle = '#86EFAC';
       ctx.font = '900 11px monospace';
       ctx.textAlign = 'right';
       ctx.fillText(`142 MPH`, 478, 22);
 
       // Crash Screen Message
       if (g.state === 'crashed') {
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.18)';
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.35)';
         ctx.fillRect(0, 0, 504, 298);
 
-        ctx.fillStyle = '#EF4444';
+        ctx.fillStyle = '#FFFFFF';
         ctx.font = '900 28px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('💥 CRASHED!', 252, 130);
 
-        ctx.fillStyle = '#1E3A8A';
+        ctx.fillStyle = '#FDE047';
         ctx.font = '800 13px monospace';
         ctx.fillText(`DISTANCE REACHED: ${g.score}m`, 252, 158);
       }
@@ -459,18 +459,18 @@ export default function PlayableRacingGame({ externalControl = null }) {
 
       {/* OVERLAY: "TAKE ACCESS" BUTTON (IN AUTOPILOT DEMO MODE) */}
       {gameState === 'demo' && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/15 backdrop-blur-[1px] p-4 pointer-events-auto">
-          <div className="bg-white/95 border-2 border-blue-600 rounded-xl px-6 py-3.5 shadow-2xl flex flex-col items-center gap-2 animate-bounce">
-            <span className="font-sans font-black text-xs text-blue-900 tracking-wider flex items-center gap-1.5">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px] p-4 pointer-events-auto">
+          <div className="bg-[#14281D]/95 border-2 border-emerald-400/90 rounded-xl px-6 py-3.5 shadow-2xl flex flex-col items-center gap-2 animate-bounce">
+            <span className="font-sans font-black text-xs chalk-mint tracking-wider flex items-center gap-1.5">
               <span>🎮</span> AUTOPILOT ACTIVE
             </span>
             <button
               onClick={takeAccess}
-              className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-[#FF2A5F] active:scale-95 text-white font-black text-xs tracking-widest uppercase transition-all shadow-md flex items-center gap-2"
+              className="px-6 py-2.5 rounded-lg bg-emerald-500 hover:bg-[#FB7185] active:scale-95 text-slate-950 font-black text-xs tracking-widest uppercase transition-all shadow-md flex items-center gap-2"
             >
               <span>⚡ TAKE ACCESS</span>
             </button>
-            <span className="text-[10px] text-slate-500 font-medium">
+            <span className="text-[10px] text-slate-300 font-medium">
               Click button or press ◀ / ▶ arrows to steer
             </span>
           </div>

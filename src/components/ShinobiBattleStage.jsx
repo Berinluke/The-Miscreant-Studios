@@ -454,7 +454,7 @@ function drawShinobi(ctx, x, y, options) {
   ctx.translate(x, y);
   ctx.scale(facing, 1);
 
-  const inkColor = '#0F172A';
+  const inkColor = '#F8FAFC';
   ctx.strokeStyle = inkColor;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -582,7 +582,7 @@ function drawShinobi(ctx, x, y, options) {
   }
 
   // --- DRAW HEAD ---
-  ctx.fillStyle = '#FFFFFF';
+  ctx.fillStyle = '#14281D';
   ctx.strokeStyle = inkColor;
   ctx.lineWidth = 2.8;
   ctx.beginPath();
@@ -592,8 +592,10 @@ function drawShinobi(ctx, x, y, options) {
 
   // --- NARUTO FEATURES ---
   if (isNaruto) {
-    // Spiky Blonde Hair
-    ctx.fillStyle = '#F59E0B';
+    // Spiky Blonde Chalk Hair
+    ctx.fillStyle = '#FDE047';
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(-headR, headY - 1);
     ctx.lineTo(-headR - 5, headY - 9);
@@ -607,15 +609,15 @@ function drawShinobi(ctx, x, y, options) {
     ctx.stroke();
 
     // Leaf Headband
-    ctx.fillStyle = '#2563EB';
+    ctx.fillStyle = '#38BDF8';
     ctx.fillRect(-headR, headY - 5, headR * 2, 5);
 
     // Metal Plate
-    ctx.fillStyle = '#E2E8F0';
+    ctx.fillStyle = '#F8FAFC';
     ctx.fillRect(-5, headY - 4.5, 10, 4);
 
     // Fluttering Ribbon
-    ctx.strokeStyle = '#2563EB';
+    ctx.strokeStyle = '#38BDF8';
     ctx.lineWidth = 2.4;
     ctx.beginPath();
     const ribSin = Math.sin(elapsed * 18) * 5;
@@ -624,16 +626,18 @@ function drawShinobi(ctx, x, y, options) {
     ctx.stroke();
 
     // Whisker Marks
-    ctx.strokeStyle = '#EA580C';
-    ctx.lineWidth = 1.2;
+    ctx.strokeStyle = '#FB7185';
+    ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(2, headY + 1); ctx.lineTo(7, headY);
     ctx.moveTo(2, headY + 4); ctx.lineTo(7, headY + 3);
     ctx.stroke();
   } else {
     // --- SASUKE FEATURES ---
-    // Dark Spiky Hair with Framing Bangs
-    ctx.fillStyle = '#1E1B4B';
+    // Dark Spiky Chalk Hair with Framing Bangs
+    ctx.fillStyle = '#334155';
+    ctx.strokeStyle = '#F8FAFC';
+    ctx.lineWidth = 1.2;
     ctx.beginPath();
     ctx.moveTo(-headR - 2, headY);
     ctx.lineTo(-headR - 6, headY - 7);
@@ -647,7 +651,7 @@ function drawShinobi(ctx, x, y, options) {
     ctx.stroke();
 
     // Rogue Headband
-    ctx.fillStyle = '#334155';
+    ctx.fillStyle = '#475569';
     ctx.fillRect(-headR, headY - 5, headR * 2, 5);
 
     // Rogue Scratch Line
@@ -674,7 +678,7 @@ function drawShinobi(ctx, x, y, options) {
     ctx.restore();
 
     // Popped High Collar
-    ctx.strokeStyle = '#312E81';
+    ctx.strokeStyle = '#64748B';
     ctx.lineWidth = 2.6;
     ctx.beginPath();
     ctx.moveTo(-5, neckY + 1);

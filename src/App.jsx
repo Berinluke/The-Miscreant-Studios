@@ -47,7 +47,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen notebook-ruled-bg notebook-margin-line text-slate-900 selection:bg-[#FF2A5F] selection:text-white flex flex-col font-sans">
+    <div className="w-full min-h-screen chalkboard-bg chalk-margin-line text-slate-100 selection:bg-[#FB7185] selection:text-slate-950 flex flex-col font-sans border-4 sm:border-8 lg:border-[16px] border-[#243329] shadow-[inset_0_0_60px_rgba(0,0,0,0.7)]">
       
       {/* Slide 1: Hero */}
       <Slide1HeroSkyDeck 
