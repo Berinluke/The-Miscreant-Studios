@@ -61,7 +61,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
                       {job.level}
                     </span>
                     <span className="text-xs text-slate-400">
-                      Chennai / Remote
+                      100% Remote
                     </span>
                   </div>
 
@@ -149,8 +149,8 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
               <span className="text-white font-medium">{studioInfo.emails.general}</span>
             </div>
             <div>
-              <span className="text-slate-500 block text-xs">HEADQUARTERS:</span>
-              <span className="text-white font-medium">{studioInfo.location}</span>
+              <span className="text-slate-500 block text-xs">STUDIO MODEL:</span>
+              <span className="text-white font-medium">100% Remote / Global</span>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
                 THE MISCREANT STUDIOS
               </span>
               <span className="text-xs text-slate-500 font-medium">
-                Estd. 2026 • Chennai, India
+                Estd. 2026 • 100% Remote Studio
               </span>
             </div>
           </div>

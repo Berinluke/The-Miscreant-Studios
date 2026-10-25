@@ -111,7 +111,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
 
       {/* Clean Minimalist Footer */}
       <div className="relative z-10 w-full flex items-center justify-between max-w-7xl mx-auto pt-6 border-t border-slate-200 text-xs font-medium text-slate-500">
-        <span>Chennai, Tamil Nadu, India</span>
+        <span>Global &amp; 100% Remote Studio</span>
         
         <a 
           href="#games"

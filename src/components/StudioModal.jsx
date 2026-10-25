@@ -95,7 +95,7 @@ export default function StudioModal({ isOpen, initialTab = 'contact', onClose })
             </p>
             <div className="mt-4 p-4 bg-black/50 border border-white/10 rounded-xl font-mono text-xs text-neutral-300 space-y-1">
               <div>// SERVER SIMULATION CLUSTER</div>
-              <div className="text-[#ff1f3d]">&gt; NODE: CHENNAI (13.0827° N, 80.2707° E)</div>
+              <div className="text-[#ff1f3d]">&gt; NODE: GLOBAL (DISTRIBUTED)</div>
               <div className="text-white">&gt; NETCODE: Deterministic Rollback UDP</div>
               <div className="text-neutral-400">&gt; PHYSICS: 0.4ms AVX-512 Sub-Stepped Collision</div>
             </div>
@@ -110,7 +110,7 @@ export default function StudioModal({ isOpen, initialTab = 'contact', onClose })
               CONNECT WITH THE MISCREANT STUDIOS
             </h3>
             <p className="mt-2 text-sm text-neutral-300 font-sans leading-relaxed">
-              Headquartered in Chennai, India (`13.0827° N, 80.2707° E`). For publishing partnerships, investor relations, or developer auditions.
+              A 100% remote-first game development studio operating worldwide. For publishing partnerships, investor relations, or developer auditions.
             </p>
 
             <div className="mt-6 p-4 bg-black/60 border border-white/10 rounded-xl flex items-center justify-between gap-4">

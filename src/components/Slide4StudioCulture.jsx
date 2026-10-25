@@ -1,8 +1,8 @@
 import React from 'react';
 import { studioManifesto, leadershipTeam, studioInfo } from '../data/studioData';
-import { Coffee, Github } from 'lucide-react';
+import { Globe, Github } from 'lucide-react';
 
-export default function Slide4ChennaiWarRoom() {
+export default function Slide4StudioCulture() {
   return (
     <section 
       id="culture" 
@@ -20,13 +20,13 @@ export default function Slide4ChennaiWarRoom() {
               HOW WE BUILD
             </h2>
             <p className="text-slate-600 text-lg sm:text-xl font-normal leading-relaxed">
-              Based in Chennai, India. We combine low-level systems engineering with complete creative freedom. No publisher interference, no corporate committees, zero-crunch pacing.
+              A 100% remote-first studio. We combine low-level systems engineering with complete creative freedom. No publisher interference, no corporate committees, zero-crunch pacing.
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-            <Coffee className="w-4 h-4 text-amber-600" />
-            <span>Chennai HQ • Filter Coffee &amp; Synthwave</span>
+            <Globe className="w-4 h-4 text-blue-600" />
+            <span>Remote-First Studio • Worldwide Collaboration</span>
           </div>
         </div>
 
@@ -39,7 +39,7 @@ export default function Slide4ChennaiWarRoom() {
             "{studioManifesto.quote}"
           </p>
           <span className="text-xs text-slate-400 font-medium block pt-2">
-            Independent Studio • Chennai, Tamil Nadu
+            Independent Studio • 100% Remote-First
           </span>
         </div>
 

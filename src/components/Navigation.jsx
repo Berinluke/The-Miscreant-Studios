@@ -30,7 +30,7 @@ export default function Navigation({ onOpenContact, onSelectSection }) {
             THE MISCREANT
           </div>
           <div className="font-mono text-[9px] tracking-wider text-neutral-400 uppercase">
-            STUDIOS // CHENNAI NODE
+            STUDIOS // REMOTE NODE
           </div>
         </div>
       </div>

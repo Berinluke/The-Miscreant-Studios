@@ -7,9 +7,9 @@ export const studioInfo = {
   tagline: "DIGITAL CHAOS SIMULATOR",
   subTagline: "Built for players. Designed for chaos.",
   year: "2026",
-  location: "Chennai, Tamil Nadu, India",
-  coordinates: "13.0827° N, 80.2707° E",
-  sector: "Asia-South Node",
+  location: "100% Remote Studio (Worldwide)",
+  coordinates: "Global Distributed Team",
+  sector: "Worldwide Creative Network",
   emails: {
     general: "themiscreantstudios@gmail.com",
     careers: "career.themiscreantstudios@gmail.com",
@@ -147,13 +147,13 @@ export const studioManifesto = {
 };
 
 export const studioCulture = {
-  city: "Chennai, India",
-  vibe: "Open creative crucible fueled by South Indian filter coffee, hot pizza, and synthwave beats.",
+  city: "100% Remote / Global",
+  vibe: "Open creative crucible fueled by hot coffee, collaborative brainstorms, and synthwave beats.",
   perks: [
     "Zero Crunch Culture — Respect for personal life and sustainable sprint goals",
     "100% Indie Autonomy — No publisher red-tape or corporate committees",
     "Studio Profit Share — Every team member shares in the financial success of our games",
-    "Monstrous Workstations — RTX 4090 / 5090 machines with dual 4K displays",
+    "Monstrous Workstations — Top-tier hardware stipends for all remote contributors",
     "Open Creative Space — Anyone can pitch an idea, from intern to founder"
   ]
 };
@@ -164,8 +164,8 @@ export const leadershipTeam = [
     role: "FOUNDER & CEO",
     initials: "BL",
     badge: "SYSTEMS ARCHITECT",
-    bio: "Leads studio vision, bare-metal C++ physics engines, and real-time networking. Passionate about player freedom and zero-compromise framerates.",
-    skills: ["Game Architecture", "Bare-Metal C++", "Netcode", "Studio Leadership"],
+    bio: "Leads studio vision, game architecture, and creative direction. Passionate about player freedom, responsive controls, and engaging worlds.",
+    skills: ["Game Architecture", "Game Design", "Creative Direction", "Studio Leadership"],
     github: "https://github.com/Berinluke"
   },
   {
@@ -173,7 +173,7 @@ export const leadershipTeam = [
     role: "2D DESIGNER & ARTIST",
     initials: "SS",
     badge: "WORLDBUILDER",
-    bio: "Visual craftsman shaping the bold 2D aesthetic, comic silhouettes, and striking cyberpunk character designs across The Miscreant Studios.",
+    bio: "Visual craftsman shaping the bold 2D aesthetic, comic silhouettes, and striking character designs across The Miscreant Studios.",
     skills: ["2D Concept Art", "Character Silhouettes", "Worldbuilding", "Visual Identity"],
     github: "#"
   }
@@ -184,15 +184,15 @@ export const careerJobs = [
     id: "unity-dev",
     title: "Unity Programmer (2D & 3D)",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "C#, Unity 2D & 3D, Game Physics, Vector Math",
-    desc: "Build smooth player controls, interactive 2D gameplay loops, and assist on our Unity 6 projects."
+    desc: "Build smooth player controls, interactive 2D gameplay loops, and assist on our Unity projects."
   },
   {
     id: "artist-2d",
     title: "2D Artist & Sprite Crafter",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "Sprite Sheets, Environment Art, Digital Painting, Photoshop",
     desc: "Create eye-catching 2D game sprites, comic action panels, and vibrant daylight environments."
   },
@@ -200,7 +200,7 @@ export const careerJobs = [
     id: "uiux-designer",
     title: "UI/UX Game HUD Designer",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "Figma, Game HUDs, Micro-Interactions, Wireframing",
     desc: "Design clean, high-contrast gaming user interfaces that look striking and feel instant to use."
   },
@@ -208,33 +208,33 @@ export const careerJobs = [
     id: "concept-artist",
     title: "Concept Artist (Characters & Worlds)",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "Character Ideation, Moodboards, Photoshop, Procreate",
-    desc: "Sketch out wild sci-fi warriors, cyberpunk streets, and futuristic machinery."
+    desc: "Sketch out wild characters, stylized worlds, and imaginative game environments."
   },
   {
     id: "story-writer",
     title: "Game Story & Lore Writer",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "World Lore, Character Dialogues, Quest Narrative, Scripting",
-    desc: "Write unforgettable dialogue, humorous character lines, and rich sci-fi lore for our universes."
+    desc: "Write unforgettable dialogue, humorous character lines, and rich lore for our story-based universes."
   },
   {
     id: "song-artist",
     title: "Song & Synthwave Artist",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
-    skills: "OST Production, Cyberpunk Beats, Synthwave, Sound FX",
+    type: "Full-Time / 100% Remote",
+    skills: "OST Production, Atmospheric Beats, Synthwave, Sound FX",
     desc: "Produce adrenaline-pumping soundtracks and punchy audio effects that make combat feel impactful."
   },
   {
     id: "designer-3d",
     title: "3D Hard-Surface Designer",
     level: "Fresher / Junior Welcome",
-    type: "Full-Time / Chennai or Remote",
+    type: "Full-Time / 100% Remote",
     skills: "Blender, Low-Poly & High-Poly, Texturing, UV Unwrapping",
-    desc: "Model futuristic weapons, vehicles, and sci-fi lab props with clean topology."
+    desc: "Model stylish 3D assets, horror game environments, and props with clean topology."
   }
 ];
 

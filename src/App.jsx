@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Slide1HeroSkyDeck from './components/Slide1HeroSkyDeck';
 import Slide2Multiverse from './components/Slide2Multiverse';
-import Slide4ChennaiWarRoom from './components/Slide4ChennaiWarRoom';
+import Slide4StudioCulture from './components/Slide4StudioCulture';
 import Slide5DispatchCareers from './components/Slide5DispatchCareers';
 import QuickApplyModal from './components/QuickApplyModal';
 
@@ -58,7 +58,7 @@ export default function App() {
       <Slide2Multiverse />
 
       {/* Slide 3: Studio Culture & Team */}
-      <Slide4ChennaiWarRoom />
+      <Slide4StudioCulture />
 
       {/* Slide 4: Careers & Contact */}
       <Slide5DispatchCareers 
