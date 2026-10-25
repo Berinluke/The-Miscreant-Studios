@@ -37,26 +37,26 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
             ============================================================== */}
         <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
           
-          {/* Main Scraped Chalk Studio Title */}
+          {/* Main Scraped Chalk Studio Title (Authentic Chalk Stick on Slate) */}
           <div className="relative">
             <h1 
               ref={letterTRef}
-              className="font-bebas text-6xl sm:text-7xl md:text-8xl lg:text-[7.2rem] font-black tracking-tight leading-[0.88] chalk-title text-white select-none drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+              className="chalk-piece-title text-6xl sm:text-7xl md:text-8xl lg:text-[7.4rem] font-black leading-[0.88] select-none"
             >
               THE MISCREANT<br />STUDIOS
             </h1>
 
             {/* Hand-drawn chalk highlight smudge underline */}
-            <div className="w-48 sm:w-64 h-1 bg-white/20 rounded-full blur-[1px] mt-2 ml-1" />
+            <div className="w-48 sm:w-64 h-1.5 bg-white/20 rounded-full blur-[1px] mt-3 ml-1" />
           </div>
 
-          {/* Tagline in Coral Chalk */}
-          <div className="font-bebas text-2xl sm:text-3xl md:text-4xl tracking-wide chalk-coral mt-5 select-none drop-shadow-[0_2px_8px_rgba(251,113,133,0.3)]">
+          {/* Tagline in Coral Chalk Piece Lettering */}
+          <div className="chalk-piece-coral text-2xl sm:text-3xl md:text-4xl tracking-wide mt-5 select-none">
             BUILT FOR PLAYERS. DESIGNED FOR CHAOS.
           </div>
 
-          {/* Description */}
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed mt-4 sm:mt-5 select-none">
+          {/* Description written in authentic classroom chalk font */}
+          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed mt-4 sm:mt-5 select-none chalk-text">
             Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
 
@@ -70,7 +70,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                 e.preventDefault();
                 if (onScrollDown) onScrollDown('games');
               }}
-              className="group relative px-8 py-3.5 rounded-full cursor-pointer flex items-center justify-center font-sans font-bold text-sm sm:text-base tracking-wide text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              className="group relative px-8 py-3.5 rounded-full cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
               title="Explore Our Games"
               aria-label="Explore Our Games"
             >
@@ -95,7 +95,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   opacity="0.6" 
                 />
               </svg>
-              <span className="relative z-10 chalk-title group-hover:text-amber-100 transition-colors">
+              <span className="relative z-10 chalk-title font-bebas text-lg sm:text-xl tracking-wider group-hover:text-amber-100 transition-colors">
                 Explore Our Games
               </span>
             </a>
@@ -107,7 +107,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                 e.preventDefault();
                 if (onScrollDown) onScrollDown('culture');
               }}
-              className="group relative px-7 py-3.5 rounded-full cursor-pointer flex items-center justify-center font-sans font-medium text-sm sm:text-base tracking-wide text-slate-200 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              className="group relative px-7 py-3.5 rounded-full cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
               title="Studio Story"
               aria-label="Studio Story"
             >
@@ -124,7 +124,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   className="group-hover:stroke-emerald-300 group-hover:fill-white/10 transition-all duration-200" 
                 />
               </svg>
-              <span className="relative z-10 chalk-text group-hover:text-white transition-colors">
+              <span className="relative z-10 chalk-text font-bebas text-lg sm:text-xl tracking-wider group-hover:text-white transition-colors">
                 Studio Story ↗
               </span>
             </a>
