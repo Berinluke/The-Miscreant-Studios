@@ -23,36 +23,44 @@ export default function ChalkBattlestationSvg() {
   const [rightStickOffset, setRightStickOffset] = useState({ x: 0, y: 0 });
   const [screenFeedback, setScreenFeedback] = useState('MISCREANT 128Hz');
 
-  const triggerControl = (action, visualKey, stickTarget = null) => {
-    hudAudio.playClick();
-    setExternalControl({ action, id: Date.now() });
-    setActiveBtn(visualKey);
+  const triggerControl = (action, visualKey, stickTarget = null, eventType = 'down') => {
+    if (eventType === 'down') {
+      hudAudio.playClick();
+      setActiveBtn(visualKey);
+    } else if (eventType === 'up') {
+      if (activeBtn === visualKey) setActiveBtn(null);
+    }
 
-    if (stickTarget === 'left') {
+    setExternalControl({ action, type: eventType, id: Date.now() });
+
+    if (eventType === 'down' && stickTarget === 'left') {
       const offX = action === 'left' ? -7 : action === 'right' ? 7 : 0;
       const offY = action === 'boost' ? -7 : action === 'brake' ? 7 : 0;
       setLeftStickOffset({ x: offX, y: offY });
-      setTimeout(() => setLeftStickOffset({ x: 0, y: 0 }), 160);
-    } else if (stickTarget === 'right') {
+      setTimeout(() => setLeftStickOffset({ x: 0, y: 0 }), 180);
+    } else if (eventType === 'down' && stickTarget === 'right') {
       const offX = action === 'left' ? -7 : action === 'right' ? 7 : 0;
       const offY = action === 'boost' ? -7 : action === 'brake' ? 7 : 0;
       setRightStickOffset({ x: offX, y: offY });
-      setTimeout(() => setRightStickOffset({ x: 0, y: 0 }), 160);
+      setTimeout(() => setRightStickOffset({ x: 0, y: 0 }), 180);
     }
 
-    const messages = {
-      left: '◀ STEER L',
-      right: 'STEER R ▶',
-      boost: '▲ BOOST!',
-      brake: '▼ BRAKE',
-      restart: '★ READY!'
-    };
-    if (messages[action]) {
-      setScreenFeedback(messages[action]);
-      setTimeout(() => setScreenFeedback('MISCREANT 128Hz'), 600);
+    if (eventType === 'down') {
+      const messages = {
+        left: '◀ STEER L',
+        right: 'STEER R ▶',
+        boost: '▲ BOOST!',
+        brake: '▼ BRAKE',
+        restart: '★ READY!'
+      };
+      if (messages[action]) {
+        setScreenFeedback(messages[action]);
+        setTimeout(() => setScreenFeedback('MISCREANT 128Hz'), 600);
+      }
+      setTimeout(() => {
+        setActiveBtn((prev) => (prev === visualKey ? null : prev));
+      }, 200);
     }
-
-    setTimeout(() => setActiveBtn(null), 180);
   };
 
   const handleStickPointerDown = (e, stick) => {
@@ -60,13 +68,12 @@ export default function ChalkBattlestationSvg() {
     hudAudio.playClick();
     const startX = e.clientX;
     const startY = e.clientY;
-    let steered = false;
+    const maxDist = 12;
 
     const onPointerMove = (moveEvt) => {
       const dx = moveEvt.clientX - startX;
       const dy = moveEvt.clientY - startY;
       const dist = Math.hypot(dx, dy);
-      const maxDist = 9;
       const factor = dist > maxDist ? maxDist / dist : 1;
       const clampedX = dx * factor;
       const clampedY = dy * factor;
@@ -77,25 +84,16 @@ export default function ChalkBattlestationSvg() {
         setRightStickOffset({ x: clampedX, y: clampedY });
       }
 
-      if (!steered && dist > 5) {
-        if (Math.abs(dx) > Math.abs(dy)) {
-          if (dx < -5) {
-            triggerControl('left', `${stick}-stick-l`, stick);
-            steered = true;
-          } else if (dx > 5) {
-            triggerControl('right', `${stick}-stick-r`, stick);
-            steered = true;
-          }
-        } else {
-          if (dy < -5) {
-            triggerControl('boost', `${stick}-stick-u`, stick);
-            steered = true;
-          } else if (dy > 5) {
-            triggerControl('brake', `${stick}-stick-d`, stick);
-            steered = true;
-          }
-        }
-      }
+      // Stream continuous normalized analog input (-1.0 to +1.0)
+      const normX = clampedX / maxDist;
+      const normY = clampedY / maxDist;
+
+      setExternalControl({
+        type: 'analog',
+        x: normX,
+        y: normY,
+        id: Date.now()
+      });
     };
 
     const onPointerUp = () => {
@@ -106,6 +104,12 @@ export default function ChalkBattlestationSvg() {
       } else {
         setRightStickOffset({ x: 0, y: 0 });
       }
+      setExternalControl({
+        type: 'analog',
+        x: 0,
+        y: 0,
+        id: Date.now()
+      });
     };
 
     window.addEventListener('pointermove', onPointerMove);
@@ -543,28 +547,36 @@ export default function ChalkBattlestationSvg() {
         >
           {/* Up (Boost) */}
           <button
-            onClick={() => triggerControl('boost', 'dpad-up')}
+            onPointerDown={() => triggerControl('boost', 'dpad-up', null, 'down')}
+            onPointerUp={() => triggerControl('boost', 'dpad-up', null, 'up')}
+            onPointerLeave={() => triggerControl('boost', 'dpad-up', null, 'up')}
             className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/20 active:scale-90 transition-all rounded-t"
             title="D-Pad Up (Nitro Boost)"
             aria-label="Nitro Boost"
           />
           {/* Down (Brake) */}
           <button
-            onClick={() => triggerControl('brake', 'dpad-down')}
+            onPointerDown={() => triggerControl('brake', 'dpad-down', null, 'down')}
+            onPointerUp={() => triggerControl('brake', 'dpad-down', null, 'up')}
+            onPointerLeave={() => triggerControl('brake', 'dpad-down', null, 'up')}
             className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/20 active:scale-90 transition-all rounded-b"
             title="D-Pad Down (Brake)"
             aria-label="Brake"
           />
           {/* Left (Steer Left) */}
           <button
-            onClick={() => triggerControl('left', 'dpad-left')}
+            onPointerDown={() => triggerControl('left', 'dpad-left', null, 'down')}
+            onPointerUp={() => triggerControl('left', 'dpad-left', null, 'up')}
+            onPointerLeave={() => triggerControl('left', 'dpad-left', null, 'up')}
             className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-l"
             title="D-Pad Left (Steer Left)"
             aria-label="Steer Left"
           />
           {/* Right (Steer Right) */}
           <button
-            onClick={() => triggerControl('right', 'dpad-right')}
+            onPointerDown={() => triggerControl('right', 'dpad-right', null, 'down')}
+            onPointerUp={() => triggerControl('right', 'dpad-right', null, 'up')}
+            onPointerLeave={() => triggerControl('right', 'dpad-right', null, 'up')}
             className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-r"
             title="D-Pad Right (Steer Right)"
             aria-label="Steer Right"
@@ -579,13 +591,15 @@ export default function ChalkBattlestationSvg() {
         >
           {/* Left half click */}
           <button
-            onClick={() => triggerControl('left', 'left-stick-l', 'left')}
+            onPointerDown={() => triggerControl('left', 'left-stick-l', 'left', 'down')}
+            onPointerUp={() => triggerControl('left', 'left-stick-l', 'left', 'up')}
             className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
             aria-label="Left Stick Steer Left"
           />
           {/* Right half click */}
           <button
-            onClick={() => triggerControl('right', 'left-stick-r', 'left')}
+            onPointerDown={() => triggerControl('right', 'left-stick-r', 'left', 'down')}
+            onPointerUp={() => triggerControl('right', 'left-stick-r', 'left', 'up')}
             className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
             aria-label="Left Stick Steer Right"
           />
@@ -599,13 +613,15 @@ export default function ChalkBattlestationSvg() {
         >
           {/* Left half click */}
           <button
-            onClick={() => triggerControl('left', 'right-stick-l', 'right')}
+            onPointerDown={() => triggerControl('left', 'right-stick-l', 'right', 'down')}
+            onPointerUp={() => triggerControl('left', 'right-stick-l', 'right', 'up')}
             className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
             aria-label="Right Stick Steer Left"
           />
           {/* Right half click */}
           <button
-            onClick={() => triggerControl('right', 'right-stick-r', 'right')}
+            onPointerDown={() => triggerControl('right', 'right-stick-r', 'right', 'down')}
+            onPointerUp={() => triggerControl('right', 'right-stick-r', 'right', 'up')}
             className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
             aria-label="Right Stick Steer Right"
           />
@@ -618,28 +634,36 @@ export default function ChalkBattlestationSvg() {
         >
           {/* Triangle ▲ (Top - Boost) */}
           <button
-            onClick={() => triggerControl('boost', 'btn-triangle')}
+            onPointerDown={() => triggerControl('boost', 'btn-triangle', null, 'down')}
+            onPointerUp={() => triggerControl('boost', 'btn-triangle', null, 'up')}
+            onPointerLeave={() => triggerControl('boost', 'btn-triangle', null, 'up')}
             className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-rose-400/25 active:scale-90 transition-all rounded-full"
             title="Triangle (Boost)"
             aria-label="Triangle Boost"
           />
           {/* Cross ✖ (Bottom - Brake / Restart) */}
           <button
-            onClick={() => triggerControl('brake', 'btn-cross')}
+            onPointerDown={() => triggerControl('brake', 'btn-cross', null, 'down')}
+            onPointerUp={() => triggerControl('brake', 'btn-cross', null, 'up')}
+            onPointerLeave={() => triggerControl('brake', 'btn-cross', null, 'up')}
             className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/25 active:scale-90 transition-all rounded-full"
             title="Cross (Brake / Restart)"
             aria-label="Cross Brake"
           />
           {/* Square ■ (Left - Steer Left) */}
           <button
-            onClick={() => triggerControl('left', 'btn-square')}
+            onPointerDown={() => triggerControl('left', 'btn-square', null, 'down')}
+            onPointerUp={() => triggerControl('left', 'btn-square', null, 'up')}
+            onPointerLeave={() => triggerControl('left', 'btn-square', null, 'up')}
             className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/25 active:scale-90 transition-all rounded-full"
             title="Square (Steer Left)"
             aria-label="Square Steer Left"
           />
           {/* Circle ● (Right - Steer Right) */}
           <button
-            onClick={() => triggerControl('right', 'btn-circle')}
+            onPointerDown={() => triggerControl('right', 'btn-circle', null, 'down')}
+            onPointerUp={() => triggerControl('right', 'btn-circle', null, 'up')}
+            onPointerLeave={() => triggerControl('right', 'btn-circle', null, 'up')}
             className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-emerald-400/25 active:scale-90 transition-all rounded-full"
             title="Circle (Steer Right)"
             aria-label="Circle Steer Right"

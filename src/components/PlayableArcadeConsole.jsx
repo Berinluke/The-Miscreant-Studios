@@ -4,16 +4,17 @@ import { hudAudio } from './AudioEngine';
 /**
  * PlayableArcadeConsole
  * 
- * 5-in-1 Classroom Chalkboard Multi-Game Arcade Engine with REAL GAMEPLAY & REAL GAME OVER:
- * 1. 🏎️ SPEEDWAY DODGE (Highway car racing with actual crash detection)
- * 2. 👾 GALAXY BLAST (Alien invaders that shoot laser bombs; ship destruction)
- * 3. 🧱 CHALK BREAKOUT (3 Lives paddle game; lose balls on bottom drop)
- * 4. 🐍 CYBER SNAKE (Solid wall borders & self-tail collision death)
- * 5. 🥷 SHINOBI JUMP (Spike & blade obstacles that defeat you if not jumped/slid)
- * 
- * Game Over:
- * - When you are out, YOU ARE OUT!
- * - Real explosion particle physics, crash sound effects, defeat telemetry, and instant restart.
+ * 5-in-1 Classroom Chalkboard Multi-Game Arcade Engine:
+ * - 60+ FPS Delta-Time Normalization across all refresh rates (60Hz, 120Hz, 144Hz+)
+ * - Continuous Analog Steering & Sub-Pixel Smooth Movement (No stutter or discrete jumps)
+ * - True Key Holding & Analog Joystick Sensitivity
+ * - Fluid Interpolated Snake Slither, Dynamic Particle Physics, Comet Trails & Organic Squadron Waves
+ * - REAL GAMEPLAY & REAL GAME OVER:
+ *   1. 🏎️ SPEEDWAY DODGE (Analog steering, velocity lerp, traffic crash)
+ *   2. 👾 GALAXY BLAST (Continuous strafing, fluid alien wave, plasma bombs)
+ *   3. 🧱 CHALK BREAKOUT (Smooth paddle glide, comet tail ball physics, 3 lives)
+ *   4. 🐍 CYBER SNAKE (Continuous sub-step interpolation, wall & tail collision)
+ *   5. 🥷 SHINOBI JUMP (Variable jump physics, animated running legs, cloth scarf, obstacles)
  */
 export const ARCADE_GAMES = [
   {
@@ -22,8 +23,8 @@ export const ARCADE_GAMES = [
     name: 'SPEEDWAY',
     title: 'SPEEDWAY DODGE',
     color: '#38BDF8',
-    controls: '◀ / ▶ Steer • ▲ Boost • ▼ Brake',
-    defeatMsg: 'CRASHED AT 128 MPH!'
+    controls: '◀ / ▶ Analog Steer • ▲ Boost • ▼ Brake',
+    defeatMsg: 'CRASHED AT 138 MPH!'
   },
   {
     id: 'invaders',
@@ -31,7 +32,7 @@ export const ARCADE_GAMES = [
     name: 'GALAXY',
     title: 'GALAXY BLAST',
     color: '#FB7185',
-    controls: '◀ / ▶ Move • ▲ Shoot Lasers',
+    controls: '◀ / ▶ Glide • ▲ / Space Rapid Lasers',
     defeatMsg: 'SHIP DESTROYED BY ALIEN FIRE!'
   },
   {
@@ -40,7 +41,7 @@ export const ARCADE_GAMES = [
     name: 'BREAKOUT',
     title: 'CHALK BREAKOUT',
     color: '#FDE047',
-    controls: '◀ / ▶ Paddle Deflect Ball',
+    controls: '◀ / ▶ Glide Paddle • Spin Deflect',
     defeatMsg: 'OUT OF BALLS!'
   },
   {
@@ -58,7 +59,7 @@ export const ARCADE_GAMES = [
     name: 'SHINOBI',
     title: 'SHINOBI JUMP',
     color: '#A78BFA',
-    controls: '▲ Jump • ▼ Slide Spikes',
+    controls: '▲ Jump (Hold for High) • ▼ Slide',
     defeatMsg: 'STRUCK BY LETHAL OBSTACLE!'
   }
 ];
@@ -73,14 +74,25 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
   const [lives, setLives] = useState(3);
   const [defeatReason, setDefeatReason] = useState('');
   const [highScores, setHighScores] = useState({
-    racer: 1480,
-    invaders: 2400,
-    breakout: 620,
-    snake: 360,
-    runner: 840
+    racer: 1680,
+    invaders: 2850,
+    breakout: 740,
+    snake: 420,
+    runner: 960
   });
 
-  // Mutable ref for 60 FPS animation loop without React state delay
+  // Continuous live input state (tracks held keys and analog stick without OS key-repeat stutter)
+  const inputRef = useRef({
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+    fire: false,
+    analogX: 0,
+    analogY: 0
+  });
+
+  // Mutable state ref for 60+ FPS physics engine
   const aRef = useRef({
     mode: 'preview',
     gameId: 'racer',
@@ -89,73 +101,98 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
     shake: 0,
     particles: [],
 
-    // 1. RACER
+    // 1. RACER (Speedway Dodge)
     racer: {
-      carLane: 1,
       carX: 252,
-      targetX: 252,
+      carVx: 0,
       tilt: 0,
-      speed: 7.0,
+      speed: 7.5,
+      targetSpeed: 7.5,
       roadOffset: 0,
       enemies: [],
-      lastSpawn: 0
+      lastSpawn: 0,
+      smokeTimer: 0
     },
 
-    // 2. INVADERS
+    // 2. INVADERS (Galaxy Blast)
     invaders: {
       shipX: 252,
+      shipVx: 0,
+      shipTilt: 0,
       bullets: [],
       alienBombs: [],
       aliens: [],
-      alienDir: 1,
-      alienStepTimer: 0,
-      lastBombSpawn: 0
+      swarmX: 60,
+      swarmY: 40,
+      swarmDir: 1,
+      lastBombSpawn: 0,
+      lastFireTime: 0
     },
 
-    // 3. BREAKOUT
+    // 3. BREAKOUT (Chalk Breakout)
     breakout: {
       paddleX: 252,
-      paddleW: 76,
+      paddleVx: 0,
+      paddleW: 82,
       ballX: 252,
       ballY: 180,
-      ballVx: 3.4,
-      ballVy: -3.8,
+      ballVx: 3.5,
+      ballVy: -4.0,
+      ballTrail: [],
       bricks: []
     },
 
-    // 4. SNAKE
+    // 4. SNAKE (Cyber Snake)
     snake: {
-      body: [{ x: 12, y: 7 }, { x: 11, y: 7 }, { x: 10, y: 7 }],
+      // Each segment stores both previous grid and current grid for sub-step lerp
+      body: [
+        { fromX: 11, fromY: 7, toX: 12, toY: 7 },
+        { fromX: 10, fromY: 7, toX: 11, toY: 7 },
+        { fromX: 9, fromY: 7, toX: 10, toY: 7 },
+        { fromX: 8, fromY: 7, toX: 9, toY: 7 }
+      ],
+      currHead: { x: 12, y: 7 },
       dir: { x: 1, y: 0 },
+      nextDir: { x: 1, y: 0 },
       food: { x: 18, y: 7 },
-      stepTimer: 0
+      lastStep: 0,
+      stepInterval: 125
     },
 
-    // 5. RUNNER
+    // 5. RUNNER (Shinobi Jump)
     runner: {
-      shinobiY: 215,
+      shinobiY: 220,
       shinobiVy: 0,
       isJumping: false,
       isSliding: false,
       slideTimer: 0,
+      runCycle: 0,
+      speed: 6.2,
+      groundOffset: 0,
       obstacles: [],
       lastObstacle: 0,
-      groundOffset: 0
+      dustPuffs: [],
+      scarfNodes: [
+        { x: 80, y: 210 },
+        { x: 74, y: 211 },
+        { x: 68, y: 212 },
+        { x: 62, y: 213 }
+      ]
     }
   });
 
   // Spawn explosion particles
-  const triggerExplosion = (x, y, count = 24, color = '#FB7185') => {
-    aRef.current.shake = 12;
+  const triggerExplosion = (x, y, count = 26, color = '#FB7185') => {
+    aRef.current.shake = 14;
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 2 + Math.random() * 5.5;
+      const speed = 1.8 + Math.random() * 5.8;
       aRef.current.particles.push({
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        life: 25 + Math.random() * 15,
+        life: 24 + Math.random() * 16,
         maxLife: 40,
         color: i % 2 === 0 ? color : '#FDE047'
       });
@@ -192,35 +229,51 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
     setLives(3);
 
     if (id === 'racer') {
-      a.racer.carLane = 1;
       a.racer.carX = 252;
-      a.racer.targetX = 252;
-      a.racer.speed = 7.0;
+      a.racer.carVx = 0;
+      a.racer.tilt = 0;
+      a.racer.speed = 7.5;
+      a.racer.targetSpeed = 7.5;
+      a.racer.roadOffset = 0;
       a.racer.enemies = [
-        { x: 96, y: 50, speed: 4.5, color: '#EF4444' },
-        { x: 408, y: 150, speed: 4.0, color: '#3B82F6' }
+        { x: 120, y: 40, speed: 4.2, color: '#EF4444' },
+        { x: 380, y: 140, speed: 3.8, color: '#3B82F6' }
       ];
+      a.racer.lastSpawn = performance.now();
     } else if (id === 'invaders') {
       a.invaders.shipX = 252;
+      a.invaders.shipVx = 0;
+      a.invaders.shipTilt = 0;
       a.invaders.bullets = [];
       a.invaders.alienBombs = [];
       a.invaders.aliens = [];
+      a.invaders.swarmX = 70;
+      a.invaders.swarmY = 40;
+      a.invaders.swarmDir = 1;
+      a.invaders.lastBombSpawn = performance.now();
+      a.invaders.lastFireTime = 0;
+
+      const colors = ['#FB7185', '#FDE047', '#38BDF8'];
       for (let r = 0; r < 3; r++) {
         for (let c = 0; c < 8; c++) {
           a.invaders.aliens.push({
-            x: 84 + c * 44,
-            y: 42 + r * 28,
+            row: r,
+            col: c,
             alive: true,
-            color: r === 0 ? '#FB7185' : r === 1 ? '#FDE047' : '#38BDF8'
+            color: colors[r],
+            x: 0,
+            y: 0
           });
         }
       }
     } else if (id === 'breakout') {
       a.breakout.paddleX = 252;
+      a.breakout.paddleVx = 0;
       a.breakout.ballX = 252;
       a.breakout.ballY = 180;
-      a.breakout.ballVx = 3.4 * (Math.random() > 0.5 ? 1 : -1);
-      a.breakout.ballVy = -3.8;
+      a.breakout.ballVx = 3.6 * (Math.random() > 0.5 ? 1 : -1);
+      a.breakout.ballVy = -4.2;
+      a.breakout.ballTrail = [];
       a.breakout.bricks = [];
       const colors = ['#FB7185', '#FDE047', '#34D399', '#38BDF8'];
       for (let r = 0; r < 4; r++) {
@@ -236,18 +289,37 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         }
       }
     } else if (id === 'snake') {
-      a.snake.body = [{ x: 12, y: 7 }, { x: 11, y: 7 }, { x: 10, y: 7 }];
+      a.snake.body = [
+        { fromX: 11, fromY: 7, toX: 12, toY: 7 },
+        { fromX: 10, fromY: 7, toX: 11, toY: 7 },
+        { fromX: 9, fromY: 7, toX: 10, toY: 7 },
+        { fromX: 8, fromY: 7, toX: 9, toY: 7 }
+      ];
+      a.snake.currHead = { x: 12, y: 7 };
       a.snake.dir = { x: 1, y: 0 };
+      a.snake.nextDir = { x: 1, y: 0 };
       a.snake.food = { x: 18, y: 7 };
-      a.snake.stepTimer = 0;
+      a.snake.lastStep = performance.now();
     } else if (id === 'runner') {
-      a.runner.shinobiY = 215;
+      a.runner.shinobiY = 220;
       a.runner.shinobiVy = 0;
       a.runner.isJumping = false;
       a.runner.isSliding = false;
+      a.runner.slideTimer = 0;
+      a.runner.runCycle = 0;
+      a.runner.speed = 6.2;
+      a.runner.groundOffset = 0;
+      a.runner.dustPuffs = [];
       a.runner.obstacles = [
-        { x: 380, type: 'spike', w: 20, h: 26 },
-        { x: 580, type: 'blade', w: 24, h: 22, y: 195 }
+        { x: 380, type: 'spike', w: 20, h: 26, y: 214 },
+        { x: 580, type: 'blade', w: 24, h: 22, y: 185, angle: 0 }
+      ];
+      a.runner.lastObstacle = performance.now();
+      a.runner.scarfNodes = [
+        { x: 80, y: 210 },
+        { x: 74, y: 211 },
+        { x: 68, y: 212 },
+        { x: 62, y: 213 }
       ];
     }
   };
@@ -290,11 +362,18 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
     initGame(ARCADE_GAMES[activeGameIndex].id);
   };
 
-  // External Joystick & D-Pad Controls
+  // External Joystick & D-Pad Controls with holding & analog support
   useEffect(() => {
     if (!externalControl) return;
-    const action = typeof externalControl === 'object' ? externalControl.action : externalControl;
+    const { action, type, x, y } = typeof externalControl === 'object' ? externalControl : { action: externalControl, type: 'down' };
     const a = aRef.current;
+
+    // Analog stick streaming input (-1.0 to +1.0)
+    if (type === 'analog') {
+      inputRef.current.analogX = typeof x === 'number' ? x : 0;
+      inputRef.current.analogY = typeof y === 'number' ? y : 0;
+      return;
+    }
 
     // 1. In Preview Mode: Opens game selector!
     if (consoleMode === 'preview') {
@@ -310,7 +389,7 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       } else if (action === 'right') {
         const next = activeGameIndex < ARCADE_GAMES.length - 1 ? activeGameIndex + 1 : 0;
         selectGame(next);
-      } else if (['boost', 'brake', 'restart', 'up', 'down'].includes(action)) {
+      } else if (['boost', 'brake', 'restart', 'up', 'down', 'fire'].includes(action)) {
         startPlay();
       }
       return;
@@ -322,41 +401,40 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       return;
     }
 
-    // 4. In Active Playing Mode:
-    const gId = a.gameId;
-    if (gId === 'racer') {
-      if (action === 'left') a.racer.carLane = Math.max(0, a.racer.carLane - 1);
-      else if (action === 'right') a.racer.carLane = Math.min(2, a.racer.carLane + 1);
-      else if (action === 'boost' || action === 'up') a.racer.speed = 13.5;
-      else if (action === 'brake' || action === 'down') a.racer.speed = 4.5;
-    } else if (gId === 'invaders') {
-      if (action === 'left') a.invaders.shipX = Math.max(40, a.invaders.shipX - 32);
-      else if (action === 'right') a.invaders.shipX = Math.min(464, a.invaders.shipX + 32);
-      else if (action === 'boost' || action === 'up' || action === 'brake') {
-        hudAudio.playLaser();
-        a.invaders.bullets.push({ x: a.invaders.shipX, y: 240 });
-      }
-    } else if (gId === 'breakout') {
-      if (action === 'left') a.breakout.paddleX = Math.max(50, a.breakout.paddleX - 36);
-      else if (action === 'right') a.breakout.paddleX = Math.min(454, a.breakout.paddleX + 36);
-    } else if (gId === 'snake') {
-      if (action === 'left' && a.snake.dir.x === 0) a.snake.dir = { x: -1, y: 0 };
-      else if (action === 'right' && a.snake.dir.x === 0) a.snake.dir = { x: 1, y: 0 };
-      else if ((action === 'boost' || action === 'up') && a.snake.dir.y === 0) a.snake.dir = { x: 0, y: -1 };
-      else if ((action === 'brake' || action === 'down') && a.snake.dir.y === 0) a.snake.dir = { x: 0, y: 1 };
-    } else if (gId === 'runner') {
-      if ((action === 'boost' || action === 'up' || action === 'left') && !a.runner.isJumping) {
-        hudAudio.playOpen();
-        a.runner.isJumping = true;
-        a.runner.shinobiVy = -11;
-      } else if (action === 'brake' || action === 'down') {
-        a.runner.isSliding = true;
-        a.runner.slideTimer = 35;
-      }
+    // 4. In Active Playing Mode: Continuous keys
+    const isDown = type !== 'up';
+    if (action === 'left') inputRef.current.left = isDown;
+    if (action === 'right') inputRef.current.right = isDown;
+    if (action === 'boost' || action === 'up') {
+      inputRef.current.up = isDown;
+      inputRef.current.fire = isDown;
+    }
+    if (action === 'brake' || action === 'down') inputRef.current.down = isDown;
+
+    // Snake direction buffer
+    if (a.gameId === 'snake' && isDown) {
+      const s = a.snake;
+      if (action === 'left' && s.dir.x === 0) s.nextDir = { x: -1, y: 0 };
+      else if (action === 'right' && s.dir.x === 0) s.nextDir = { x: 1, y: 0 };
+      else if ((action === 'boost' || action === 'up') && s.dir.y === 0) s.nextDir = { x: 0, y: -1 };
+      else if ((action === 'brake' || action === 'down') && s.dir.y === 0) s.nextDir = { x: 0, y: 1 };
+    }
+
+    // Auto-release for quick single clicks
+    if (type === 'down' || !type) {
+      setTimeout(() => {
+        if (action === 'left') inputRef.current.left = false;
+        if (action === 'right') inputRef.current.right = false;
+        if (action === 'boost' || action === 'up') {
+          inputRef.current.up = false;
+          inputRef.current.fire = false;
+        }
+        if (action === 'brake' || action === 'down') inputRef.current.down = false;
+      }, 150);
     }
   }, [externalControl]);
 
-  // Keyboard navigation & controls
+  // Window Keyboard Listeners: Keydown & Keyup for butter-smooth holding
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (consoleMode === 'preview') {
@@ -376,60 +454,71 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         return;
       }
       if (consoleMode === 'gameover') {
-        if (['Enter', 'Space'].includes(e.code)) {
+        if (['Enter', 'Space', 'KeyR'].includes(e.code)) {
           startPlay();
         }
         return;
       }
 
-      // Playing mode keys
+      // Playing mode continuous keys
       const a = aRef.current;
-      const gId = a.gameId;
-      if (gId === 'racer') {
-        if (['ArrowLeft', 'KeyA'].includes(e.code)) a.racer.carLane = Math.max(0, a.racer.carLane - 1);
-        else if (['ArrowRight', 'KeyD'].includes(e.code)) a.racer.carLane = Math.min(2, a.racer.carLane + 1);
-      } else if (gId === 'invaders') {
-        if (['ArrowLeft', 'KeyA'].includes(e.code)) a.invaders.shipX = Math.max(40, a.invaders.shipX - 26);
-        else if (['ArrowRight', 'KeyD'].includes(e.code)) a.invaders.shipX = Math.min(464, a.invaders.shipX + 26);
-        else if (['Space', 'ArrowUp', 'KeyW'].includes(e.code)) {
-          hudAudio.playLaser();
-          a.invaders.bullets.push({ x: a.invaders.shipX, y: 240 });
-        }
-      } else if (gId === 'breakout') {
-        if (['ArrowLeft', 'KeyA'].includes(e.code)) a.breakout.paddleX = Math.max(50, a.breakout.paddleX - 32);
-        else if (['ArrowRight', 'KeyD'].includes(e.code)) a.breakout.paddleX = Math.min(454, a.breakout.paddleX + 32);
-      } else if (gId === 'snake') {
-        if (['ArrowLeft', 'KeyA'].includes(e.code) && a.snake.dir.x === 0) a.snake.dir = { x: -1, y: 0 };
-        else if (['ArrowRight', 'KeyD'].includes(e.code) && a.snake.dir.x === 0) a.snake.dir = { x: 1, y: 0 };
-        else if (['ArrowUp', 'KeyW'].includes(e.code) && a.snake.dir.y === 0) a.snake.dir = { x: 0, y: -1 };
-        else if (['ArrowDown', 'KeyS'].includes(e.code) && a.snake.dir.y === 0) a.snake.dir = { x: 0, y: 1 };
-      } else if (gId === 'runner') {
-        if (['ArrowUp', 'KeyW', 'Space'].includes(e.code) && !a.runner.isJumping) {
-          hudAudio.playOpen();
-          a.runner.isJumping = true;
-          a.runner.shinobiVy = -11;
-        } else if (['ArrowDown', 'KeyS'].includes(e.code)) {
-          a.runner.isSliding = true;
-          a.runner.slideTimer = 35;
-        }
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') inputRef.current.left = true;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') inputRef.current.right = true;
+      if (e.code === 'ArrowUp' || e.code === 'KeyW') {
+        inputRef.current.up = true;
+        inputRef.current.fire = true;
+      }
+      if (e.code === 'ArrowDown' || e.code === 'KeyS') inputRef.current.down = true;
+      if (e.code === 'Space') inputRef.current.fire = true;
+
+      // Snake discrete direction queuing
+      if (a.gameId === 'snake') {
+        const s = a.snake;
+        if (['ArrowLeft', 'KeyA'].includes(e.code) && s.dir.x === 0) s.nextDir = { x: -1, y: 0 };
+        else if (['ArrowRight', 'KeyD'].includes(e.code) && s.dir.x === 0) s.nextDir = { x: 1, y: 0 };
+        else if (['ArrowUp', 'KeyW'].includes(e.code) && s.dir.y === 0) s.nextDir = { x: 0, y: -1 };
+        else if (['ArrowDown', 'KeyS'].includes(e.code) && s.dir.y === 0) s.nextDir = { x: 0, y: 1 };
       }
     };
 
+    const handleKeyUp = (e) => {
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') inputRef.current.left = false;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') inputRef.current.right = false;
+      if (e.code === 'ArrowUp' || e.code === 'KeyW') {
+        inputRef.current.up = false;
+        inputRef.current.fire = false;
+      }
+      if (e.code === 'ArrowDown' || e.code === 'KeyS') inputRef.current.down = false;
+      if (e.code === 'Space') inputRef.current.fire = false;
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
   }, [consoleMode, activeGameIndex]);
 
-  // Main 60 FPS Game Loop
+  // Main 60+ FPS Delta-Time Game Loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animId;
+    let lastTime = performance.now();
 
     initGame(ARCADE_GAMES[0].id);
 
     const loop = (timestamp) => {
+      // High-precision delta time calculation clamped between 10 FPS and 165 FPS
+      const dtRaw = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+      const dt = Math.min(Math.max(dtRaw, 0.001), 0.04);
+      const scale = dt * 60; // 1.0 at 60 FPS
+
       const a = aRef.current;
+      const input = inputRef.current;
       const isAuto = a.mode === 'preview' || a.mode === 'select';
       const isGameOver = a.mode === 'gameover';
 
@@ -440,15 +529,15 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           (Math.random() - 0.5) * a.shake,
           (Math.random() - 0.5) * a.shake
         );
-        a.shake *= 0.88;
-        if (a.shake < 0.5) a.shake = 0;
+        a.shake *= Math.pow(0.86, scale);
+        if (a.shake < 0.4) a.shake = 0;
       }
 
       // Clear Canvas Screen (504 x 298 Widescreen Chalkboard)
       ctx.fillStyle = '#0F2116';
       ctx.fillRect(0, 0, 504, 298);
 
-      // Subtle chalk grid
+      // Subtle chalk architectural grid
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
       ctx.lineWidth = 1;
       for (let x = 0; x < 504; x += 36) {
@@ -459,29 +548,91 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       }
 
       // ==============================================================
-      // 1. GAME 1: SPEEDWAY DODGE (REAL CRASH DETECTION)
+      // 1. GAME 1: SPEEDWAY DODGE (FLUID ANALOG STEERING & TRAFFIC)
       // ==============================================================
       if (a.gameId === 'racer') {
-        const lanePositions = [96, 252, 408];
+        const rc = a.racer;
 
+        // Fluid Continuous Steer & Velocity
+        let steer = 0;
         if (!isGameOver) {
-          a.racer.roadOffset = (a.racer.roadOffset + a.racer.speed) % 36;
+          if (isAuto) {
+            // Autopilot AI smoothly tracks closest gap
+            const threat = rc.enemies.find((e) => e.y > 50 && e.y < 230 && Math.abs(e.x - rc.carX) < 70);
+            if (threat) {
+              steer = threat.x > rc.carX ? -0.9 : 0.9;
+            } else {
+              steer = Math.sin(timestamp * 0.0025) * 0.4;
+            }
+          } else {
+            if (input.left) steer -= 1.0;
+            if (input.right) steer += 1.0;
+            if (Math.abs(input.analogX) > 0.1) steer = input.analogX;
+
+            // Target speed based on Boost / Brake
+            if (input.up) rc.targetSpeed = 13.5;
+            else if (input.down) rc.targetSpeed = 4.2;
+            else rc.targetSpeed = 7.5;
+          }
+
+          // Smooth exponential velocity lerp & aerodynamic friction
+          rc.carVx += steer * 34 * dt;
+          rc.carVx *= Math.pow(0.82, scale);
+          rc.carX += rc.carVx * scale * 1.8;
+          rc.carX = Math.max(48, Math.min(456, rc.carX));
+
+          // Smooth car tilt
+          const targetTilt = (rc.carVx / 8.0) * 0.24;
+          rc.tilt += (targetTilt - rc.tilt) * Math.min(1, 0.22 * scale);
+
+          // Smooth speed ramping
+          rc.speed += (rc.targetSpeed - rc.speed) * Math.min(1, 0.14 * scale);
+
+          // Sub-pixel continuous road scrolling
+          rc.roadOffset = (rc.roadOffset + rc.speed * scale) % 36;
+
+          // Exhaust chalk smoke particles
+          if (timestamp - rc.smokeTimer > 80) {
+            rc.smokeTimer = timestamp;
+            a.particles.push({
+              x: rc.carX + (Math.random() - 0.5) * 8,
+              y: 254,
+              vx: (Math.random() - 0.5) * 0.8,
+              vy: 2.2 + Math.random() * 1.5,
+              life: 14,
+              maxLife: 14,
+              color: 'rgba(255, 255, 255, 0.35)'
+            });
+          }
+
+          // Spawn traffic
+          if (timestamp - rc.lastSpawn > 950) {
+            rc.lastSpawn = timestamp;
+            const lanes = [96, 252, 408];
+            const laneX = lanes[Math.floor(Math.random() * 3)] + (Math.random() - 0.5) * 30;
+            rc.enemies.push({
+              x: laneX,
+              y: -50,
+              speed: 3.5 + Math.random() * 2.8,
+              color: laneX < 180 ? '#EF4444' : laneX < 330 ? '#3B82F6' : '#10B981'
+            });
+          }
         }
 
-        // Draw Kerbs
+        // Draw Sub-Pixel Red/Blue Kerbs
         for (let s = -2; s < 18; s++) {
-          const y = s * 18 + (a.racer.roadOffset % 18);
-          const isAlt = Math.floor((s * 18 + a.racer.roadOffset) / 18) % 2 === 0;
+          const y = s * 18 + (rc.roadOffset % 18);
+          const isAlt = Math.floor((s * 18 + rc.roadOffset) / 18) % 2 === 0;
           ctx.fillStyle = isAlt ? '#EF4444' : '#0284C7';
           ctx.fillRect(0, y, 16, 18);
           ctx.fillRect(488, y, 16, 18);
         }
 
-        // Dividers
+        // Road Dividers
         ctx.strokeStyle = '#FDE047';
-        ctx.lineWidth = 2.2;
+        ctx.lineWidth = 2.4;
         ctx.setLineDash([20, 16]);
-        ctx.lineDashOffset = -a.racer.roadOffset;
+        ctx.lineDashOffset = -rc.roadOffset;
         ctx.beginPath();
         ctx.moveTo(174, 0);
         ctx.lineTo(174, 298);
@@ -490,37 +641,11 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         ctx.stroke();
         ctx.setLineDash([]);
 
-        if (isAuto && !isGameOver) {
-          const threat = a.racer.enemies.find((e) => e.y > 60 && e.y < 220 && Math.abs(e.x - a.racer.carX) < 70);
-          if (threat) {
-            a.racer.carLane = threat.x > 252 ? 0 : 2;
-          }
-        }
-
-        if (!isGameOver) {
-          a.racer.targetX = lanePositions[a.racer.carLane];
-          a.racer.carX += (a.racer.targetX - a.racer.carX) * 0.22;
-          const diffX = a.racer.targetX - a.racer.carX;
-          a.racer.tilt = Math.max(-0.25, Math.min(0.25, diffX * 0.006));
-
-          // Spawn traffic
-          if (timestamp - a.racer.lastSpawn > 1050) {
-            a.racer.lastSpawn = timestamp;
-            const rLane = Math.floor(Math.random() * 3);
-            a.racer.enemies.push({
-              x: lanePositions[rLane],
-              y: -60,
-              speed: 3 + Math.random() * 2.5,
-              color: rLane === 0 ? '#EF4444' : rLane === 1 ? '#3B82F6' : '#10B981'
-            });
-          }
-        }
-
-        // Draw and update enemies
-        for (let i = a.racer.enemies.length - 1; i >= 0; i--) {
-          const e = a.racer.enemies[i];
+        // Update and draw enemy cars
+        for (let i = rc.enemies.length - 1; i >= 0; i--) {
+          const e = rc.enemies[i];
           if (!isGameOver) {
-            e.y += e.speed + a.racer.speed * 0.45;
+            e.y += (e.speed + rc.speed * 0.45) * scale;
           }
 
           ctx.save();
@@ -536,17 +661,17 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
 
           // REAL COLLISION DETECTION WITH PLAYER CAR!
           if (!isAuto && !isGameOver) {
-            const dx = Math.abs(e.x - a.racer.carX);
+            const dx = Math.abs(e.x - rc.carX);
             const dy = Math.abs(e.y - 230);
             if (dx < 26 && dy < 44) {
-              triggerExplosion(a.racer.carX, 230, 28, '#EF4444');
+              triggerExplosion(rc.carX, 230, 30, '#EF4444');
               handleGameOver('💥 HIGH-SPEED TRAFFIC COLLISION!');
               break;
             }
           }
 
           if (e.y > 340) {
-            a.racer.enemies.splice(i, 1);
+            rc.enemies.splice(i, 1);
             if (!isAuto && !isGameOver) a.score += 20;
           }
         }
@@ -554,8 +679,8 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         // Draw Player Car
         if (!isGameOver) {
           ctx.save();
-          ctx.translate(a.racer.carX, 230);
-          ctx.rotate(a.racer.tilt);
+          ctx.translate(rc.carX, 230);
+          ctx.rotate(rc.tilt);
           ctx.fillStyle = '#FFFFFF';
           ctx.strokeStyle = '#0284C7';
           ctx.lineWidth = 3;
@@ -565,54 +690,112 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           ctx.stroke();
           ctx.fillStyle = '#67E8F9';
           ctx.fillRect(-11, -12, 22, 12);
+          // Headlights glow beams
+          ctx.fillStyle = 'rgba(253, 224, 71, 0.15)';
+          ctx.beginPath();
+          ctx.moveTo(-12, -28);
+          ctx.lineTo(-24, -90);
+          ctx.lineTo(24, -90);
+          ctx.lineTo(12, -28);
+          ctx.closePath();
+          ctx.fill();
           ctx.restore();
         }
       }
 
       // ==============================================================
-      // 2. GAME 2: GALAXY BLAST (REAL ALIEN BOMBS & DESTRUCTION)
+      // 2. GAME 2: GALAXY BLAST (SMOOTH STRAFING & ORGANIC SQUADRON)
       // ==============================================================
       else if (a.gameId === 'invaders') {
         const inv = a.invaders;
 
-        // Stars
-        for (let st = 0; st < 30; st++) {
-          const sx = (st * 73 + timestamp * 0.05) % 504;
-          const sy = (st * 47 + timestamp * 0.1) % 298;
+        // Dynamic Starfield with sub-pixel parallax
+        for (let st = 0; st < 32; st++) {
+          const speedFactor = (st % 3 + 1) * 0.4;
+          const sx = (st * 71 + timestamp * 0.03 * speedFactor) % 504;
+          const sy = (st * 43 + timestamp * 0.08 * speedFactor) % 298;
           ctx.fillStyle = st % 2 === 0 ? '#FDE047' : '#FFFFFF';
           ctx.fillRect(sx, sy, 2, 2);
         }
 
-        // Alien Swarm March
-        if (!isGameOver && timestamp - inv.alienStepTimer > 380) {
-          inv.alienStepTimer = timestamp;
-          let hitWall = false;
-          inv.aliens.forEach((al) => {
-            if (al.alive) {
-              al.x += inv.alienDir * 12;
-              if (al.x < 30 || al.x > 470) hitWall = true;
+        // Smooth Continuous Ship Movement
+        let strafe = 0;
+        if (!isGameOver) {
+          if (isAuto) {
+            const nearestAlien = inv.aliens.find((al) => al.alive && Math.abs(al.x - inv.shipX) < 45);
+            if (nearestAlien) {
+              if (timestamp - inv.lastFireTime > 200) {
+                inv.lastFireTime = timestamp;
+                inv.bullets.push({ x: inv.shipX, y: 236 });
+              }
+            } else {
+              strafe = Math.sin(timestamp * 0.003) * 0.7;
             }
-          });
-          if (hitWall) {
-            inv.alienDir *= -1;
-            inv.aliens.forEach((al) => (al.y += 12));
+          } else {
+            if (input.left) strafe -= 1.0;
+            if (input.right) strafe += 1.0;
+            if (Math.abs(input.analogX) > 0.1) strafe = input.analogX;
+
+            // Continuous rapid fire when holding Space or Up
+            if ((input.fire || input.up) && timestamp - inv.lastFireTime > 165) {
+              inv.lastFireTime = timestamp;
+              hudAudio.playLaser();
+              inv.bullets.push({ x: inv.shipX, y: 236 });
+            }
+          }
+
+          inv.shipVx += strafe * 38 * dt;
+          inv.shipVx *= Math.pow(0.80, scale);
+          inv.shipX += inv.shipVx * scale * 1.8;
+          inv.shipX = Math.max(32, Math.min(472, inv.shipX));
+          inv.shipTilt = (inv.shipVx / 9.0) * 0.22;
+
+          // Organic Squadron Wave Movement (Continuous fluid sine wave instead of blocky steps)
+          inv.swarmX += inv.swarmDir * 40 * dt;
+          if (inv.swarmX < 45) {
+            inv.swarmDir = 1;
+            inv.swarmY += 10;
+          } else if (inv.swarmX > 115) {
+            inv.swarmDir = -1;
+            inv.swarmY += 10;
+          }
+
+          // Aliens drop laser bombs downwards smoothly
+          if (timestamp - inv.lastBombSpawn > 850) {
+            inv.lastBombSpawn = timestamp;
+            const aliveAliens = inv.aliens.filter((al) => al.alive);
+            if (aliveAliens.length > 0) {
+              const shooter = aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
+              inv.alienBombs.push({ x: shooter.x, y: shooter.y + 12 });
+            }
           }
         }
 
-        // Aliens drop laser bombs downwards!
-        if (!isGameOver && timestamp - inv.lastBombSpawn > 900) {
-          inv.lastBombSpawn = timestamp;
-          const aliveAliens = inv.aliens.filter((al) => al.alive);
-          if (aliveAliens.length > 0) {
-            const shooter = aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
-            inv.alienBombs.push({ x: shooter.x, y: shooter.y + 10 });
+        // Calculate and Draw Fluid Alien Positions
+        inv.aliens.forEach((al) => {
+          if (al.alive) {
+            al.x = inv.swarmX + al.col * 44 + Math.sin(timestamp * 0.0035 + al.col * 0.4) * 6;
+            al.y = inv.swarmY + al.row * 28 + Math.cos(timestamp * 0.003 + al.row * 0.5) * 3;
+
+            ctx.fillStyle = al.color;
+            ctx.beginPath();
+            ctx.arc(al.x, al.y, 9, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 1.4;
+            ctx.beginPath();
+            ctx.moveTo(al.x - 6, al.y - 8);
+            ctx.lineTo(al.x - 10, al.y - 13);
+            ctx.moveTo(al.x + 6, al.y - 8);
+            ctx.lineTo(al.x + 10, al.y - 13);
+            ctx.stroke();
           }
-        }
+        });
 
         // Update Alien Bombs
         for (let ab = inv.alienBombs.length - 1; ab >= 0; ab--) {
           const bomb = inv.alienBombs[ab];
-          if (!isGameOver) bomb.y += 5.2;
+          if (!isGameOver) bomb.y += 5.2 * scale;
 
           ctx.fillStyle = '#FB7185';
           ctx.beginPath();
@@ -640,29 +823,19 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           }
         }
 
-        // Auto-pilot logic
-        if (isAuto && !isGameOver) {
-          const nearestAlien = inv.aliens.find((al) => al.alive && Math.abs(al.x - inv.shipX) < 40);
-          if (nearestAlien) {
-            inv.bullets.push({ x: inv.shipX, y: 240 });
-          } else {
-            inv.shipX += Math.sin(timestamp * 0.004) * 2.2;
-          }
-        }
-
-        // Player Bullets
+        // Update Player Lasers
         for (let b = inv.bullets.length - 1; b >= 0; b--) {
           const blt = inv.bullets[b];
-          if (!isGameOver) blt.y -= 7.5;
+          if (!isGameOver) blt.y -= 9.2 * scale;
 
           ctx.fillStyle = '#34D399';
-          ctx.fillRect(blt.x - 2, blt.y - 8, 4, 12);
+          ctx.fillRect(blt.x - 2, blt.y - 9, 4, 14);
 
           for (let al of inv.aliens) {
             if (al.alive && Math.abs(al.x - blt.x) < 18 && Math.abs(al.y - blt.y) < 16) {
               al.alive = false;
               hudAudio.playPoint();
-              triggerExplosion(al.x, al.y, 10, al.color);
+              triggerExplosion(al.x, al.y, 12, al.color);
               inv.bullets.splice(b, 1);
               if (!isAuto) a.score += 50;
               break;
@@ -671,61 +844,78 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           if (blt.y < 0) inv.bullets.splice(b, 1);
         }
 
-        // Draw Aliens
-        inv.aliens.forEach((al) => {
-          if (al.alive) {
-            ctx.fillStyle = al.color;
-            ctx.beginPath();
-            ctx.arc(al.x, al.y, 9, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#FFFFFF';
-            ctx.lineWidth = 1.4;
-            ctx.beginPath();
-            ctx.moveTo(al.x - 6, al.y - 8);
-            ctx.lineTo(al.x - 10, al.y - 13);
-            ctx.moveTo(al.x + 6, al.y - 8);
-            ctx.lineTo(al.x + 10, al.y - 13);
-            ctx.stroke();
-          }
-        });
-
         // Draw Player Spacecraft
         if (!isGameOver) {
+          ctx.save();
+          ctx.translate(inv.shipX, 246);
+          ctx.rotate(inv.shipTilt);
           ctx.fillStyle = '#38BDF8';
           ctx.strokeStyle = '#FFFFFF';
-          ctx.lineWidth = 2.2;
+          ctx.lineWidth = 2.4;
           ctx.beginPath();
-          ctx.moveTo(inv.shipX, 230);
-          ctx.lineTo(inv.shipX - 16, 260);
-          ctx.lineTo(inv.shipX + 16, 260);
+          ctx.moveTo(0, -18);
+          ctx.lineTo(-16, 12);
+          ctx.lineTo(16, 12);
           ctx.closePath();
           ctx.fill();
           ctx.stroke();
           ctx.fillStyle = '#FDE047';
-          ctx.fillRect(inv.shipX - 3, 242, 6, 8);
+          ctx.fillRect(-3, -2, 6, 8);
+          // Plasma Thruster Flame
+          ctx.fillStyle = 'rgba(251, 113, 133, 0.8)';
+          ctx.beginPath();
+          ctx.moveTo(-6, 12);
+          ctx.lineTo(0, 20 + Math.random() * 5);
+          ctx.lineTo(6, 12);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
         }
       }
 
       // ==============================================================
-      // 3. GAME 3: CHALK BREAKOUT (3 LIVES & BALL LOSS OUT)
+      // 3. GAME 3: CHALK BREAKOUT (BUTTER-SMOOTH PADDLE & COMET TAIL)
       // ==============================================================
       else if (a.gameId === 'breakout') {
         const brk = a.breakout;
 
         if (!isGameOver) {
-          brk.ballX += brk.ballVx;
-          brk.ballY += brk.ballVy;
+          let padSteer = 0;
+          if (isAuto) {
+            brk.paddleX += (brk.ballX - brk.paddleX) * Math.min(1, 0.18 * scale);
+          } else {
+            if (input.left) padSteer -= 1.0;
+            if (input.right) padSteer += 1.0;
+            if (Math.abs(input.analogX) > 0.1) padSteer = input.analogX;
+
+            brk.paddleVx += padSteer * 44 * dt;
+            brk.paddleVx *= Math.pow(0.78, scale);
+            brk.paddleX += brk.paddleVx * scale * 1.8;
+          }
+          brk.paddleX = Math.max(brk.paddleW / 2 + 10, Math.min(504 - brk.paddleW / 2 - 10, brk.paddleX));
+
+          // Ball continuous sub-pixel movement
+          brk.ballX += brk.ballVx * scale;
+          brk.ballY += brk.ballVy * scale;
+
+          // Record trail positions for comet glow
+          brk.ballTrail.unshift({ x: brk.ballX, y: brk.ballY });
+          if (brk.ballTrail.length > 5) brk.ballTrail.pop();
 
           // Wall bounces
-          if (brk.ballX < 12 || brk.ballX > 492) brk.ballVx *= -1;
-          if (brk.ballY < 12) brk.ballVy *= -1;
-
-          // Autopilot
-          if (isAuto) {
-            brk.paddleX += (brk.ballX - brk.paddleX) * 0.18;
+          if (brk.ballX < 12) {
+            brk.ballX = 12;
+            brk.ballVx = Math.abs(brk.ballVx);
+          } else if (brk.ballX > 492) {
+            brk.ballX = 492;
+            brk.ballVx = -Math.abs(brk.ballVx);
+          }
+          if (brk.ballY < 12) {
+            brk.ballY = 12;
+            brk.ballVy = Math.abs(brk.ballVy);
           }
 
-          // Paddle deflection
+          // Paddle deflection with angle + spin transfer
           const paddleY = 260;
           if (
             brk.ballY >= paddleY - 8 &&
@@ -736,30 +926,33 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
             hudAudio.playPoint();
             brk.ballVy = -Math.abs(brk.ballVy);
             const hitOffset = (brk.ballX - brk.paddleX) / (brk.paddleW / 2);
-            brk.ballVx = hitOffset * 4.2;
+            brk.ballVx = hitOffset * 4.4 + brk.paddleVx * 0.25;
+            // Cap max ball speed
+            brk.ballVx = Math.max(-6.5, Math.min(6.5, brk.ballVx));
           }
 
           // REAL BALL DROP OUT!
-          if (brk.ballY > 292) {
+          if (brk.ballY > 294) {
             if (!isAuto) {
               a.lives--;
               setLives(a.lives);
               hudAudio.playCrash();
 
               if (a.lives <= 0) {
-                triggerExplosion(brk.ballX, 280, 20, '#FDE047');
+                triggerExplosion(brk.ballX, 280, 24, '#FDE047');
                 handleGameOver('❌ OUT OF BALLS! GAME OVER');
               } else {
-                // Reset ball position
                 brk.ballX = brk.paddleX;
                 brk.ballY = 190;
-                brk.ballVy = -3.8;
-                brk.ballVx = 3.2 * (Math.random() > 0.5 ? 1 : -1);
+                brk.ballVy = -4.0;
+                brk.ballVx = 3.4 * (Math.random() > 0.5 ? 1 : -1);
+                brk.ballTrail = [];
               }
             } else {
               brk.ballX = 252;
               brk.ballY = 180;
-              brk.ballVy = -3.8;
+              brk.ballVy = -4.0;
+              brk.ballTrail = [];
             }
           }
 
@@ -805,8 +998,16 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         ctx.fill();
         ctx.stroke();
 
-        // Draw Ball
+        // Draw Ball & Comet Motion Trail
         if (!isGameOver) {
+          brk.ballTrail.forEach((pt, idx) => {
+            const alpha = 0.35 - (idx * 0.07);
+            ctx.fillStyle = `rgba(253, 224, 71, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 6.0 - idx * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
           ctx.fillStyle = '#FDE047';
           ctx.beginPath();
           ctx.arc(brk.ballX, brk.ballY, 6.5, 0, Math.PI * 2);
@@ -815,39 +1016,56 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       }
 
       // ==============================================================
-      // 4. GAME 4: CYBER SNAKE (SOLID WALL & SELF-COLLISION DEATH)
+      // 4. GAME 4: CYBER SNAKE (SUB-STEP CONTINUOUS GLIDE & SMOOTH SPINE)
       // ==============================================================
       else if (a.gameId === 'snake') {
         const snk = a.snake;
         const cell = 20;
 
         if (isAuto && !isGameOver) {
-          const head = snk.body[0];
-          if (head.x < snk.food.x && snk.dir.x !== -1) snk.dir = { x: 1, y: 0 };
-          else if (head.x > snk.food.x && snk.dir.x !== 1) snk.dir = { x: -1, y: 0 };
-          else if (head.y < snk.food.y && snk.dir.y !== -1) snk.dir = { x: 0, y: 1 };
-          else if (head.y > snk.food.y && snk.dir.y !== 1) snk.dir = { x: 0, y: -1 };
+          const head = snk.currHead;
+          if (head.x < snk.food.x && snk.dir.x !== -1) snk.nextDir = { x: 1, y: 0 };
+          else if (head.x > snk.food.x && snk.dir.x !== 1) snk.nextDir = { x: -1, y: 0 };
+          else if (head.y < snk.food.y && snk.dir.y !== -1) snk.nextDir = { x: 0, y: 1 };
+          else if (head.y > snk.food.y && snk.dir.y !== 1) snk.nextDir = { x: 0, y: -1 };
         }
 
-        if (!isGameOver && timestamp - snk.stepTimer > 120) {
-          snk.stepTimer = timestamp;
-          const head = snk.body[0];
+        // Advance logical grid at step intervals
+        if (!isGameOver && timestamp - snk.lastStep > snk.stepInterval) {
+          snk.lastStep = timestamp;
+          snk.dir = { ...snk.nextDir };
+
           const newHead = {
-            x: head.x + snk.dir.x,
-            y: head.y + snk.dir.y
+            x: snk.currHead.x + snk.dir.x,
+            y: snk.currHead.y + snk.dir.y
           };
 
           // REAL SOLID WALL COLLISION DEATH!
           if (!isAuto && (newHead.x < 0 || newHead.x >= 25 || newHead.y < 0 || newHead.y >= 14)) {
-            triggerExplosion(head.x * cell + 10, head.y * cell + 10, 25, '#34D399');
+            triggerExplosion(snk.currHead.x * cell + 10, snk.currHead.y * cell + 10, 25, '#34D399');
             handleGameOver('🐍 CRASHED INTO CHALKBOARD WALL!');
           }
           // REAL SELF-TAIL COLLISION DEATH!
-          else if (!isAuto && snk.body.slice(1).some((seg) => seg.x === newHead.x && seg.y === newHead.y)) {
-            triggerExplosion(head.x * cell + 10, head.y * cell + 10, 25, '#EF4444');
+          else if (!isAuto && snk.body.slice(1).some((seg) => seg.toX === newHead.x && seg.toY === newHead.y)) {
+            triggerExplosion(snk.currHead.x * cell + 10, snk.currHead.y * cell + 10, 25, '#EF4444');
             handleGameOver('💀 BITTEN YOUR OWN SERPENT TAIL!');
           } else {
-            snk.body.unshift(newHead);
+            // Push new segment at front with smooth interpolation endpoints
+            snk.body.unshift({
+              fromX: snk.currHead.x,
+              fromY: snk.currHead.y,
+              toX: newHead.x,
+              toY: newHead.y
+            });
+            snk.currHead = newHead;
+
+            // Update remaining segments' interpolation source
+            for (let s = 1; s < snk.body.length; s++) {
+              snk.body[s].fromX = snk.body[s].toX;
+              snk.body[s].fromY = snk.body[s].toY;
+              snk.body[s].toX = snk.body[s - 1].fromX;
+              snk.body[s].toY = snk.body[s - 1].fromY;
+            }
 
             if (newHead.x === snk.food.x && newHead.y === snk.food.y) {
               hudAudio.playPoint();
@@ -862,35 +1080,89 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           }
         }
 
-        // Draw Food
+        // Sub-step interpolation factor (0.0 to 1.0)
+        const t = Math.min(1.0, Math.max(0.0, (timestamp - snk.lastStep) / snk.stepInterval));
+
+        // Draw Pulsing Food
+        const foodPulse = Math.sin(timestamp * 0.008) * 1.5;
         ctx.fillStyle = '#FB7185';
         ctx.beginPath();
-        ctx.arc(snk.food.x * cell + 10, snk.food.y * cell + 10, 7, 0, Math.PI * 2);
+        ctx.arc(snk.food.x * cell + 10, snk.food.y * cell + 10, 7 + foodPulse, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw Snake Body
+        // Render Smooth Interpolated Serpent Body
         snk.body.forEach((seg, idx) => {
-          ctx.fillStyle = idx === 0 ? '#34D399' : '#86EFAC';
-          ctx.strokeStyle = '#0F2116';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.roundRect(seg.x * cell + 2, seg.y * cell + 2, cell - 4, cell - 4, 4);
-          ctx.fill();
-          ctx.stroke();
+          const rx = (seg.fromX + (seg.toX - seg.fromX) * t) * cell + 10;
+          const ry = (seg.fromY + (seg.toY - seg.fromY) * t) * cell + 10;
+
+          if (idx === 0) {
+            // Head with cute animated eyes looking forward
+            ctx.fillStyle = '#34D399';
+            ctx.beginPath();
+            ctx.arc(rx, ry, 9, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0F2116';
+            const eyeOffX = snk.dir.x * 3;
+            const eyeOffY = snk.dir.y * 3;
+            ctx.beginPath();
+            ctx.arc(rx + eyeOffX - 2, ry + eyeOffY - 2, 2, 0, Math.PI * 2);
+            ctx.arc(rx + eyeOffX + 2, ry + eyeOffY + 2, 2, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            // Body segments smoothly connected
+            ctx.fillStyle = idx % 2 === 0 ? '#34D399' : '#86EFAC';
+            ctx.beginPath();
+            ctx.arc(rx, ry, 7.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
         });
       }
 
       // ==============================================================
-      // 5. GAME 5: SHINOBI JUMP (REAL SPIKE & BLADE COLLISION DEATH)
+      // 5. GAME 5: SHINOBI JUMP (VARIABLE JUMP PHYSICS & ANIMATED RUN)
       // ==============================================================
       else if (a.gameId === 'runner') {
         const run = a.runner;
         const groundY = 240;
 
         if (!isGameOver) {
+          // Continuous Run Cycle & Ground Parallax
+          run.runCycle += 14 * dt;
+          run.groundOffset = (run.groundOffset + run.speed * scale) % 24;
+
+          // Variable Jump Physics (Hold ▲ for higher leap)
+          if (!run.isJumping) {
+            if (isAuto) {
+              const threat = run.obstacles.find((o) => o.x > 80 && o.x < 150);
+              if (threat) {
+                if (threat.type === 'spike') {
+                  run.isJumping = true;
+                  run.shinobiVy = -12.0;
+                } else if (threat.type === 'blade') {
+                  run.isSliding = true;
+                  run.slideTimer = 30;
+                }
+              }
+            } else {
+              if (input.up) {
+                hudAudio.playOpen();
+                run.isJumping = true;
+                run.shinobiVy = -12.4;
+              } else if (input.down) {
+                run.isSliding = true;
+                run.slideTimer = 30;
+              }
+            }
+          } else {
+            // Cut jump short if player releases button early (classic responsive platformer feel!)
+            if (!isAuto && !input.up && run.shinobiVy < -4) {
+              run.shinobiVy *= 0.65;
+            }
+          }
+
           if (run.isJumping) {
-            run.shinobiVy += 0.65;
-            run.shinobiY += run.shinobiVy;
+            run.shinobiVy += 32 * dt; // Gravity
+            run.shinobiY += run.shinobiVy * scale;
             if (run.shinobiY >= groundY - 20) {
               run.shinobiY = groundY - 20;
               run.isJumping = false;
@@ -899,38 +1171,55 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           }
 
           if (run.isSliding) {
-            run.slideTimer--;
+            run.slideTimer -= scale;
             if (run.slideTimer <= 0) run.isSliding = false;
           }
 
-          run.groundOffset = (run.groundOffset + 5) % 24;
-
-          if (timestamp - run.lastObstacle > 1300) {
+          // Spawn obstacles
+          if (timestamp - run.lastObstacle > 1250) {
             run.lastObstacle = timestamp;
-            const isHigh = Math.random() > 0.5;
+            const isBlade = Math.random() > 0.5;
             run.obstacles.push({
               x: 520,
-              type: isHigh ? 'blade' : 'spike',
+              type: isBlade ? 'blade' : 'spike',
               w: 22,
-              h: isHigh ? 20 : 28,
-              y: isHigh ? groundY - 45 : groundY - 28
+              h: isBlade ? 20 : 28,
+              y: isBlade ? groundY - 45 : groundY - 28,
+              angle: 0
+            });
+          }
+
+          // Foot dust puffs while sprinting on ground
+          if (!run.isJumping && !run.isSliding && Math.random() < 0.25) {
+            run.dustPuffs.push({
+              x: 84,
+              y: groundY - 2,
+              vx: -(1.5 + Math.random() * 2),
+              vy: -(Math.random() * 1.5),
+              life: 12
             });
           }
         }
 
+        // Update Foot Dust
+        for (let d = run.dustPuffs.length - 1; d >= 0; d--) {
+          const df = run.dustPuffs[d];
+          df.x += df.vx * scale;
+          df.y += df.vy * scale;
+          df.life -= scale;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+          ctx.beginPath();
+          ctx.arc(df.x, df.y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+          if (df.life <= 0) run.dustPuffs.splice(d, 1);
+        }
+
+        // Update and draw obstacles
         for (let o = run.obstacles.length - 1; o >= 0; o--) {
           const obs = run.obstacles[o];
-          if (!isGameOver) obs.x -= 5.5;
-
-          // Autopilot for demo
-          if (isAuto && obs.x > 80 && obs.x < 150) {
-            if (obs.type === 'spike' && !run.isJumping) {
-              run.isJumping = true;
-              run.shinobiVy = -11;
-            } else if (obs.type === 'blade' && !run.isSliding) {
-              run.isSliding = true;
-              run.slideTimer = 30;
-            }
+          if (!isGameOver) {
+            obs.x -= run.speed * scale;
+            if (obs.type === 'blade') obs.angle += 12 * dt;
           }
 
           // REAL OBSTACLE COLLISION DEATH!
@@ -938,15 +1227,15 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
             const playerX = 90;
             const dx = Math.abs(obs.x - playerX);
 
-            // Hit ground spike if NOT jumping
-            if (obs.type === 'spike' && dx < 18 && !run.isJumping) {
-              triggerExplosion(playerX, groundY - 15, 25, '#FB7185');
+            // Ground spike struck if NOT jumping
+            if (obs.type === 'spike' && dx < 20 && !run.isJumping) {
+              triggerExplosion(playerX, groundY - 15, 26, '#FB7185');
               handleGameOver('⚔️ STRUCK BY SHINOBI SPIKES!');
               break;
             }
-            // Hit high blade if NOT sliding
-            if (obs.type === 'blade' && dx < 18 && !run.isSliding && run.shinobiY > 185) {
-              triggerExplosion(playerX, obs.y + 10, 25, '#FDE047');
+            // Rotating blade struck if NOT sliding
+            if (obs.type === 'blade' && dx < 20 && !run.isSliding && run.shinobiY > 185) {
+              triggerExplosion(playerX, obs.y + 10, 26, '#FDE047');
               handleGameOver('🪓 SLASHED BY ROTATING SHURIKEN BLADE!');
               break;
             }
@@ -963,8 +1252,8 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
             ctx.fill();
           } else {
             ctx.save();
-            ctx.translate(obs.x + 10, obs.y + 10);
-            ctx.rotate(timestamp * 0.015);
+            ctx.translate(obs.x + 11, obs.y + 10);
+            ctx.rotate(obs.angle);
             ctx.fillStyle = '#FDE047';
             ctx.fillRect(-10, -3, 20, 6);
             ctx.fillRect(-3, -10, 6, 20);
@@ -977,7 +1266,7 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
           }
         }
 
-        // Ground Line
+        // Draw Ground Line & Sub-Pixel Parallax Notches
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 2.4;
         ctx.beginPath();
@@ -985,41 +1274,74 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
         ctx.lineTo(504, groundY);
         ctx.stroke();
 
-        // Draw Shinobi
+        for (let g = 0; g < 504; g += 24) {
+          const gx = (g - run.groundOffset + 504) % 504;
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(gx, groundY);
+          ctx.lineTo(gx - 8, groundY + 8);
+          ctx.stroke();
+        }
+
+        // Draw Shinobi Ninja with Animated Legs & Trailing Flowing Scarf
         if (!isGameOver) {
           ctx.save();
           ctx.translate(90, run.shinobiY);
+
+          // Flowing Ninja Scarf / Cape
+          ctx.strokeStyle = '#FDE047';
+          ctx.lineWidth = 2.6;
+          ctx.beginPath();
+          ctx.moveTo(-6, -10);
+          ctx.lineTo(-20, -8 + Math.sin(timestamp * 0.015) * 5);
+          ctx.lineTo(-32, -6 + Math.sin(timestamp * 0.018) * 8);
+          ctx.stroke();
+
           if (run.isSliding) {
+            // Low-Profile Slide Pose
             ctx.fillStyle = '#A78BFA';
             ctx.beginPath();
             ctx.ellipse(0, 10, 18, 7, 0, 0, Math.PI * 2);
             ctx.fill();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(8, 6, 5, 4); // Eye visor
           } else {
+            // Torso
             ctx.fillStyle = '#A78BFA';
             ctx.beginPath();
-            ctx.roundRect(-8, -16, 16, 28, 4);
+            ctx.roundRect(-8, -16, 16, 24, 4);
             ctx.fill();
-            ctx.strokeStyle = '#FDE047';
-            ctx.lineWidth = 2.4;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(2, -14, 5, 3); // Eye visor
+
+            // Animated Running Legs
+            const legSwing = run.isJumping ? 0.3 : Math.sin(run.runCycle);
+            ctx.strokeStyle = '#A78BFA';
+            ctx.lineWidth = 3.2;
             ctx.beginPath();
-            ctx.moveTo(-6, -12);
-            ctx.lineTo(-24, -10 + Math.sin(timestamp * 0.02) * 5);
+            // Left leg
+            ctx.moveTo(-4, 8);
+            ctx.lineTo(-4 + legSwing * 9, 20);
+            // Right leg
+            ctx.moveTo(4, 8);
+            ctx.lineTo(4 - legSwing * 9, 20);
             ctx.stroke();
           }
           ctx.restore();
         }
       }
 
-      // Draw active particles across all games
+      // Draw Global Explosion Particles Across All Games
       for (let p = a.particles.length - 1; p >= 0; p--) {
         const pt = a.particles[p];
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        pt.life--;
+        pt.x += pt.vx * scale;
+        pt.y += pt.vy * scale;
+        pt.life -= scale;
 
         ctx.fillStyle = pt.color;
         ctx.beginPath();
-        ctx.arc(pt.x, pt.y, (pt.life / pt.maxLife) * 4, 0, Math.PI * 2);
+        ctx.arc(pt.x, pt.y, Math.max(0.5, (pt.life / pt.maxLife) * 4), 0, Math.PI * 2);
         ctx.fill();
 
         if (pt.life <= 0) a.particles.splice(p, 1);
@@ -1043,7 +1365,7 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
   return (
     <div className="relative w-full h-full select-none overflow-hidden font-mono">
       
-      {/* 60 FPS Canvas Game Screen (ALWAYS 100% VISIBLE & RUNNING) */}
+      {/* 60+ FPS Canvas Game Screen (ALWAYS 100% VISIBLE & RUNNING) */}
       <canvas
         ref={canvasRef}
         width={504}
@@ -1052,7 +1374,7 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       />
 
       {/* ==============================================================
-          MODE 1: AUTO-PLAY PREVIEW (Exact Aesthetic Match to Original Card)
+          MODE 1: AUTO-PLAY PREVIEW (Exact Aesthetic Match to Reference Card)
           ============================================================== */}
       {consoleMode === 'preview' && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px] p-4 pointer-events-auto">
@@ -1078,7 +1400,7 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
       )}
 
       {/* ==============================================================
-          MODE 2: CHOOSE YOUR GAME (Compact, Clean Card matching Original)
+          MODE 2: CHOOSE YOUR GAME (Compact, Clean Card matching Reference)
           ============================================================== */}
       {consoleMode === 'select' && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 backdrop-blur-[1px] p-4 pointer-events-auto">
