@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PlayableRacingGame from './PlayableRacingGame';
+import PlayableArcadeConsole from './PlayableArcadeConsole';
 import { hudAudio } from './AudioEngine';
 
 /**
@@ -118,7 +118,7 @@ export default function ChalkBattlestationSvg() {
       {/* Battlestation Master SVG & Canvas Composite */}
       <div className="relative w-full aspect-[460/410] drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
         
-        {/* Layer 1: Live Interactive 60 FPS Canvas Racing Game (Inside Chalk Screen Window) */}
+        {/* Layer 1: Live Interactive 60 FPS Multi-Game Canvas Console (Inside Chalk Screen Window) */}
         <div 
           className="absolute z-10 overflow-hidden bg-black"
           style={{
@@ -129,7 +129,7 @@ export default function ChalkBattlestationSvg() {
             borderRadius: '4px'
           }}
         >
-          <PlayableRacingGame externalControl={externalControl} />
+          <PlayableArcadeConsole externalControl={externalControl} />
         </div>
 
         {/* Layer 2: Pure Code & SVG Hand-Drawn Chalkboard Artwork */}
