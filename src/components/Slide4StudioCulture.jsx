@@ -59,7 +59,7 @@ export default function Slide4StudioCulture() {
                   <span className="font-bebas text-4xl chalk-coral leading-none block">
                     {rule.num}
                   </span>
-                  <h4 className="font-bebas text-2xl text-white mt-3 leading-none chalk-text">
+                  <h4 className="font-bebas text-2xl mt-3 leading-none chalk-text">
                     {rule.title}
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-normal">
@@ -83,14 +83,14 @@ export default function Slide4StudioCulture() {
                 key={idx}
                 className="bg-[#13261C] p-8 rounded-2xl border border-slate-700/80 flex flex-col sm:flex-row gap-6 items-start hover:border-slate-500 transition-colors"
               >
-                <div className="w-16 h-16 rounded-2xl bg-[#183526] border border-slate-500 text-white flex-shrink-0 flex items-center justify-center font-bebas text-3xl tracking-wider">
+                <div className="w-16 h-16 rounded-2xl bg-[#183526] border border-slate-500 flex-shrink-0 flex items-center justify-center font-bebas text-3xl tracking-wider chalk-text">
                   {leader.initials}
                 </div>
 
                 <div className="space-y-2 flex-1">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <h4 className="font-bebas text-3xl text-white leading-none chalk-text">
+                      <h4 className="font-bebas text-3xl leading-none chalk-text">
                         {leader.name}
                       </h4>
                       <span className="text-xs font-bold chalk-coral uppercase tracking-wider">

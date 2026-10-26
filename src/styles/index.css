@@ -220,104 +220,126 @@
   letter-spacing: 0.03em;
 }
 
-/* Realistic Scraped Chalk Typography (Authentic Rough Chalkboard Finish) */
+/* Realistic Scraped Chalk Typography (Exact 1:1 Match to User Reference across Full Project) */
 .chalk-title {
-  color: #FFFFFF;
-  text-shadow: 
-    0 0 1px rgba(255, 255, 255, 0.95),
-    1px 0 2px rgba(255, 255, 255, 0.7),
-    -1px 0 2px rgba(255, 255, 255, 0.7),
-    0 1px 2px rgba(255, 255, 255, 0.7),
-    0 -1px 2px rgba(255, 255, 255, 0.7),
-    2px 2px 3px rgba(0, 0, 0, 0.85),
-    0 0 10px rgba(255, 255, 255, 0.22);
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
   letter-spacing: 0.04em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_pure.png');
+  background-size: 260px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.85));
+  display: inline-block;
+}
+
+.chalk-text {
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
+  letter-spacing: 0.04em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_pure.png');
+  background-size: 220px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.85))
+    drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 /* Authentic Chalk Piece Lettering (Real Chalk Stick on Slate) */
 .chalk-piece-title {
-  font-family: 'Bebas Neue', Impact, sans-serif;
-  font-weight: 900;
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
   letter-spacing: 0.04em;
-  color: transparent;
-  background-image: 
-    repeating-linear-gradient(
-      90deg,
-      #FFFFFF 0px,
-      #FFFFFF 2px,
-      #F1F5F9 3px,
-      #CBD5E1 4px,
-      #FFFFFF 5px,
-      #E2E8F0 6px,
-      #FFFFFF 7px
-    ),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 1  0 1 0 0 1  0 0 1 0 1  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 7px 100%, 150px 150px;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.95)) drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.25));
-  position: relative;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_pure.png');
+  background-size: 260px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.85));
+  display: inline-block;
 }
 
 .chalk-piece-coral {
-  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
   letter-spacing: 0.05em;
-  color: transparent;
-  background-image: 
-    repeating-linear-gradient(
-      90deg,
-      #FB7185 0px,
-      #FB7185 2px,
-      #F43F5E 3px,
-      #FDA4AF 4px,
-      #FB7185 5px
-    ),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 1  0 1 0 0 1  0 0 1 0 1  0 0 0 0.45 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 6px 100%, 120px 120px;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 1px rgba(251, 113, 133, 0.95)) drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(244, 63, 94, 0.35));
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_coral.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(251, 113, 133, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 .chalk-coral {
-  color: #FB7185;
-  text-shadow: 
-    0 0 1.5px rgba(251, 113, 133, 0.95),
-    1px 0 2px rgba(251, 113, 133, 0.75),
-    -1px 0 2px rgba(251, 113, 133, 0.75),
-    2px 2px 3px rgba(0, 0, 0, 0.85),
-    0 0 12px rgba(244, 63, 94, 0.35);
-  letter-spacing: 0.03em;
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
+  letter-spacing: 0.05em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_coral.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(251, 113, 133, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 .chalk-yellow {
-  color: #FDE047;
-  text-shadow: 
-    0 0 1.5px rgba(253, 224, 71, 0.95),
-    1px 0 2px rgba(253, 224, 71, 0.75),
-    -1px 0 2px rgba(253, 224, 71, 0.75),
-    2px 2px 3px rgba(0, 0, 0, 0.85),
-    0 0 12px rgba(234, 179, 8, 0.35);
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
+  letter-spacing: 0.05em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_yellow.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(253, 224, 71, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 .chalk-cyan {
-  color: #67E8F9;
-  text-shadow: 
-    0 0 1.5px rgba(103, 232, 249, 0.95),
-    1px 0 2px rgba(103, 232, 249, 0.75),
-    2px 2px 3px rgba(0, 0, 0, 0.85),
-    0 0 12px rgba(6, 182, 212, 0.35);
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
+  letter-spacing: 0.05em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_cyan.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(103, 232, 249, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 .chalk-mint {
-  color: #86EFAC;
-  text-shadow: 
-    0 0 1.5px rgba(134, 239, 172, 0.95),
-    1px 0 2px rgba(134, 239, 172, 0.75),
-    2px 2px 3px rgba(0, 0, 0, 0.85),
-    0 0 12px rgba(34, 197, 94, 0.35);
+  font-family: 'Bebas Neue', Impact, sans-serif !important;
+  letter-spacing: 0.05em;
+  color: transparent !important;
+  background-image: url('/textures/chalk_stick_mint.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(134, 239, 172, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 /* Organic Hand-Drawn Chalk Buttons */

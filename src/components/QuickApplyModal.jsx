@@ -38,7 +38,7 @@ export default function QuickApplyModal({ job, isOpen, onClose }) {
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-500/40 text-[11px] font-mono font-bold uppercase">
             <span>{job.level}</span>
           </div>
-          <h3 className="font-bebas text-3xl sm:text-4xl text-white leading-tight chalk-title">
+          <h3 className="font-bebas text-3xl sm:text-4xl leading-tight chalk-title">
             Apply: {job.title}
           </h3>
           <p className="text-xs text-slate-400 font-mono">

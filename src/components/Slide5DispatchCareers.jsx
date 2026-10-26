@@ -65,7 +65,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
                     </span>
                   </div>
 
-                  <h4 className="font-bebas text-3xl text-white leading-tight chalk-text">
+                  <h4 className="font-bebas text-3xl leading-tight chalk-text">
                     {job.title}
                   </h4>
 
@@ -111,7 +111,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
               <span className="text-xs font-bold chalk-coral uppercase tracking-wider">
                 Direct Contact
               </span>
-              <h3 className="font-bebas text-4xl sm:text-5xl text-white tracking-wide leading-none chalk-title">
+              <h3 className="font-bebas text-4xl sm:text-5xl tracking-wide leading-none chalk-title">
                 DROP US A LINE
               </h3>
               <p className="text-slate-300 text-sm sm:text-base font-normal max-w-xl">
@@ -164,7 +164,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
               className="w-12 h-12 object-contain rounded-full shadow-md border border-slate-700" 
             />
             <div className="flex flex-col">
-              <span className="font-bebas text-lg text-white leading-none chalk-title">
+              <span className="font-bebas text-lg leading-none chalk-title">
                 THE MISCREANT STUDIOS
               </span>
               <span className="text-xs text-slate-400 font-medium">

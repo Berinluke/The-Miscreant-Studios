@@ -98,7 +98,7 @@ export default function Slide2Multiverse() {
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-bebas text-5xl sm:text-6xl text-white tracking-wide leading-none chalk-title">
+                <h3 className="font-bebas text-5xl sm:text-6xl tracking-wide leading-none chalk-title">
                   {selectedGame.title}
                 </h3>
                 <p className="text-base font-semibold chalk-yellow">
@@ -116,7 +116,7 @@ export default function Slide2Multiverse() {
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                       {key}
                     </span>
-                    <span className="font-bebas text-2xl text-slate-100 leading-tight">
+                    <span className="font-bebas text-2xl chalk-text leading-tight">
                       {val}
                     </span>
                   </div>
