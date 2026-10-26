@@ -29,7 +29,7 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
       <div className="max-w-7xl mx-auto w-full space-y-16 px-4 sm:px-6">
         
         {/* Header */}
-        <div className="border-b border-slate-800 pb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-slate-800 pb-8">
           <div className="space-y-4 max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-wider chalk-coral">
               Careers
@@ -40,6 +40,20 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
             <p className="text-slate-300 text-lg sm:text-xl font-normal leading-relaxed">
               We actively welcome ambitious freshers and junior developers. If you have raw drive and want to build great games without corporate red tape, we want to hear from you.
             </p>
+          </div>
+
+          {/* Mild Chalk Paper Plane & Level-Up Doodles */}
+          <div className="flex flex-col items-end gap-1.5 text-xs font-hand opacity-75 select-none self-end pb-1">
+            <div className="flex items-center gap-2 text-[#FDE047]">
+              <span>Level Up! +500 XP</span>
+              <span>★</span>
+              <span className="text-[#86EFAC]">Dice: ⚄</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-400">
+              <span className="text-[#67E8F9]">Skill &gt;= Passion ? Hire : Train;</span>
+              <span>•</span>
+              <span>Ping = 0ms</span>
+            </div>
           </div>
         </div>
 
@@ -108,9 +122,16 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
         <div className="p-8 sm:p-12 rounded-2xl bg-[#162D20] text-white space-y-8 border border-slate-700/80 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-700/80 pb-8">
             <div className="space-y-2">
-              <span className="text-xs font-bold chalk-coral uppercase tracking-wider">
-                Direct Contact
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold chalk-coral uppercase tracking-wider">
+                  Direct Contact
+                </span>
+                {/* Chalk Paper Plane Mini Icon */}
+                <svg width="22" height="16" viewBox="0 0 22 16" fill="none" className="opacity-80">
+                  <path d="M1 8L20 1L14 15L10 10L1 8Z" stroke="#FDE047" strokeWidth="1.2" strokeLinejoin="round" />
+                  <path d="M10 10L20 1" stroke="#FDE047" strokeWidth="1" strokeDasharray="2 1" />
+                </svg>
+              </div>
               <h3 className="font-bebas text-4xl sm:text-5xl tracking-wide leading-none chalk-title">
                 DROP US A LINE
               </h3>

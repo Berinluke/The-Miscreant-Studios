@@ -37,6 +37,29 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
             ============================================================== */}
         <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
           
+          {/* Mild Chalk Doodle: Classroom Tic-Tac-Toe (XOX) Game */}
+          <div className="hidden sm:block absolute -top-12 -left-2 pointer-events-none select-none opacity-70">
+            <svg width="110" height="80" viewBox="0 0 110 80" fill="none">
+              {/* 3x3 Chalk Grid */}
+              <line x1="32" y1="8" x2="32" y2="68" stroke="#CBD5E1" strokeWidth="1.2" strokeDasharray="14 2 20 1" />
+              <line x1="62" y1="8" x2="62" y2="68" stroke="#CBD5E1" strokeWidth="1.2" strokeDasharray="16 2 22 1" />
+              <line x1="8" y1="28" x2="86" y2="28" stroke="#CBD5E1" strokeWidth="1.2" strokeDasharray="22 2 28 1" />
+              <line x1="8" y1="48" x2="86" y2="48" stroke="#CBD5E1" strokeWidth="1.2" strokeDasharray="18 2 32 1" />
+              {/* Chalk X and O marks */}
+              <text x="16" y="24" fill="#FB7185" fontFamily="Caveat" fontSize="16" fontWeight="bold">X</text>
+              <text x="44" y="24" fill="#67E8F9" fontFamily="Caveat" fontSize="16" fontWeight="bold">O</text>
+              <text x="71" y="24" fill="#FB7185" fontFamily="Caveat" fontSize="16" fontWeight="bold">X</text>
+              
+              <text x="16" y="44" fill="#67E8F9" fontFamily="Caveat" fontSize="16" fontWeight="bold">O</text>
+              <text x="44" y="44" fill="#FB7185" fontFamily="Caveat" fontSize="16" fontWeight="bold">X</text>
+              
+              <text x="71" y="64" fill="#FB7185" fontFamily="Caveat" fontSize="16" fontWeight="bold">X</text>
+              {/* Diagonal Winning Chalk Strike */}
+              <line x1="12" y1="12" x2="80" y2="66" stroke="#FDE047" strokeWidth="1.8" strokeLinecap="round" opacity="0.9" />
+              <text x="82" y="75" fill="#FDE047" fontFamily="Caveat" fontSize="11" transform="rotate(-6 82 75)">win!</text>
+            </svg>
+          </div>
+
           {/* Main Scraped Chalk Studio Title (Exact 1:1 Match to Reference) */}
           <div className="relative">
             <h1 
@@ -59,6 +82,17 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
           <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-xl font-hand font-bold tracking-wide leading-relaxed mt-4 sm:mt-5 select-none chalk-text">
             Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
+
+          {/* Mild Gaming Formulas in Chalk */}
+          <div className="hidden lg:flex items-center gap-3 text-xs font-hand text-slate-300 opacity-60 mt-3 select-none">
+            <span>FPS = 128Hz</span>
+            <span>•</span>
+            <span>Δt → 0</span>
+            <span>•</span>
+            <span className="text-[#86EFAC]">HitBox(x, y, w, h)</span>
+            <span>•</span>
+            <span className="text-[#FDE047]">λ = c / f</span>
+          </div>
 
           {/* Action Row: Real Hand-Drawn Chalk Pill Buttons & Doodles */}
           <div className="relative flex flex-wrap items-center gap-5 sm:gap-6 mt-8 sm:mt-10">

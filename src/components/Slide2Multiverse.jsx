@@ -27,9 +27,19 @@ export default function Slide2Multiverse() {
             </p>
           </div>
 
-          <span className="text-xs font-semibold chalk-mint whitespace-nowrap self-end pb-1">
-            4 Titles • 1 Released &amp; 3 in Active Development
-          </span>
+          <div className="flex flex-col items-end gap-1.5 self-end pb-1">
+            <span className="text-xs font-semibold chalk-mint whitespace-nowrap">
+              4 Titles • 1 Released &amp; 3 in Active Development
+            </span>
+            {/* Mild Chalk Gaming Physics Formulas */}
+            <div className="hidden sm:flex items-center gap-2.5 text-xs font-hand text-slate-400 opacity-75 select-none">
+              <span>v = v₀ + a·t</span>
+              <span>•</span>
+              <span className="text-[#67E8F9]">Raycast(p, dir)</span>
+              <span>•</span>
+              <span className="text-[#FDE047]">★ Crit x2.5</span>
+            </div>
+          </div>
         </div>
 
         {/* Master-Detail Layout */}
@@ -76,6 +86,33 @@ export default function Slide2Multiverse() {
                 </button>
               );
             })}
+
+            {/* Mild Classroom Chalkboard Gaming Doodles: Tic-Tac-Toe (O-Win) & Telemetry */}
+            <div className="p-3.5 rounded-xl border border-dashed border-slate-700/60 bg-[#13261C]/50 opacity-80 select-none flex items-center justify-between mt-2">
+              {/* Tic-Tac-Toe O-Win */}
+              <svg width="80" height="60" viewBox="0 0 80 60" fill="none">
+                <line x1="26" y1="4" x2="26" y2="52" stroke="#94A3B8" strokeWidth="1" strokeDasharray="12 2 16 1" />
+                <line x1="52" y1="4" x2="52" y2="52" stroke="#94A3B8" strokeWidth="1" strokeDasharray="14 2 18 1" />
+                <line x1="4" y1="20" x2="74" y2="20" stroke="#94A3B8" strokeWidth="1" strokeDasharray="18 2 24 1" />
+                <line x1="4" y1="36" x2="74" y2="36" stroke="#94A3B8" strokeWidth="1" strokeDasharray="16 2 26 1" />
+                <text x="10" y="16" fill="#FB7185" fontFamily="Caveat" fontSize="13">X</text>
+                <text x="36" y="16" fill="#67E8F9" fontFamily="Caveat" fontSize="13">O</text>
+                {/* O winning row */}
+                <text x="10" y="32" fill="#67E8F9" fontFamily="Caveat" fontSize="13" fontWeight="bold">O</text>
+                <text x="36" y="32" fill="#67E8F9" fontFamily="Caveat" fontSize="13" fontWeight="bold">O</text>
+                <text x="61" y="32" fill="#67E8F9" fontFamily="Caveat" fontSize="13" fontWeight="bold">O</text>
+                <line x1="4" y1="28" x2="74" y2="28" stroke="#FDE047" strokeWidth="1.6" strokeLinecap="round" />
+                <text x="10" y="48" fill="#FB7185" fontFamily="Caveat" fontSize="13">X</text>
+                <text x="61" y="48" fill="#FB7185" fontFamily="Caveat" fontSize="13">X</text>
+              </svg>
+
+              {/* Gaming Formula & Health Bar */}
+              <div className="flex flex-col text-right font-hand text-xs space-y-0.5">
+                <span className="text-[#86EFAC]">HP: [██████░░] 78%</span>
+                <span className="text-slate-300">FOV = 90° • Ping &lt; 12ms</span>
+                <span className="text-[#FDE047]">COMBO x99 ⚡</span>
+              </div>
+            </div>
           </div>
 
           {/* Right: Selected Game Presentation Card (7 cols) with Shinobi Battle Arena along the Marked Roof */}

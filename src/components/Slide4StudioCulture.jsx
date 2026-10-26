@@ -24,9 +24,19 @@ export default function Slide4StudioCulture() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-slate-300 text-sm font-medium">
-            <Globe className="w-4 h-4 text-emerald-400" />
-            <span>Remote-First Studio • Worldwide Collaboration</span>
+          <div className="flex flex-col items-end gap-2 text-slate-300 text-sm font-medium">
+            <div className="flex items-center gap-2">
+              <Globe className="w-4 h-4 text-emerald-400" />
+              <span>Remote-First Studio • Worldwide Collaboration</span>
+            </div>
+            {/* Mild Engineering Chalkboard Logic Doodles */}
+            <div className="hidden sm:flex items-center gap-3 text-xs font-hand text-slate-400 opacity-75 select-none pt-1">
+              <span className="text-[#86EFAC]">while(passion) &#123; ship(); &#125;</span>
+              <span>•</span>
+              <span className="text-[#67E8F9]">Ping: 8ms</span>
+              <span>•</span>
+              <span className="text-[#FDE047]">Chaos = max(Fun)</span>
+            </div>
           </div>
         </div>
 
@@ -68,6 +78,36 @@ export default function Slide4StudioCulture() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mild Classroom Chalkboard Strip: Tic-Tac-Toe (Vertical Win) & Studio Formula */}
+          <div className="flex flex-wrap items-center justify-between px-4 py-2 rounded-xl border border-dashed border-slate-700/50 bg-[#13261C]/40 opacity-75 select-none text-xs font-hand">
+            <div className="flex items-center gap-3">
+              {/* Tic-Tac-Toe Vertical Win */}
+              <svg width="65" height="45" viewBox="0 0 65 45" fill="none">
+                <line x1="22" y1="3" x2="22" y2="42" stroke="#94A3B8" strokeWidth="1" strokeDasharray="10 2 12 1" />
+                <line x1="44" y1="3" x2="44" y2="42" stroke="#94A3B8" strokeWidth="1" strokeDasharray="12 2 14 1" />
+                <line x1="3" y1="15" x2="62" y2="15" stroke="#94A3B8" strokeWidth="1" strokeDasharray="14 2 18 1" />
+                <line x1="3" y1="30" x2="62" y2="30" stroke="#94A3B8" strokeWidth="1" strokeDasharray="12 2 16 1" />
+                {/* Vertical X win on column 1 */}
+                <text x="8" y="12" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <text x="8" y="27" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <text x="8" y="41" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <line x1="12" y1="2" x2="12" y2="43" stroke="#FDE047" strokeWidth="1.5" strokeLinecap="round" />
+                <text x="29" y="12" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+                <text x="51" y="27" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+                <text x="29" y="41" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+              </svg>
+              <span className="text-slate-300">Entropy(Chaos) → ∞</span>
+            </div>
+
+            <div className="flex items-center gap-3 text-slate-400">
+              <span className="text-[#86EFAC]">F = m · a</span>
+              <span>•</span>
+              <span className="text-[#FDE047]">Code + Art = Magic</span>
+              <span>•</span>
+              <span>E = mc²</span>
+            </div>
           </div>
         </div>
 
@@ -128,6 +168,36 @@ export default function Slide4StudioCulture() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mild Classroom Chalkboard Strip: Tic-Tac-Toe (Vertical Win) & Studio Formula */}
+          <div className="flex flex-wrap items-center justify-between px-4 py-2 rounded-xl border border-dashed border-slate-700/50 bg-[#13261C]/40 opacity-75 select-none text-xs font-hand">
+            <div className="flex items-center gap-3">
+              {/* Tic-Tac-Toe Vertical Win */}
+              <svg width="65" height="45" viewBox="0 0 65 45" fill="none">
+                <line x1="22" y1="3" x2="22" y2="42" stroke="#94A3B8" strokeWidth="1" strokeDasharray="10 2 12 1" />
+                <line x1="44" y1="3" x2="44" y2="42" stroke="#94A3B8" strokeWidth="1" strokeDasharray="12 2 14 1" />
+                <line x1="3" y1="15" x2="62" y2="15" stroke="#94A3B8" strokeWidth="1" strokeDasharray="14 2 18 1" />
+                <line x1="3" y1="30" x2="62" y2="30" stroke="#94A3B8" strokeWidth="1" strokeDasharray="12 2 16 1" />
+                {/* Vertical X win on column 1 */}
+                <text x="8" y="12" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <text x="8" y="27" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <text x="8" y="41" fill="#FB7185" fontFamily="Caveat" fontSize="11" fontWeight="bold">X</text>
+                <line x1="12" y1="2" x2="12" y2="43" stroke="#FDE047" strokeWidth="1.5" strokeLinecap="round" />
+                <text x="29" y="12" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+                <text x="51" y="27" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+                <text x="29" y="41" fill="#67E8F9" fontFamily="Caveat" fontSize="11">O</text>
+              </svg>
+              <span className="text-slate-300">Entropy(Chaos) → ∞</span>
+            </div>
+
+            <div className="flex items-center gap-3 text-slate-400">
+              <span className="text-[#86EFAC]">F = m · a</span>
+              <span>•</span>
+              <span className="text-[#FDE047]">Code + Art = Magic</span>
+              <span>•</span>
+              <span>E = mc²</span>
+            </div>
           </div>
         </div>
 
