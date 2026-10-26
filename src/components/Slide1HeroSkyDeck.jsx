@@ -23,6 +23,32 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
       id="hero" 
       className="relative min-h-screen w-full flex flex-col justify-between pt-10 sm:pt-14 pb-8 px-6 sm:px-10 lg:px-16 bg-transparent select-none overflow-hidden"
     >
+      {/* Global SVG Chalk Texture Filters for GPU-Accelerated Lettering */}
+      <svg width="0" height="0" className="absolute pointer-events-none" aria-hidden="true">
+        <defs>
+          {/* Authentic Physical Chalk Stick Roughness & Porosity Filter */}
+          <filter id="chalk-piece-realistic" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="fineNoise" />
+            <feDisplacementMap in="SourceGraphic" in2="fineNoise" scale="3.2" xChannelSelector="R" yChannelSelector="G" result="roughened" />
+            <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" result="porosity" />
+            <feColorMatrix in="porosity" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.85 0.15" result="porousAlpha" />
+            <feComposite in="roughened" in2="porousAlpha" operator="in" result="porousChalk" />
+            <feGaussianBlur in="roughened" stdDeviation="0.8" result="chalkDust" />
+            <feMerge>
+              <feMergeNode in="chalkDust" />
+              <feMergeNode in="porousChalk" />
+            </feMerge>
+          </filter>
+
+          {/* Chalk Coral Tagline Filter */}
+          <filter id="chalk-piece-coral" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+            <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.8" />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Supersonic Fighter Jet Atmospheric Flyby */}
       <JetMissionScrollytelling
         containerRef={containerRef}
@@ -37,22 +63,22 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
             ============================================================== */}
         <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
           
-          {/* Main Scraped Chalk Studio Title (Authentic Cursive Chalk Handwriting matching user reference) */}
+          {/* Main Scraped Chalk Studio Title (Heavy Condensed Sans-Serif Bebas Neue / Eraser Dust) */}
           <div className="relative">
             <h1 
               ref={letterTRef}
-              className="chalk-handwritten-title text-6xl sm:text-7xl md:text-8xl lg:text-[6.4rem] font-normal leading-[1.06] select-none text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
+              className="chalk-piece-headline text-6xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.88] select-none text-white tracking-wide"
             >
-              The Miscreant<br />Studios
+              THE MISCREANT<br />STUDIOS
             </h1>
 
             {/* Hand-drawn chalk highlight smudge underline */}
-            <div className="w-56 sm:w-72 h-1.5 bg-white/25 rounded-full blur-[1px] mt-3 ml-2" />
+            <div className="w-64 sm:w-80 h-2 bg-white/25 rounded-full blur-[1px] mt-3 ml-1" />
           </div>
 
-          {/* Tagline in Coral Chalk Cursive Script */}
-          <div className="chalk-handwritten-coral text-2xl sm:text-3xl md:text-4xl tracking-wide mt-4 select-none drop-shadow-[0_2px_10px_rgba(251,113,133,0.35)]">
-            Built for Players. Designed for Chaos.
+          {/* Tagline in Coral Chalk Block/Condensed Typography */}
+          <div className="chalk-piece-tagline text-2xl sm:text-3xl md:text-4xl tracking-wider mt-4 sm:mt-5 select-none font-black">
+            BUILT FOR PLAYERS. DESIGNED FOR CHAOS.
           </div>
 
           {/* Description written in authentic classroom chalk font */}
@@ -95,7 +121,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   opacity="0.6" 
                 />
               </svg>
-              <span className="relative z-10 chalk-handwritten-title text-xl sm:text-2xl tracking-wide group-hover:text-amber-100 transition-colors">
+              <span className="relative z-10 font-bebas text-2xl sm:text-3xl tracking-wider group-hover:text-amber-100 transition-colors uppercase chalk-piece-btn">
                 Explore Our Games
               </span>
             </a>
@@ -124,7 +150,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
                   className="group-hover:stroke-emerald-300 group-hover:fill-white/10 transition-all duration-200" 
                 />
               </svg>
-              <span className="relative z-10 chalk-text font-hand text-xl sm:text-2xl font-bold tracking-wide group-hover:text-white transition-colors">
+              <span className="relative z-10 font-bebas text-2xl sm:text-3xl tracking-wider group-hover:text-white transition-colors uppercase chalk-piece-btn">
                 Studio Story ↗
               </span>
             </a>
