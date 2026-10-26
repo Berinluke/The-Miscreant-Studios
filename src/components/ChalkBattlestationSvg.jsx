@@ -55,6 +55,14 @@ export default function ChalkBattlestationSvg() {
             <filter id="chalkDustBlur" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="3" />
             </filter>
+
+            {/* Hatch Patterns for Gamepad Grip Wings */}
+            <pattern id="hatchLeft" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.65" />
+            </pattern>
+            <pattern id="hatchRight" width="6" height="6" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.65" />
+            </pattern>
           </defs>
 
           {/* ==========================================================
@@ -136,89 +144,185 @@ export default function ChalkBattlestationSvg() {
           </g>
 
           {/* ==========================================================
-              3. HAND-DRAWN CHALK GAMEPAD CONTROLLER
+              3. EXACT REFERENCE CHALK GAMEPAD CONTROLLER
               ========================================================== */}
-          <g filter="url(#chalkNoise)">
-            {/* Controller Outer Body Silhouette */}
-            <path 
-              d="M 145 256 
-                 C 165 252, 225 252, 245 256 
-                 C 265 260, 295 272, 310 302 
-                 C 322 328, 315 352, 292 360 
-                 C 275 365, 258 350, 250 334 
-                 C 238 312, 215 305, 195 305 
-                 C 175 305, 152 312, 140 334 
-                 C 132 350, 115 365, 98 360 
-                 C 75 352, 68 328, 80 302 
-                 C 95 272, 125 260, 145 256 Z" 
-              fill="#12251B" 
-              fillOpacity="0.9" 
-              stroke="#FFFFFF" 
-              strokeWidth="2.6" 
-            />
+          {/* Top Coiled Wire Leading to Monitor Base */}
+          <path 
+            d="M 195 246 C 190 234, 202 226, 195 218 C 188 210, 200 200, 195 188" 
+            stroke="#FFFFFF" 
+            strokeWidth="2" 
+            fill="none" 
+            strokeLinecap="round" 
+            opacity="0.9" 
+          />
 
-            {/* Controller Inner Contour Line */}
-            <path 
-              d="M 150 262 
-                 C 168 258, 222 258, 240 262 
-                 C 258 266, 285 276, 298 305 
-                 C 308 326, 302 342, 286 348 
-                 C 274 352, 260 340, 254 326 
-                 C 242 305, 218 298, 195 298 
-                 C 172 298, 148 305, 136 326 
-                 C 130 340, 116 352, 104 348 
-                 C 88 342, 82 326, 92 305 
-                 C 105 276, 132 266, 150 262 Z" 
-              fill="none" 
-              stroke="#E2E8F0" 
-              strokeWidth="1.2" 
-              opacity="0.8" 
-            />
-
-            {/* D-Pad (Left Cross) */}
-            <g stroke="#FFFFFF" fill="#1A3324" strokeWidth="2">
-              {/* Vertical Cross Bar */}
-              <rect x="122" y="286" width="16" height="42" rx="2" />
-              {/* Horizontal Cross Bar */}
-              <rect x="109" y="299" width="42" height="16" rx="2" />
-              {/* D-Pad Arrow Markings */}
-              <polyline points="130,290 126,294 134,294" stroke="#FFFFFF" strokeWidth="1.4" fill="none" />
-              <polyline points="130,324 126,320 134,320" stroke="#FFFFFF" strokeWidth="1.4" fill="none" />
-              <polyline points="113,307 117,303 117,311" stroke="#FFFFFF" strokeWidth="1.4" fill="none" />
-              <polyline points="147,307 143,303 143,311" stroke="#FFFFFF" strokeWidth="1.4" fill="none" />
+          {/* Master Controller Group (Centered at X=195, Y=310) */}
+          <g transform="translate(195, 310) scale(0.74) translate(-266, -120)">
+            
+            {/* Top Shoulder Bumpers (Left & Right Angled Charcoal Trapezoids) */}
+            <g filter="url(#chalkNoise)">
+              {/* Left Bumper */}
+              <polygon points="144,38 196,36 200,64 136,68" fill="#18232E" stroke="#FFFFFF" strokeWidth="2.2" strokeLinejoin="round" />
+              {/* Right Bumper */}
+              <polygon points="336,36 388,38 396,68 332,64" fill="#18232E" stroke="#FFFFFF" strokeWidth="2.2" strokeLinejoin="round" />
             </g>
 
-            {/* Action Buttons (Right 4 Buttons in Diamond Layout) */}
-            <g stroke="#FFFFFF" fill="#1A3324" strokeWidth="1.8">
-              {/* Top (Y) */}
-              <circle cx="265" cy="292" r="7" />
-              <text x="265" y="295.5" fill="#FDE047" fontSize="7" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">Y</text>
-              {/* Left (X) */}
-              <circle cx="251" cy="306" r="7" />
-              <text x="251" y="309.5" fill="#67E8F9" fontSize="7" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">X</text>
-              {/* Right (B) */}
-              <circle cx="279" cy="306" r="7" />
-              <text x="279" y="309.5" fill="#FB7185" fontSize="7" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">B</text>
-              {/* Bottom (A) */}
-              <circle cx="265" cy="320" r="7" />
-              <text x="265" y="323.5" fill="#86EFAC" fontSize="7" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">A</text>
+            {/* Controller Body Silhouette */}
+            <g filter="url(#chalkNoise)">
+              {/* Outer Chalk Stroke Contour */}
+              <path 
+                d="M 196,44 
+                   C 216,40, 250,40, 266,40 
+                   C 282,40, 316,40, 336,44 
+                   C 362,50, 400,64, 420,105 
+                   C 438,140, 430,178, 400,192 
+                   C 376,204, 350,188, 338,164 
+                   C 322,132, 292,122, 266,122 
+                   C 240,122, 210,132, 194,164 
+                   C 182,188, 156,204, 132,192 
+                   C 102,178, 94,140, 112,105 
+                   C 132,64, 170,50, 196,44 Z" 
+                fill="#13241A" 
+                stroke="#FFFFFF" 
+                strokeWidth="3.2" 
+                strokeLinejoin="round"
+              />
+
+              {/* Inner Contour (Mint Green Chalk #86EFAC) */}
+              <path 
+                d="M 200,50 
+                   C 218,46, 248,46, 266,46 
+                   C 284,46, 314,46, 332,50 
+                   C 356,56, 392,68, 410,105 
+                   C 426,136, 418,170, 394,184 
+                   C 372,194, 348,180, 338,158 
+                   C 324,128, 292,118, 266,118 
+                   C 240,118, 208,128, 194,158 
+                   C 184,180, 160,194, 138,184 
+                   C 114,170, 106,136, 122,105 
+                   C 140,68, 176,56, 200,50 Z" 
+                fill="none" 
+                stroke="#86EFAC" 
+                strokeWidth="1.8" 
+                strokeLinejoin="round"
+                opacity="0.85"
+              />
+
+              {/* Left Grip Textured Hatch Panel */}
+              <path 
+                d="M 116,118 
+                   C 112,135, 116,160, 134,178 
+                   C 140,165, 142,142, 136,125 Z" 
+                fill="url(#hatchLeft)" 
+                stroke="#FFFFFF" 
+                strokeWidth="1.2" 
+              />
+
+              {/* Right Grip Textured Hatch Panel */}
+              <path 
+                d="M 416,118 
+                   C 420,135, 416,160, 398,178 
+                   C 392,165, 390,142, 396,125 Z" 
+                fill="url(#hatchRight)" 
+                stroke="#FFFFFF" 
+                strokeWidth="1.2" 
+              />
             </g>
 
-            {/* Dual Analog Thumbsticks */}
-            <g stroke="#FFFFFF" strokeWidth="1.8" fill="#14281D">
-              {/* Left Thumbstick */}
-              <circle cx="158" cy="318" r="13" />
-              <circle cx="158" cy="318" r="8" fill="#223E2C" strokeDasharray="3 2" />
-              {/* Right Thumbstick */}
-              <circle cx="232" cy="318" r="13" />
-              <circle cx="232" cy="318" r="8" fill="#223E2C" strokeDasharray="3 2" />
+            {/* Center Screen: Rounded Box with Yellow Accent & MISCREANT 128Hz */}
+            <g filter="url(#chalkNoise)">
+              <rect x="230" y="42" width="72" height="46" rx="6" fill="#182430" stroke="#FFFFFF" strokeWidth="2.2" />
+              {/* Top Yellow Status Accent Line */}
+              <line x1="238" y1="50" x2="294" y2="50" stroke="#FDE047" strokeWidth="2.2" strokeLinecap="round" />
+              {/* Screen Text: MISCREANT 128Hz */}
+              <text x="266" y="70" fill="#FFFFFF" fontSize="7.5" fontFamily="'JetBrains Mono', monospace" fontWeight="bold" textAnchor="middle" letterSpacing="0.5">
+                MISCREANT 128Hz
+              </text>
             </g>
 
-            {/* Center Touchpad / Miscreant Plate */}
-            <rect x="175" y="266" width="40" height="22" rx="4" stroke="#FFFFFF" strokeWidth="1.5" fill="#1A3324" />
-            <text x="195" y="280" fill="#FDE047" fontSize="7.5" fontFamily="Permanent Marker" textAnchor="middle" opacity="0.95">
-              MISCREANT
-            </text>
+            {/* Left: Directional D-Pad */}
+            <g filter="url(#chalkNoise)">
+              {/* Circular Backdrop */}
+              <circle cx="178" cy="100" r="24" fill="#15212D" stroke="#FFFFFF" strokeWidth="2.2" />
+              {/* Cross D-Pad */}
+              <path 
+                d="M 172,83 L 184,83 L 184,94 L 195,94 L 195,106 L 184,106 L 184,117 L 172,117 L 172,106 L 161,106 L 161,94 L 172,94 Z" 
+                fill="#15212D" 
+                stroke="#FFFFFF" 
+                strokeWidth="1.8" 
+                strokeLinejoin="round"
+              />
+              {/* Center Pivot Dot */}
+              <circle cx="178" cy="100" r="2.8" fill="#FFFFFF" />
+            </g>
+
+            {/* Right: Action Buttons (PlayStation Style Diamond) */}
+            <g filter="url(#chalkNoise)">
+              {/* Circular Backdrop */}
+              <circle cx="354" cy="100" r="24" fill="#15212D" stroke="#FFFFFF" strokeWidth="2.2" />
+              
+              {/* Top Button: Red/Coral Triangle ▲ */}
+              <circle cx="354" cy="85" r="6" fill="#182430" stroke="#FB7185" strokeWidth="1.5" />
+              <polygon points="354,82 350.8,87.5 357.2,87.5" fill="#FB7185" />
+
+              {/* Left Button: Yellow Square ■ */}
+              <circle cx="339" cy="100" r="6" fill="#182430" stroke="#FDE047" strokeWidth="1.5" />
+              <rect x="336.5" y="97.5" width="5" height="5" fill="#FDE047" />
+
+              {/* Right Button: Green Circle ● */}
+              <circle cx="369" cy="100" r="6" fill="#182430" stroke="#34D399" strokeWidth="1.5" />
+              <circle cx="369" cy="100" r="2.6" fill="none" stroke="#34D399" strokeWidth="1.5" />
+
+              {/* Bottom Button: Cyan Cross ✖ */}
+              <circle cx="354" cy="115" r="6" fill="#182430" stroke="#38BDF8" strokeWidth="1.5" />
+              <line x1="351.5" y1="112.5" x2="356.5" y2="117.5" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="356.5" y1="112.5" x2="351.5" y2="117.5" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" />
+            </g>
+
+            {/* Bottom Center: Dual Analog Thumbsticks */}
+            <g filter="url(#chalkNoise)">
+              {/* Left Stick */}
+              <g transform="translate(210, 138)">
+                <circle cx="0" cy="0" r="17" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
+                {/* Ring of 12 grip knurling dots */}
+                <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
+                <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
+                <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
+                <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
+                <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                {/* Inner stick cap */}
+                <circle cx="0" cy="0" r="9" fill="#1A2836" stroke="#CBD5E1" strokeWidth="1.4" />
+                <circle cx="0" cy="0" r="2.8" fill="#FFFFFF" />
+              </g>
+
+              {/* Right Stick */}
+              <g transform="translate(322, 138)">
+                <circle cx="0" cy="0" r="17" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
+                {/* Ring of 12 grip knurling dots */}
+                <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
+                <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
+                <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
+                <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
+                <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                {/* Inner stick cap */}
+                <circle cx="0" cy="0" r="9" fill="#1A2836" stroke="#CBD5E1" strokeWidth="1.4" />
+                <circle cx="0" cy="0" r="2.8" fill="#FFFFFF" />
+              </g>
+            </g>
           </g>
 
           {/* ==========================================================
@@ -285,9 +389,9 @@ export default function ChalkBattlestationSvg() {
           className="absolute z-30 cursor-pointer rounded-full hover:bg-cyan-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-cyan-300/40"
           style={{
             left: '23%',
-            top: '60%',
-            width: '11%',
-            height: '11%'
+            top: '56%',
+            width: '12%',
+            height: '12%'
           }}
           title="Steer Car Left (D-Pad)"
           aria-label="Steer Car Left"
@@ -300,10 +404,10 @@ export default function ChalkBattlestationSvg() {
           onClick={() => handleSteer('right')}
           className="absolute z-30 cursor-pointer rounded-full hover:bg-rose-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-rose-300/40"
           style={{
-            left: '55%',
-            top: '60%',
-            width: '11%',
-            height: '11%'
+            left: '51%',
+            top: '56%',
+            width: '12%',
+            height: '12%'
           }}
           title="Steer Car Right (Buttons)"
           aria-label="Steer Car Right"
