@@ -23,16 +23,16 @@ export default function ChalkBattlestationSvg() {
     <div className="relative w-full max-w-[560px] flex flex-col items-center justify-center select-none py-1 pointer-events-auto">
       
       {/* Battlestation Master SVG & Canvas Composite */}
-      <div className="relative w-full aspect-[460/480] drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
+      <div className="relative w-full aspect-[460/410] drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
         
         {/* Layer 1: Live Interactive 60 FPS Canvas Racing Game (Inside Chalk Screen Window) */}
         <div 
           className="absolute z-10 overflow-hidden bg-black"
           style={{
             left: '8.7%',
-            top: '7.5%',
+            top: '8.8%',
             width: '67.8%',
-            height: '40.8%',
+            height: '46.8%',
             borderRadius: '4px'
           }}
         >
@@ -41,7 +41,7 @@ export default function ChalkBattlestationSvg() {
 
         {/* Layer 2: Pure Code & SVG Hand-Drawn Chalkboard Artwork */}
         <svg 
-          viewBox="0 0 460 480" 
+          viewBox="0 0 460 410" 
           className="absolute inset-0 w-full h-full pointer-events-none z-20 select-none overflow-visible"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -103,61 +103,31 @@ export default function ChalkBattlestationSvg() {
             </g>
           </g>
 
-          {/* ==========================================================
-              2. CLASSICAL GREEK FLUTED PEDESTAL COLUMN
-              ========================================================== */}
-          <g filter="url(#chalkNoise)" stroke="#FFFFFF" fill="none" opacity="0.92">
-            {/* Column Capital Top Scroll / Cornice */}
-            <path d="M 125 348 C 145 340, 245 340, 265 348 L 272 358 C 248 352, 142 352, 118 358 Z" strokeWidth="2.4" fill="#14281D" fillOpacity="0.4" />
-            <line x1="115" y1="360" x2="275" y2="360" strokeWidth="2" />
-            
-            {/* Fluted Vertical Ridges on Column Shaft */}
-            {/* Left Outer Contour */}
-            <path d="M 128 360 Q 134 415 125 460" strokeWidth="2.6" />
-            {/* Flute 1 */}
-            <path d="M 145 360 Q 147 415 142 460" strokeWidth="2" strokeDasharray="30 2 50 1" />
-            {/* Flute 2 */}
-            <path d="M 165 360 Q 166 415 162 460" strokeWidth="2" />
-            {/* Center Flute 3 */}
-            <path d="M 185 360 Q 185 415 183 460" strokeWidth="2.2" />
-            {/* Center Flute 4 */}
-            <path d="M 205 360 Q 205 415 205 460" strokeWidth="2.2" />
-            {/* Flute 5 */}
-            <path d="M 225 360 Q 224 415 228 460" strokeWidth="2" />
-            {/* Flute 6 */}
-            <path d="M 245 360 Q 243 415 248 460" strokeWidth="2" strokeDasharray="40 2 40 1" />
-            {/* Right Outer Contour */}
-            <path d="M 262 360 Q 256 415 268 460" strokeWidth="2.6" />
-            
-            {/* Column Shaft Horizontal Shading & Scratches */}
-            <g strokeWidth="1" opacity="0.5">
-              <line x1="135" y1="385" x2="160" y2="385" />
-              <line x1="172" y1="405" x2="200" y2="405" />
-              <line x1="230" y1="395" x2="255" y2="395" />
-              <line x1="138" y1="440" x2="175" y2="440" />
-              <line x1="210" y1="445" x2="250" y2="445" />
-            </g>
-
-            {/* Stepped Column Base Plinth */}
-            <path d="M 115 460 L 278 460 L 286 472 L 106 472 Z" strokeWidth="2.4" fill="#14281D" fillOpacity="0.5" />
-            <line x1="100" y1="475" x2="292" y2="475" strokeWidth="2.8" />
+          {/* Architectural Drafting Chalk Guidelines (Matching Reference) */}
+          <g opacity="0.25" stroke="#FFFFFF" strokeWidth="1" strokeDasharray="5 7">
+            {/* Horizontal guideline behind monitor bottom & wire */}
+            <line x1="20" y1="234" x2="440" y2="234" />
+            {/* Horizontal guideline through controller stick centers */}
+            <line x1="40" y1="312" x2="430" y2="312" />
+            {/* Subtle diagonal guideline */}
+            <line x1="90" y1="370" x2="270" y2="190" strokeDasharray="3 7" opacity="0.6" />
           </g>
 
           {/* ==========================================================
-              3. EXACT REFERENCE CHALK GAMEPAD CONTROLLER
+              2. EXACT REFERENCE CHALK GAMEPAD CONTROLLER
               ========================================================== */}
-          {/* Top Coiled Wire Leading to Monitor Base */}
+          {/* Coiled Controller Wire Connecting Monitor Base to Gamepad */}
           <path 
-            d="M 195 246 C 190 234, 202 226, 195 218 C 188 210, 200 200, 195 188" 
+            d="M 194 232 C 188 238, 202 243, 194 248 C 188 251, 196 254, 194 256" 
             stroke="#FFFFFF" 
-            strokeWidth="2" 
+            strokeWidth="2.2" 
             fill="none" 
             strokeLinecap="round" 
             opacity="0.9" 
           />
 
-          {/* Master Controller Group (Centered at X=195, Y=310) */}
-          <g transform="translate(195, 310) scale(0.74) translate(-266, -120)">
+          {/* Master Controller Group (Centered at X=194, Y=312 with 0.84 scale) */}
+          <g transform="translate(194, 312) scale(0.84) translate(-266, -120)">
             
             {/* Top Shoulder Bumpers (Left & Right Angled Charcoal Trapezoids) */}
             <g filter="url(#chalkNoise)">
@@ -341,44 +311,19 @@ export default function ChalkBattlestationSvg() {
             <path d="M 432 92 L 433 96 L 438 96 L 434 99 L 436 104 L 432 101 L 428 104 L 430 99 L 426 96 L 431 96 Z" stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.75" />
           </g>
 
-          {/* Right Bottom Math Formulas */}
+          {/* Right Bottom Math Formulas (Positioned Exactly per Reference) */}
           <g opacity="0.9">
-            <text x="368" y="275" fill="#FFFFFF" fontSize="13" fontFamily="Permanent Marker" opacity="0.85">
+            <text x="368" y="255" fill="#FFFFFF" fontSize="12" fontFamily="Permanent Marker" opacity="0.85">
               ΔV = 2/(3L)
             </text>
-            <text x="376" y="325" fill="#93C5FD" fontSize="13" fontFamily="Caveat" opacity="0.95">
+            <text x="372" y="312" fill="#93C5FD" fontSize="12" fontFamily="Caveat" opacity="0.95">
               max(h) = 1/2
             </text>
-            <text x="382" y="360" fill="#FDE047" fontSize="15" fontFamily="Caveat">
+            <text x="380" y="358" fill="#FDE047" fontSize="14" fontFamily="Caveat">
               (x - 5) / 2
             </text>
-            {/* Small chalk wedge diagram */}
-            <polygon points="390,342 420,358 390,364" stroke="#FFFFFF" strokeWidth="1.4" fill="none" />
           </g>
 
-          {/* Curved Hand-Drawn Chalk Arrow pointing Left */}
-          <g stroke="#FFFFFF" strokeWidth="1.8" fill="none" opacity="0.8" filter="url(#chalkNoise)">
-            <path d="M 30 250 C 10 260, 10 290, 28 295" />
-            <polyline points="20,288 29,295 23,304" strokeLinecap="round" strokeLinejoin="round" />
-          </g>
-
-          {/* ==========================================================
-              5. REALISTIC 3D CHALK STICK PIECE (Bottom Slate Ledge)
-              ========================================================== */}
-          <g transform="translate(255, 410) rotate(-16)" opacity="0.95">
-            {/* Powdery chalk dust smudge behind the chalk stick */}
-            <ellipse cx="28" cy="9" rx="30" ry="12" fill="#FFFFFF" opacity="0.16" filter="url(#chalkDustBlur)" />
-            {/* Chalk stick body */}
-            <rect x="0" y="0" width="48" height="13" rx="3.5" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.8" />
-            {/* Subtle cylinder 3D bevel shadow */}
-            <rect x="0" y="7" width="48" height="6" rx="2" fill="#94A3B8" opacity="0.65" />
-            {/* Chalk stick rounded tips */}
-            <ellipse cx="48" cy="6.5" rx="3.5" ry="6.5" fill="#FFFFFF" stroke="#CBD5E1" strokeWidth="0.8" />
-            <ellipse cx="0" cy="6.5" rx="3.5" ry="6.5" fill="#CBD5E1" />
-            {/* Small broken chalk crumbs */}
-            <circle cx="-10" cy="14" r="2.8" fill="#FFFFFF" opacity="0.85" />
-            <circle cx="-16" cy="18" r="1.6" fill="#FFFFFF" opacity="0.6" />
-          </g>
         </svg>
 
         {/* Layer 3: Interactive Steer Controls over Gamepad D-Pad & Action Buttons */}
@@ -388,10 +333,10 @@ export default function ChalkBattlestationSvg() {
           onClick={() => handleSteer('left')}
           className="absolute z-30 cursor-pointer rounded-full hover:bg-cyan-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-cyan-300/40"
           style={{
-            left: '23%',
-            top: '56%',
-            width: '12%',
-            height: '12%'
+            left: '21.7%',
+            top: '67.0%',
+            width: '8.8%',
+            height: '9.8%'
           }}
           title="Steer Car Left (D-Pad)"
           aria-label="Steer Car Left"
@@ -404,10 +349,10 @@ export default function ChalkBattlestationSvg() {
           onClick={() => handleSteer('right')}
           className="absolute z-30 cursor-pointer rounded-full hover:bg-rose-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-rose-300/40"
           style={{
-            left: '51%',
-            top: '56%',
-            width: '12%',
-            height: '12%'
+            left: '53.9%',
+            top: '67.0%',
+            width: '8.8%',
+            height: '9.8%'
           }}
           title="Steer Car Right (Buttons)"
           aria-label="Steer Car Right"
