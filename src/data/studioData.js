@@ -16,7 +16,6 @@ export const studioInfo = {
     business: "themiscreantstudios@gmail.com"
   },
   socials: {
-    github: "https://github.com/Berinluke",
     twitter: "https://x.com/TheMiscreantStudios",
     discord: "#",
     steam: "#"
@@ -165,8 +164,7 @@ export const leadershipTeam = [
     initials: "BL",
     badge: "SYSTEMS ARCHITECT",
     bio: "Leads studio vision, game architecture, and creative direction. Passionate about player freedom, responsive controls, and engaging worlds.",
-    skills: ["Game Architecture", "Game Design", "Creative Direction", "Studio Leadership"],
-    github: "https://github.com/Berinluke"
+    skills: ["Game Architecture", "Game Design", "Creative Direction", "Studio Leadership"]
   },
   {
     name: "Sai Sabareesh",
@@ -174,8 +172,7 @@ export const leadershipTeam = [
     initials: "SS",
     badge: "WORLDBUILDER",
     bio: "Visual craftsman shaping the bold 2D aesthetic, comic silhouettes, and striking character designs across The Miscreant Studios.",
-    skills: ["2D Concept Art", "Character Silhouettes", "Worldbuilding", "Visual Identity"],
-    github: "#"
+    skills: ["2D Concept Art", "Character Silhouettes", "Worldbuilding", "Visual Identity"]
   }
 ];
 

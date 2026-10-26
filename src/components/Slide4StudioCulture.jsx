@@ -1,6 +1,6 @@
 import React from 'react';
 import { studioManifesto, leadershipTeam, studioInfo } from '../data/studioData';
-import { Globe, Github } from 'lucide-react';
+import { Globe } from 'lucide-react';
 
 export default function Slide4StudioCulture() {
   return (
@@ -137,18 +137,6 @@ export default function Slide4StudioCulture() {
                         {leader.role}
                       </span>
                     </div>
-
-                    {leader.github && leader.github !== '#' && (
-                      <a 
-                        href={leader.github} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="p-2 rounded-lg bg-[#183526] hover:bg-slate-700 text-slate-200 transition-colors border border-slate-600"
-                        title="GitHub Profile"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-                    )}
                   </div>
 
                   <p className="text-sm text-slate-300 leading-relaxed font-normal pt-1">

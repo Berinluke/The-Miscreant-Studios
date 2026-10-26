@@ -195,10 +195,6 @@ export default function Slide5DispatchCareers({ onSelectJob }) {
           </div>
 
           <div className="flex items-center gap-4">
-            <a href="https://github.com/Berinluke" target="_blank" rel="noreferrer" className="hover:text-white font-bold underline transition-colors">
-              GitHub: Berinluke
-            </a>
-            <span>•</span>
             <span className="text-xs font-semibold text-slate-300">Built for players. Designed for chaos.</span>
           </div>
         </div>

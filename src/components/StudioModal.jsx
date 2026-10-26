@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Copy, Shield, Cpu, Flame, ExternalLink } from 'lucide-react';
+import { X, Check, Copy, Shield, Cpu, Flame } from 'lucide-react';
 import { hudAudio } from './AudioEngine';
 
 export default function StudioModal({ isOpen, initialTab = 'contact', onClose }) {
@@ -128,16 +128,6 @@ export default function StudioModal({ isOpen, initialTab = 'contact', onClose })
             </div>
 
             <div className="mt-4 flex items-center gap-4 text-xs font-mono text-neutral-400">
-              <a 
-                href="https://github.com/Berinluke" 
-                target="_blank" 
-                rel="noreferrer"
-                className="hover:text-white flex items-center gap-1 underline underline-offset-4"
-              >
-                <span>GITHUB REPOSITORY</span>
-                <ExternalLink className="h-3 w-3" />
-              </a>
-              <span>•</span>
               <span>CAREERS: career.themiscreantstudios@gmail.com</span>
             </div>
           </div>
