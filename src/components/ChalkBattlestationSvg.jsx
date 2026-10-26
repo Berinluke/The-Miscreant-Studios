@@ -70,6 +70,12 @@ export default function ChalkBattlestationSvg() {
     const startY = e.clientY;
     const maxDist = 12;
 
+    if (e.target && e.target.setPointerCapture) {
+      try {
+        e.target.setPointerCapture(e.pointerId);
+      } catch (err) {}
+    }
+
     const onPointerMove = (moveEvt) => {
       const dx = moveEvt.clientX - startX;
       const dy = moveEvt.clientY - startY;
@@ -96,9 +102,10 @@ export default function ChalkBattlestationSvg() {
       });
     };
 
-    const onPointerUp = () => {
+    const cleanup = () => {
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointerup', cleanup);
+      window.removeEventListener('pointercancel', cleanup);
       if (stick === 'left') {
         setLeftStickOffset({ x: 0, y: 0 });
       } else {
@@ -113,7 +120,8 @@ export default function ChalkBattlestationSvg() {
     };
 
     window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointerup', cleanup);
+    window.addEventListener('pointercancel', cleanup);
   };
 
   return (
@@ -542,15 +550,15 @@ export default function ChalkBattlestationSvg() {
         
         {/* 1. D-PAD CLUSTER (Top Left) */}
         <div 
-          className="absolute z-30" 
-          style={{ left: '20.5%', top: '65.2%', width: '10.5%', height: '11.8%' }}
+          className="absolute z-30 touch-none" 
+          style={{ left: '20.0%', top: '64.5%', width: '11.5%', height: '13.0%' }}
         >
           {/* Up (Boost) */}
           <button
             onPointerDown={() => triggerControl('boost', 'dpad-up', null, 'down')}
             onPointerUp={() => triggerControl('boost', 'dpad-up', null, 'up')}
             onPointerLeave={() => triggerControl('boost', 'dpad-up', null, 'up')}
-            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/20 active:scale-90 transition-all rounded-t"
+            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/20 active:scale-90 transition-all rounded-t touch-none"
             title="D-Pad Up (Nitro Boost)"
             aria-label="Nitro Boost"
           />
@@ -559,7 +567,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('brake', 'dpad-down', null, 'down')}
             onPointerUp={() => triggerControl('brake', 'dpad-down', null, 'up')}
             onPointerLeave={() => triggerControl('brake', 'dpad-down', null, 'up')}
-            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/20 active:scale-90 transition-all rounded-b"
+            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/20 active:scale-90 transition-all rounded-b touch-none"
             title="D-Pad Down (Brake)"
             aria-label="Brake"
           />
@@ -568,7 +576,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('left', 'dpad-left', null, 'down')}
             onPointerUp={() => triggerControl('left', 'dpad-left', null, 'up')}
             onPointerLeave={() => triggerControl('left', 'dpad-left', null, 'up')}
-            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-l"
+            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-l touch-none"
             title="D-Pad Left (Steer Left)"
             aria-label="Steer Left"
           />
@@ -577,7 +585,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('right', 'dpad-right', null, 'down')}
             onPointerUp={() => triggerControl('right', 'dpad-right', null, 'up')}
             onPointerLeave={() => triggerControl('right', 'dpad-right', null, 'up')}
-            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-r"
+            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-r touch-none"
             title="D-Pad Right (Steer Right)"
             aria-label="Steer Right"
           />
@@ -585,59 +593,59 @@ export default function ChalkBattlestationSvg() {
 
         {/* 2. LEFT ANALOG STICK HITBOX (Under D-Pad) */}
         <div 
-          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ left: '27.5%', top: '74.2%', width: '9.0%', height: '10.2%' }}
+          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
+          style={{ left: '26.5%', top: '73.0%', width: '11.0%', height: '12.0%' }}
           title="Left Analog Stick (Drag or Click Left/Right to Steer)"
         >
           {/* Left half click */}
           <button
             onPointerDown={() => triggerControl('left', 'left-stick-l', 'left', 'down')}
             onPointerUp={() => triggerControl('left', 'left-stick-l', 'left', 'up')}
-            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full touch-none"
             aria-label="Left Stick Steer Left"
           />
           {/* Right half click */}
           <button
             onPointerDown={() => triggerControl('right', 'left-stick-r', 'left', 'down')}
             onPointerUp={() => triggerControl('right', 'left-stick-r', 'left', 'up')}
-            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full touch-none"
             aria-label="Left Stick Steer Right"
           />
         </div>
 
         {/* 3. RIGHT ANALOG STICK HITBOX (Under Action Buttons) */}
         <div 
-          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ left: '48.0%', top: '74.2%', width: '9.0%', height: '10.2%' }}
+          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing touch-none"
+          style={{ left: '47.0%', top: '73.0%', width: '11.0%', height: '12.0%' }}
           title="Right Analog Stick (Drag or Click Left/Right to Steer)"
         >
           {/* Left half click */}
           <button
             onPointerDown={() => triggerControl('left', 'right-stick-l', 'right', 'down')}
             onPointerUp={() => triggerControl('left', 'right-stick-l', 'right', 'up')}
-            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full touch-none"
             aria-label="Right Stick Steer Left"
           />
           {/* Right half click */}
           <button
             onPointerDown={() => triggerControl('right', 'right-stick-r', 'right', 'down')}
             onPointerUp={() => triggerControl('right', 'right-stick-r', 'right', 'up')}
-            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full touch-none"
             aria-label="Right Stick Steer Right"
           />
         </div>
 
         {/* 4. ACTION BUTTONS CLUSTER (Top Right) */}
         <div 
-          className="absolute z-30" 
-          style={{ left: '52.8%', top: '65.2%', width: '10.5%', height: '11.8%' }}
+          className="absolute z-30 touch-none" 
+          style={{ left: '52.0%', top: '64.5%', width: '11.5%', height: '13.0%' }}
         >
           {/* Triangle ▲ (Top - Boost) */}
           <button
             onPointerDown={() => triggerControl('boost', 'btn-triangle', null, 'down')}
             onPointerUp={() => triggerControl('boost', 'btn-triangle', null, 'up')}
             onPointerLeave={() => triggerControl('boost', 'btn-triangle', null, 'up')}
-            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-rose-400/25 active:scale-90 transition-all rounded-full"
+            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-rose-400/25 active:scale-90 transition-all rounded-full touch-none"
             title="Triangle (Boost)"
             aria-label="Triangle Boost"
           />
@@ -646,7 +654,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('brake', 'btn-cross', null, 'down')}
             onPointerUp={() => triggerControl('brake', 'btn-cross', null, 'up')}
             onPointerLeave={() => triggerControl('brake', 'btn-cross', null, 'up')}
-            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/25 active:scale-90 transition-all rounded-full"
+            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/25 active:scale-90 transition-all rounded-full touch-none"
             title="Cross (Brake / Restart)"
             aria-label="Cross Brake"
           />
@@ -655,7 +663,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('left', 'btn-square', null, 'down')}
             onPointerUp={() => triggerControl('left', 'btn-square', null, 'up')}
             onPointerLeave={() => triggerControl('left', 'btn-square', null, 'up')}
-            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/25 active:scale-90 transition-all rounded-full"
+            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/25 active:scale-90 transition-all rounded-full touch-none"
             title="Square (Steer Left)"
             aria-label="Square Steer Left"
           />
@@ -664,7 +672,7 @@ export default function ChalkBattlestationSvg() {
             onPointerDown={() => triggerControl('right', 'btn-circle', null, 'down')}
             onPointerUp={() => triggerControl('right', 'btn-circle', null, 'up')}
             onPointerLeave={() => triggerControl('right', 'btn-circle', null, 'up')}
-            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-emerald-400/25 active:scale-90 transition-all rounded-full"
+            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-emerald-400/25 active:scale-90 transition-all rounded-full touch-none"
             title="Circle (Steer Right)"
             aria-label="Circle Steer Right"
           />

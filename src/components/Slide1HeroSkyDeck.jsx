@@ -21,7 +21,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
     <section 
       ref={containerRef}
       id="hero" 
-      className="relative min-h-screen w-full flex flex-col justify-between pt-10 sm:pt-14 pb-8 px-6 sm:px-10 lg:px-16 bg-transparent select-none overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col justify-between pt-6 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-10 lg:px-16 bg-transparent select-none overflow-x-hidden"
     >
       {/* Supersonic Fighter Jet Atmospheric Flyby */}
       <JetMissionScrollytelling
@@ -30,7 +30,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
       />
 
       {/* Main Hero Stage (Two-Column Asymmetric Architectural Bento Layout) */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
         
         {/* ==============================================================
             LEFT COLUMN: Pure Code Chalk Typography & Hand-Drawn Buttons
@@ -64,22 +64,22 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
           <div className="relative">
             <h1 
               ref={letterTRef}
-              className="chalk-piece-headline text-6xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.88] select-none tracking-wide"
+              className="chalk-piece-headline text-5xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.88] select-none tracking-wide"
             >
               THE MISCREANT<br />STUDIOS
             </h1>
 
             {/* Hand-drawn chalk highlight smudge underline */}
-            <div className="w-64 sm:w-80 h-2 bg-white/20 rounded-full blur-[1px] mt-3 ml-1" />
+            <div className="w-56 sm:w-80 h-2 bg-white/20 rounded-full blur-[1px] mt-2 sm:mt-3 ml-1" />
           </div>
 
           {/* Tagline in Coral Chalk Block/Condensed Typography */}
-          <div className="chalk-piece-tagline text-2xl sm:text-3xl md:text-4xl tracking-wider mt-4 sm:mt-5 select-none font-black">
+          <div className="chalk-piece-tagline text-xl sm:text-3xl md:text-4xl tracking-wider mt-3 sm:mt-5 select-none font-black">
             BUILT FOR PLAYERS. DESIGNED FOR CHAOS.
           </div>
 
           {/* Description written in authentic classroom chalk font */}
-          <p className="text-slate-200 text-base sm:text-lg md:text-xl max-w-xl font-hand font-bold tracking-wide leading-relaxed mt-4 sm:mt-5 select-none chalk-text">
+          <p className="text-slate-200 text-sm sm:text-lg md:text-xl max-w-xl font-hand font-bold tracking-wide leading-relaxed mt-2.5 sm:mt-5 select-none chalk-text">
             Independent game studio forging addictive hyper-casual hits and rich, immersive story-based games designed for pure player immersion.
           </p>
 
@@ -95,7 +95,7 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
           </div>
 
           {/* Action Row: Real Hand-Drawn Chalk Pill Buttons & Doodles */}
-          <div className="relative flex flex-wrap items-center gap-5 sm:gap-6 mt-8 sm:mt-10">
+          <div className="relative flex flex-wrap items-center gap-3.5 sm:gap-6 mt-5 sm:mt-10">
             
             {/* Button 1: "Explore Our Games" (Pure SVG Rough Chalk Oval) */}
             <a

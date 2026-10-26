@@ -434,6 +434,148 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
     }
   }, [externalControl]);
 
+  // Touch & Swipe gestures for Mobile gameplay
+  const touchStateRef = useRef({
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    active: false
+  });
+
+  const handleScreenTouchStart = (e) => {
+    if (consoleMode === 'preview') {
+      openSelect();
+      return;
+    }
+    if (consoleMode === 'gameover') {
+      startPlay();
+      return;
+    }
+    if (consoleMode !== 'playing') return;
+
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+
+    touchStateRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startTime: performance.now(),
+      active: true
+    };
+
+    updateScreenTouch(touch.clientX, touch.clientY, rect);
+  };
+
+  const handleScreenTouchMove = (e) => {
+    if (consoleMode !== 'playing' || !touchStateRef.current.active) return;
+    const touch = e.touches[0];
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    updateScreenTouch(touch.clientX, touch.clientY, rect);
+  };
+
+  const updateScreenTouch = (clientX, clientY, rect) => {
+    const a = aRef.current;
+    const relX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const relY = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+
+    // Direct paddle tracking for Breakout
+    if (a.gameId === 'breakout') {
+      a.breakout.paddleX = relX * 504;
+    }
+
+    // Analog steering for Racer, Space, Paddle
+    const normX = (relX - 0.5) * 2.2;
+    inputRef.current.analogX = normX;
+
+    if (normX < -0.2) {
+      inputRef.current.left = true;
+      inputRef.current.right = false;
+    } else if (normX > 0.2) {
+      inputRef.current.right = true;
+      inputRef.current.left = false;
+    } else {
+      inputRef.current.left = false;
+      inputRef.current.right = false;
+    }
+
+    // Top half -> Jump / Boost / Shoot
+    if (relY < 0.45) {
+      inputRef.current.up = true;
+      inputRef.current.fire = true;
+      inputRef.current.down = false;
+    } else if (relY > 0.72) {
+      inputRef.current.down = true;
+      inputRef.current.up = false;
+      inputRef.current.fire = false;
+    } else {
+      inputRef.current.up = false;
+      inputRef.current.down = false;
+      if (a.gameId === 'invaders') {
+        inputRef.current.fire = true;
+      }
+    }
+  };
+
+  const handleScreenTouchEnd = (e) => {
+    if (!touchStateRef.current.active) return;
+    touchStateRef.current.active = false;
+
+    // Detect fast swipe gestures on mobile
+    if (e.changedTouches && e.changedTouches[0]) {
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStateRef.current.startX;
+      const dy = touch.clientY - touchStateRef.current.startY;
+      const dist = Math.hypot(dx, dy);
+      const elapsed = performance.now() - touchStateRef.current.startTime;
+
+      if (dist > 22 && elapsed < 400) {
+        const a = aRef.current;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) {
+            // Swipe Left
+            if (a.gameId === 'snake' && a.snake.dir.x === 0) a.snake.nextDir = { x: -1, y: 0 };
+          } else {
+            // Swipe Right
+            if (a.gameId === 'snake' && a.snake.dir.x === 0) a.snake.nextDir = { x: 1, y: 0 };
+          }
+        } else {
+          if (dy < 0) {
+            // Swipe Up
+            if (a.gameId === 'snake' && a.snake.dir.y === 0) a.snake.nextDir = { x: 0, y: -1 };
+            else if (a.gameId === 'runner' && !a.runner.isJumping) {
+              hudAudio.playOpen();
+              a.runner.isJumping = true;
+              a.runner.shinobiVy = -12.4;
+            } else if (a.gameId === 'racer') {
+              a.racer.targetSpeed = 13.5;
+            }
+          } else {
+            // Swipe Down
+            if (a.gameId === 'snake' && a.snake.dir.y === 0) a.snake.nextDir = { x: 0, y: 1 };
+            else if (a.gameId === 'runner') {
+              a.runner.isSliding = true;
+              a.runner.slideTimer = 35;
+            } else if (a.gameId === 'racer') {
+              a.racer.targetSpeed = 4.2;
+            }
+          }
+        }
+      }
+    }
+
+    inputRef.current.left = false;
+    inputRef.current.right = false;
+    inputRef.current.up = false;
+    inputRef.current.down = false;
+    inputRef.current.fire = false;
+    inputRef.current.analogX = 0;
+    inputRef.current.analogY = 0;
+  };
+
   // Window Keyboard Listeners: Keydown & Keyup for butter-smooth holding
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -1363,14 +1505,24 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
   const activeGame = ARCADE_GAMES[activeGameIndex];
 
   return (
-    <div className="relative w-full h-full select-none overflow-hidden font-mono">
+    <div 
+      className="relative w-full h-full select-none overflow-hidden font-mono touch-none"
+      onTouchStart={handleScreenTouchStart}
+      onTouchMove={handleScreenTouchMove}
+      onTouchEnd={handleScreenTouchEnd}
+      onTouchCancel={handleScreenTouchEnd}
+    >
       
       {/* 60+ FPS Canvas Game Screen (ALWAYS 100% VISIBLE & RUNNING) */}
       <canvas
         ref={canvasRef}
         width={504}
         height={298}
-        className="w-full h-full object-cover block"
+        className="w-full h-full object-cover block cursor-pointer"
+        onClick={() => {
+          if (consoleMode === 'preview') openSelect();
+          else if (consoleMode === 'gameover') startPlay();
+        }}
       />
 
       {/* ==============================================================
@@ -1479,6 +1631,57 @@ export default function PlayableArcadeConsole({ externalControl = null }) {
             <span className="font-mono text-xs font-bold text-amber-300">
               SCORE: {score}
             </span>
+          </div>
+        </div>
+      )}
+
+      {/* ==============================================================
+          MODE 3.5: ON-SCREEN MOBILE TOUCH CONTROLS (Active in Playing Mode)
+          ============================================================== */}
+      {consoleMode === 'playing' && (
+        <div className="absolute inset-x-0 bottom-1 px-2.5 z-20 flex items-center justify-between pointer-events-none select-none sm:opacity-80">
+          {/* Mobile Left & Right Steer Wings */}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
+            <button
+              onPointerDown={(e) => { e.stopPropagation(); inputRef.current.left = true; }}
+              onPointerUp={(e) => { e.stopPropagation(); inputRef.current.left = false; }}
+              onPointerLeave={(e) => { e.stopPropagation(); inputRef.current.left = false; }}
+              className="w-8 h-8 rounded-full bg-black/65 hover:bg-emerald-500/40 active:bg-emerald-500 active:scale-90 border border-white/35 text-white font-mono font-black text-xs flex items-center justify-center transition-all backdrop-blur-xs shadow-md touch-none cursor-pointer"
+              aria-label="Steer Left"
+            >
+              ◀
+            </button>
+            <button
+              onPointerDown={(e) => { e.stopPropagation(); inputRef.current.right = true; }}
+              onPointerUp={(e) => { e.stopPropagation(); inputRef.current.right = false; }}
+              onPointerLeave={(e) => { e.stopPropagation(); inputRef.current.right = false; }}
+              className="w-8 h-8 rounded-full bg-black/65 hover:bg-emerald-500/40 active:bg-emerald-500 active:scale-90 border border-white/35 text-white font-mono font-black text-xs flex items-center justify-center transition-all backdrop-blur-xs shadow-md touch-none cursor-pointer"
+              aria-label="Steer Right"
+            >
+              ▶
+            </button>
+          </div>
+
+          {/* Mobile Up / Jump / Boost & Down / Brake Wings */}
+          <div className="flex items-center gap-1.5 pointer-events-auto">
+            <button
+              onPointerDown={(e) => { e.stopPropagation(); inputRef.current.down = true; }}
+              onPointerUp={(e) => { e.stopPropagation(); inputRef.current.down = false; }}
+              onPointerLeave={(e) => { e.stopPropagation(); inputRef.current.down = false; }}
+              className="w-8 h-8 rounded-full bg-black/65 hover:bg-sky-500/40 active:bg-sky-500 active:scale-90 border border-white/35 text-white font-mono font-black text-xs flex items-center justify-center transition-all backdrop-blur-xs shadow-md touch-none cursor-pointer"
+              aria-label="Brake or Slide"
+            >
+              ▼
+            </button>
+            <button
+              onPointerDown={(e) => { e.stopPropagation(); inputRef.current.up = true; inputRef.current.fire = true; }}
+              onPointerUp={(e) => { e.stopPropagation(); inputRef.current.up = false; inputRef.current.fire = false; }}
+              onPointerLeave={(e) => { e.stopPropagation(); inputRef.current.up = false; inputRef.current.fire = false; }}
+              className="w-9 h-9 rounded-full bg-emerald-500 hover:bg-emerald-400 active:scale-90 border-2 border-white text-slate-950 font-black text-sm flex items-center justify-center transition-all shadow-[0_0_12px_rgba(16,185,129,0.8)] touch-none cursor-pointer"
+              aria-label="Action, Jump or Nitro"
+            >
+              ▲
+            </button>
           </div>
         </div>
       )}
