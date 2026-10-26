@@ -143,26 +143,51 @@
   font-family: 'Kaushan Script', cursive;
 }
 
-/* Master Heavy Condensed Sans-Serif Chalk Headline (Bebas Neue / Eraser Dust) */
+/* Master Heavy Condensed Sans-Serif Chalk Headline (Exact 1:1 Match to User Reference) */
 .chalk-piece-headline {
-  font-family: 'Bebas Neue', 'Eraser Dust', 'Eraser', Impact, sans-serif;
-  font-weight: 900;
-  color: #FFFFFF;
-  letter-spacing: 0.04em;
-  filter: url(#chalk-piece-realistic) drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.12));
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: transparent;
+  background-image: url('/textures/chalk_stick_pure.png');
+  background-size: 260px auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.85));
+  display: inline-block;
 }
 
 .chalk-piece-tagline {
-  font-family: 'Bebas Neue', 'Eraser Dust', Impact, sans-serif;
+  font-family: 'Bebas Neue', Impact, sans-serif;
   letter-spacing: 0.08em;
-  color: #FB7185;
-  filter: url(#chalk-piece-coral) drop-shadow(0 0 10px rgba(251, 113, 133, 0.4)) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.9));
+  color: transparent;
+  background-image: url('/textures/chalk_stick_coral.png');
+  background-size: 200px auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(251, 113, 133, 0.9))
+    drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 .chalk-piece-btn {
   font-family: 'Bebas Neue', Impact, sans-serif;
   letter-spacing: 0.06em;
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.8));
+  color: transparent;
+  background-image: url('/textures/chalk_stick_pure.png');
+  background-size: 180px auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: 
+    drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.85))
+    drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.8));
+  display: inline-block;
 }
 
 /* True Chalk Piece Cursive Handwriting (Matching User's Reference) */

@@ -23,32 +23,6 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
       id="hero" 
       className="relative min-h-screen w-full flex flex-col justify-between pt-10 sm:pt-14 pb-8 px-6 sm:px-10 lg:px-16 bg-transparent select-none overflow-hidden"
     >
-      {/* Global SVG Chalk Texture Filters for GPU-Accelerated Lettering */}
-      <svg width="0" height="0" className="absolute pointer-events-none" aria-hidden="true">
-        <defs>
-          {/* Authentic Physical Chalk Stick Roughness & Porosity Filter */}
-          <filter id="chalk-piece-realistic" x="-10%" y="-10%" width="120%" height="120%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="fineNoise" />
-            <feDisplacementMap in="SourceGraphic" in2="fineNoise" scale="3.2" xChannelSelector="R" yChannelSelector="G" result="roughened" />
-            <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" result="porosity" />
-            <feColorMatrix in="porosity" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.85 0.15" result="porousAlpha" />
-            <feComposite in="roughened" in2="porousAlpha" operator="in" result="porousChalk" />
-            <feGaussianBlur in="roughened" stdDeviation="0.8" result="chalkDust" />
-            <feMerge>
-              <feMergeNode in="chalkDust" />
-              <feMergeNode in="porousChalk" />
-            </feMerge>
-          </filter>
-
-          {/* Chalk Coral Tagline Filter */}
-          <filter id="chalk-piece-coral" x="-10%" y="-10%" width="120%" height="120%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="displaced" />
-            <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.8" />
-          </filter>
-        </defs>
-      </svg>
-
       {/* Supersonic Fighter Jet Atmospheric Flyby */}
       <JetMissionScrollytelling
         containerRef={containerRef}
@@ -63,17 +37,17 @@ export default function Slide1HeroSkyDeck({ onScrollDown }) {
             ============================================================== */}
         <div className="lg:col-span-7 flex flex-col items-start justify-center relative">
           
-          {/* Main Scraped Chalk Studio Title (Heavy Condensed Sans-Serif Bebas Neue / Eraser Dust) */}
+          {/* Main Scraped Chalk Studio Title (Exact 1:1 Match to Reference) */}
           <div className="relative">
             <h1 
               ref={letterTRef}
-              className="chalk-piece-headline text-6xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.88] select-none text-white tracking-wide"
+              className="chalk-piece-headline text-6xl sm:text-7xl md:text-8xl lg:text-[7.6rem] font-black leading-[0.88] select-none tracking-wide"
             >
               THE MISCREANT<br />STUDIOS
             </h1>
 
             {/* Hand-drawn chalk highlight smudge underline */}
-            <div className="w-64 sm:w-80 h-2 bg-white/25 rounded-full blur-[1px] mt-3 ml-1" />
+            <div className="w-64 sm:w-80 h-2 bg-white/20 rounded-full blur-[1px] mt-3 ml-1" />
           </div>
 
           {/* Tagline in Coral Chalk Block/Condensed Typography */}
