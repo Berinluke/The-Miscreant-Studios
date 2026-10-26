@@ -1,22 +1,115 @@
 import React, { useState } from 'react';
 import PlayableRacingGame from './PlayableRacingGame';
+import { hudAudio } from './AudioEngine';
 
 /**
  * ChalkBattlestationSvg
  * 
  * 100% Code & SVG Hand-Drawn Chalkboard Gaming Battlestation:
- * - Hand-sketched chalk monitor chassis mounted atop a classical Greek fluted column
- * - Ergonomic hand-drawn chalk gamepad controller with interactive clickable steer buttons
- * - Live 60 FPS HTML5 Canvas Racing Game embedded seamlessly inside the monitor window
- * - Authentic chalk math doodles (dx/dt = v, x² + y² = r², ΔV, stars)
- * - Zero raster screenshots used!
+ * - Hand-sketched chalk monitor chassis
+ * - Full interactive gamepad controller:
+ *   * D-Pad (Left/Right steer, Up boost, Down brake)
+ *   * Dual Analog Thumbsticks (interactive dragging & clicking with live stick deflection)
+ *   * Action buttons (Square steer left, Circle steer right, Triangle boost, Cross brake)
+ *   * Shoulder bumpers (L1 / R1)
+ *   * Center OLED display with live input telemetry
+ * - Live 60 FPS HTML5 Canvas Racing Game embedded inside monitor window
+ * - Authentic chalk math doodles
  */
 export default function ChalkBattlestationSvg() {
   const [externalControl, setExternalControl] = useState(null);
+  const [activeBtn, setActiveBtn] = useState(null);
+  const [leftStickOffset, setLeftStickOffset] = useState({ x: 0, y: 0 });
+  const [rightStickOffset, setRightStickOffset] = useState({ x: 0, y: 0 });
+  const [screenFeedback, setScreenFeedback] = useState('MISCREANT 128Hz');
 
-  const handleSteer = (dir) => {
-    setExternalControl(dir);
-    setTimeout(() => setExternalControl(null), 120);
+  const triggerControl = (action, visualKey, stickTarget = null) => {
+    hudAudio.playClick();
+    setExternalControl({ action, id: Date.now() });
+    setActiveBtn(visualKey);
+
+    if (stickTarget === 'left') {
+      const offX = action === 'left' ? -7 : action === 'right' ? 7 : 0;
+      const offY = action === 'boost' ? -7 : action === 'brake' ? 7 : 0;
+      setLeftStickOffset({ x: offX, y: offY });
+      setTimeout(() => setLeftStickOffset({ x: 0, y: 0 }), 160);
+    } else if (stickTarget === 'right') {
+      const offX = action === 'left' ? -7 : action === 'right' ? 7 : 0;
+      const offY = action === 'boost' ? -7 : action === 'brake' ? 7 : 0;
+      setRightStickOffset({ x: offX, y: offY });
+      setTimeout(() => setRightStickOffset({ x: 0, y: 0 }), 160);
+    }
+
+    const messages = {
+      left: '◀ STEER L',
+      right: 'STEER R ▶',
+      boost: '▲ BOOST!',
+      brake: '▼ BRAKE',
+      restart: '★ READY!'
+    };
+    if (messages[action]) {
+      setScreenFeedback(messages[action]);
+      setTimeout(() => setScreenFeedback('MISCREANT 128Hz'), 600);
+    }
+
+    setTimeout(() => setActiveBtn(null), 180);
+  };
+
+  const handleStickPointerDown = (e, stick) => {
+    e.preventDefault();
+    hudAudio.playClick();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    let steered = false;
+
+    const onPointerMove = (moveEvt) => {
+      const dx = moveEvt.clientX - startX;
+      const dy = moveEvt.clientY - startY;
+      const dist = Math.hypot(dx, dy);
+      const maxDist = 9;
+      const factor = dist > maxDist ? maxDist / dist : 1;
+      const clampedX = dx * factor;
+      const clampedY = dy * factor;
+
+      if (stick === 'left') {
+        setLeftStickOffset({ x: clampedX, y: clampedY });
+      } else {
+        setRightStickOffset({ x: clampedX, y: clampedY });
+      }
+
+      if (!steered && dist > 5) {
+        if (Math.abs(dx) > Math.abs(dy)) {
+          if (dx < -5) {
+            triggerControl('left', `${stick}-stick-l`, stick);
+            steered = true;
+          } else if (dx > 5) {
+            triggerControl('right', `${stick}-stick-r`, stick);
+            steered = true;
+          }
+        } else {
+          if (dy < -5) {
+            triggerControl('boost', `${stick}-stick-u`, stick);
+            steered = true;
+          } else if (dy > 5) {
+            triggerControl('brake', `${stick}-stick-d`, stick);
+            steered = true;
+          }
+        }
+      }
+    };
+
+    const onPointerUp = () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      if (stick === 'left') {
+        setLeftStickOffset({ x: 0, y: 0 });
+      } else {
+        setRightStickOffset({ x: 0, y: 0 });
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
   };
 
   return (
@@ -131,10 +224,28 @@ export default function ChalkBattlestationSvg() {
             
             {/* Top Shoulder Bumpers (Left & Right Angled Charcoal Trapezoids) */}
             <g filter="url(#chalkNoise)">
-              {/* Left Bumper */}
-              <polygon points="144,38 196,36 200,64 136,68" fill="#18232E" stroke="#FFFFFF" strokeWidth="2.2" strokeLinejoin="round" />
-              {/* Right Bumper */}
-              <polygon points="336,36 388,38 396,68 332,64" fill="#18232E" stroke="#FFFFFF" strokeWidth="2.2" strokeLinejoin="round" />
+              {/* Left Bumper (L1) */}
+              <polygon 
+                points="144,38 196,36 200,64 136,68" 
+                fill={activeBtn === 'bumper-left' ? '#0284C7' : '#18232E'} 
+                stroke="#FFFFFF" 
+                strokeWidth="2.2" 
+                strokeLinejoin="round"
+                className="cursor-pointer transition-colors"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('left', 'bumper-left')}
+              />
+              {/* Right Bumper (R1) */}
+              <polygon 
+                points="336,36 388,38 396,68 332,64" 
+                fill={activeBtn === 'bumper-right' ? '#0284C7' : '#18232E'} 
+                stroke="#FFFFFF" 
+                strokeWidth="2.2" 
+                strokeLinejoin="round"
+                className="cursor-pointer transition-colors"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('right', 'bumper-right')}
+              />
             </g>
 
             {/* Controller Body Silhouette */}
@@ -199,22 +310,33 @@ export default function ChalkBattlestationSvg() {
               />
             </g>
 
-            {/* Center Screen: Rounded Box with Yellow Accent & MISCREANT 128Hz */}
+            {/* Center Screen: Rounded Box with Yellow Accent & MISCREANT Telemetry */}
             <g filter="url(#chalkNoise)">
               <rect x="230" y="42" width="72" height="46" rx="6" fill="#182430" stroke="#FFFFFF" strokeWidth="2.2" />
               {/* Top Yellow Status Accent Line */}
               <line x1="238" y1="50" x2="294" y2="50" stroke="#FDE047" strokeWidth="2.2" strokeLinecap="round" />
-              {/* Screen Text: MISCREANT 128Hz */}
-              <text x="266" y="70" fill="#FFFFFF" fontSize="7.5" fontFamily="'JetBrains Mono', monospace" fontWeight="bold" textAnchor="middle" letterSpacing="0.5">
-                MISCREANT 128Hz
+              {/* Dynamic Screen Text: Live Input Feedback */}
+              <text 
+                x="266" y="70" 
+                fill={activeBtn ? '#86EFAC' : '#FFFFFF'} 
+                fontSize="7.5" 
+                fontFamily="'JetBrains Mono', monospace" 
+                fontWeight="bold" 
+                textAnchor="middle" 
+                letterSpacing="0.5"
+              >
+                {screenFeedback}
               </text>
             </g>
 
-            {/* Left: Directional D-Pad */}
+            {/* ==========================================================
+                LEFT: DIRECTIONAL D-PAD (Clickable in all 4 directions)
+                ========================================================== */}
             <g filter="url(#chalkNoise)">
               {/* Circular Backdrop */}
               <circle cx="178" cy="100" r="24" fill="#15212D" stroke="#FFFFFF" strokeWidth="2.2" />
-              {/* Cross D-Pad */}
+              
+              {/* Cross D-Pad Shape */}
               <path 
                 d="M 172,83 L 184,83 L 184,94 L 195,94 L 195,106 L 184,106 L 184,117 L 172,117 L 172,106 L 161,106 L 161,94 L 172,94 Z" 
                 fill="#15212D" 
@@ -222,76 +344,160 @@ export default function ChalkBattlestationSvg() {
                 strokeWidth="1.8" 
                 strokeLinejoin="round"
               />
+
+              {/* D-Pad Up Arm (Boost) */}
+              <rect 
+                x="172" y="83" width="12" height="11" 
+                fill={activeBtn === 'dpad-up' ? '#FDE047' : 'transparent'}
+                className="cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('boost', 'dpad-up')}
+              />
+              {/* D-Pad Down Arm (Brake) */}
+              <rect 
+                x="172" y="106" width="12" height="11" 
+                fill={activeBtn === 'dpad-down' ? '#38BDF8' : 'transparent'}
+                className="cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('brake', 'dpad-down')}
+              />
+              {/* D-Pad Left Arm (Steer Left) */}
+              <rect 
+                x="161" y="94" width="11" height="12" 
+                fill={activeBtn === 'dpad-left' ? '#67E8F9' : 'transparent'}
+                className="cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('left', 'dpad-left')}
+              />
+              {/* D-Pad Right Arm (Steer Right) */}
+              <rect 
+                x="184" y="94" width="11" height="12" 
+                fill={activeBtn === 'dpad-right' ? '#67E8F9' : 'transparent'}
+                className="cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('right', 'dpad-right')}
+              />
+
               {/* Center Pivot Dot */}
               <circle cx="178" cy="100" r="2.8" fill="#FFFFFF" />
             </g>
 
-            {/* Right: Action Buttons (PlayStation Style Diamond) */}
+            {/* ==========================================================
+                RIGHT: ACTION BUTTONS (PlayStation Style Diamond)
+                ========================================================== */}
             <g filter="url(#chalkNoise)">
               {/* Circular Backdrop */}
               <circle cx="354" cy="100" r="24" fill="#15212D" stroke="#FFFFFF" strokeWidth="2.2" />
               
-              {/* Top Button: Red/Coral Triangle ▲ */}
-              <circle cx="354" cy="85" r="6" fill="#182430" stroke="#FB7185" strokeWidth="1.5" />
-              <polygon points="354,82 350.8,87.5 357.2,87.5" fill="#FB7185" />
+              {/* Top Button: Triangle ▲ (Boost) */}
+              <g 
+                className="cursor-pointer transition-transform" 
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('boost', 'btn-triangle')}
+              >
+                <circle cx="354" cy="85" r="7" fill={activeBtn === 'btn-triangle' ? '#FB7185' : '#182430'} stroke="#FB7185" strokeWidth="1.5" />
+                <polygon points="354,81 350.5,88 357.5,88" fill={activeBtn === 'btn-triangle' ? '#182430' : '#FB7185'} />
+              </g>
 
-              {/* Left Button: Yellow Square ■ */}
-              <circle cx="339" cy="100" r="6" fill="#182430" stroke="#FDE047" strokeWidth="1.5" />
-              <rect x="336.5" y="97.5" width="5" height="5" fill="#FDE047" />
+              {/* Left Button: Square ■ (Steer Left) */}
+              <g 
+                className="cursor-pointer transition-transform" 
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('left', 'btn-square')}
+              >
+                <circle cx="339" cy="100" r="7" fill={activeBtn === 'btn-square' ? '#FDE047' : '#182430'} stroke="#FDE047" strokeWidth="1.5" />
+                <rect x="336.5" y="97.5" width="5" height="5" fill={activeBtn === 'btn-square' ? '#182430' : '#FDE047'} />
+              </g>
 
-              {/* Right Button: Green Circle ● */}
-              <circle cx="369" cy="100" r="6" fill="#182430" stroke="#34D399" strokeWidth="1.5" />
-              <circle cx="369" cy="100" r="2.6" fill="none" stroke="#34D399" strokeWidth="1.5" />
+              {/* Right Button: Circle ● (Steer Right) */}
+              <g 
+                className="cursor-pointer transition-transform" 
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('right', 'btn-circle')}
+              >
+                <circle cx="369" cy="100" r="7" fill={activeBtn === 'btn-circle' ? '#34D399' : '#182430'} stroke="#34D399" strokeWidth="1.5" />
+                <circle cx="369" cy="100" r="2.6" fill="none" stroke={activeBtn === 'btn-circle' ? '#182430' : '#34D399'} strokeWidth="1.5" />
+              </g>
 
-              {/* Bottom Button: Cyan Cross ✖ */}
-              <circle cx="354" cy="115" r="6" fill="#182430" stroke="#38BDF8" strokeWidth="1.5" />
-              <line x1="351.5" y1="112.5" x2="356.5" y2="117.5" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="356.5" y1="112.5" x2="351.5" y2="117.5" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Bottom Button: Cross ✖ (Brake / Restart) */}
+              <g 
+                className="cursor-pointer transition-transform" 
+                style={{ pointerEvents: 'auto' }}
+                onClick={() => triggerControl('brake', 'btn-cross')}
+              >
+                <circle cx="354" cy="115" r="7" fill={activeBtn === 'btn-cross' ? '#38BDF8' : '#182430'} stroke="#38BDF8" strokeWidth="1.5" />
+                <line x1="351.5" y1="112.5" x2="356.5" y2="117.5" stroke={activeBtn === 'btn-cross' ? '#182430' : '#38BDF8'} strokeWidth="1.5" strokeLinecap="round" />
+                <line x1="356.5" y1="112.5" x2="351.5" y2="117.5" stroke={activeBtn === 'btn-cross' ? '#182430' : '#38BDF8'} strokeWidth="1.5" strokeLinecap="round" />
+              </g>
             </g>
 
-            {/* Bottom Center: Dual Analog Thumbsticks */}
+            {/* ==========================================================
+                BOTTOM CENTER: DUAL ANALOG THUMBSTICKS (Draggable & Clickable)
+                ========================================================== */}
             <g filter="url(#chalkNoise)">
-              {/* Left Stick */}
+              
+              {/* LEFT ANALOG THUMBSTICK (cx: 210, cy: 138) */}
               <g transform="translate(210, 138)">
-                <circle cx="0" cy="0" r="17" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
-                {/* Ring of 12 grip knurling dots */}
-                <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
-                <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
-                <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
-                <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
-                <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
-                <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
-                <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
-                <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
-                <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
-                {/* Inner stick cap */}
-                <circle cx="0" cy="0" r="9" fill="#1A2836" stroke="#CBD5E1" strokeWidth="1.4" />
-                <circle cx="0" cy="0" r="2.8" fill="#FFFFFF" />
+                {/* Stick Base Socket Ring */}
+                <circle cx="0" cy="0" r="18" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
+                
+                {/* Animated / Draggable Stick Head */}
+                <g 
+                  transform={`translate(${leftStickOffset.x}, ${leftStickOffset.y})`}
+                  className="cursor-grab active:cursor-grabbing transition-transform duration-75"
+                  style={{ pointerEvents: 'auto' }}
+                  onPointerDown={(e) => handleStickPointerDown(e, 'left')}
+                >
+                  {/* Ring of 12 grip knurling dots */}
+                  <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
+                  <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
+                  <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                  {/* Inner stick cap */}
+                  <circle cx="0" cy="0" r="10" fill={leftStickOffset.x !== 0 ? '#1E3A8A' : '#1A2836'} stroke="#CBD5E1" strokeWidth="1.4" />
+                  <circle cx="0" cy="0" r="3" fill="#FFFFFF" />
+                </g>
               </g>
 
-              {/* Right Stick */}
+              {/* RIGHT ANALOG THUMBSTICK (cx: 322, cy: 138) */}
               <g transform="translate(322, 138)">
-                <circle cx="0" cy="0" r="17" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
-                {/* Ring of 12 grip knurling dots */}
-                <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
-                <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
-                <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
-                <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
-                <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
-                <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
-                <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
-                <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
-                <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
-                <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
-                {/* Inner stick cap */}
-                <circle cx="0" cy="0" r="9" fill="#1A2836" stroke="#CBD5E1" strokeWidth="1.4" />
-                <circle cx="0" cy="0" r="2.8" fill="#FFFFFF" />
+                {/* Stick Base Socket Ring */}
+                <circle cx="0" cy="0" r="18" fill="#101922" stroke="#FFFFFF" strokeWidth="2.2" />
+                
+                {/* Animated / Draggable Stick Head */}
+                <g 
+                  transform={`translate(${rightStickOffset.x}, ${rightStickOffset.y})`}
+                  className="cursor-grab active:cursor-grabbing transition-transform duration-75"
+                  style={{ pointerEvents: 'auto' }}
+                  onPointerDown={(e) => handleStickPointerDown(e, 'right')}
+                >
+                  {/* Ring of 12 grip knurling dots */}
+                  <circle cx="0" cy="-12" r="1.3" fill="#FFFFFF" />
+                  <circle cx="6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="12" cy="0" r="1.3" fill="#FFFFFF" />
+                  <circle cx="10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="0" cy="12" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-6" cy="10.4" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-10.4" cy="6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-12" cy="0" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-10.4" cy="-6" r="1.3" fill="#FFFFFF" />
+                  <circle cx="-6" cy="-10.4" r="1.3" fill="#FFFFFF" />
+                  {/* Inner stick cap */}
+                  <circle cx="0" cy="0" r="10" fill={rightStickOffset.x !== 0 ? '#1E3A8A' : '#1A2836'} stroke="#CBD5E1" strokeWidth="1.4" />
+                  <circle cx="0" cy="0" r="3" fill="#FFFFFF" />
+                </g>
               </g>
+
             </g>
           </g>
 
@@ -326,39 +532,119 @@ export default function ChalkBattlestationSvg() {
 
         </svg>
 
-        {/* Layer 3: Interactive Steer Controls over Gamepad D-Pad & Action Buttons */}
+        {/* ==========================================================
+            Layer 3: Accessible Full Touch & Mouse Overlay Hitboxes
+            ========================================================== */}
         
-        {/* Left D-Pad Steer Hitbox */}
-        <button
-          onClick={() => handleSteer('left')}
-          className="absolute z-30 cursor-pointer rounded-full hover:bg-cyan-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-cyan-300/40"
-          style={{
-            left: '21.7%',
-            top: '67.0%',
-            width: '8.8%',
-            height: '9.8%'
-          }}
-          title="Steer Car Left (D-Pad)"
-          aria-label="Steer Car Left"
+        {/* 1. D-PAD CLUSTER (Top Left) */}
+        <div 
+          className="absolute z-30" 
+          style={{ left: '20.5%', top: '65.2%', width: '10.5%', height: '11.8%' }}
         >
-          <span className="sr-only">Steer Left</span>
-        </button>
+          {/* Up (Boost) */}
+          <button
+            onClick={() => triggerControl('boost', 'dpad-up')}
+            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/20 active:scale-90 transition-all rounded-t"
+            title="D-Pad Up (Nitro Boost)"
+            aria-label="Nitro Boost"
+          />
+          {/* Down (Brake) */}
+          <button
+            onClick={() => triggerControl('brake', 'dpad-down')}
+            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/20 active:scale-90 transition-all rounded-b"
+            title="D-Pad Down (Brake)"
+            aria-label="Brake"
+          />
+          {/* Left (Steer Left) */}
+          <button
+            onClick={() => triggerControl('left', 'dpad-left')}
+            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-l"
+            title="D-Pad Left (Steer Left)"
+            aria-label="Steer Left"
+          />
+          {/* Right (Steer Right) */}
+          <button
+            onClick={() => triggerControl('right', 'dpad-right')}
+            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-cyan-400/25 active:scale-90 transition-all rounded-r"
+            title="D-Pad Right (Steer Right)"
+            aria-label="Steer Right"
+          />
+        </div>
 
-        {/* Right Action Button Steer Hitbox */}
-        <button
-          onClick={() => handleSteer('right')}
-          className="absolute z-30 cursor-pointer rounded-full hover:bg-rose-400/25 active:scale-90 transition-all flex items-center justify-center border border-transparent hover:border-rose-300/40"
-          style={{
-            left: '53.9%',
-            top: '67.0%',
-            width: '8.8%',
-            height: '9.8%'
-          }}
-          title="Steer Car Right (Buttons)"
-          aria-label="Steer Car Right"
+        {/* 2. LEFT ANALOG STICK HITBOX (Under D-Pad) */}
+        <div 
+          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing"
+          style={{ left: '27.5%', top: '74.2%', width: '9.0%', height: '10.2%' }}
+          title="Left Analog Stick (Drag or Click Left/Right to Steer)"
         >
-          <span className="sr-only">Steer Right</span>
-        </button>
+          {/* Left half click */}
+          <button
+            onClick={() => triggerControl('left', 'left-stick-l', 'left')}
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
+            aria-label="Left Stick Steer Left"
+          />
+          {/* Right half click */}
+          <button
+            onClick={() => triggerControl('right', 'left-stick-r', 'left')}
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
+            aria-label="Left Stick Steer Right"
+          />
+        </div>
+
+        {/* 3. RIGHT ANALOG STICK HITBOX (Under Action Buttons) */}
+        <div 
+          className="absolute z-30 flex items-center justify-center cursor-grab active:cursor-grabbing"
+          style={{ left: '48.0%', top: '74.2%', width: '9.0%', height: '10.2%' }}
+          title="Right Analog Stick (Drag or Click Left/Right to Steer)"
+        >
+          {/* Left half click */}
+          <button
+            onClick={() => triggerControl('left', 'right-stick-l', 'right')}
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-l-full"
+            aria-label="Right Stick Steer Left"
+          />
+          {/* Right half click */}
+          <button
+            onClick={() => triggerControl('right', 'right-stick-r', 'right')}
+            className="w-1/2 h-full hover:bg-cyan-400/20 active:scale-90 rounded-r-full"
+            aria-label="Right Stick Steer Right"
+          />
+        </div>
+
+        {/* 4. ACTION BUTTONS CLUSTER (Top Right) */}
+        <div 
+          className="absolute z-30" 
+          style={{ left: '52.8%', top: '65.2%', width: '10.5%', height: '11.8%' }}
+        >
+          {/* Triangle ▲ (Top - Boost) */}
+          <button
+            onClick={() => triggerControl('boost', 'btn-triangle')}
+            className="absolute top-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-rose-400/25 active:scale-90 transition-all rounded-full"
+            title="Triangle (Boost)"
+            aria-label="Triangle Boost"
+          />
+          {/* Cross ✖ (Bottom - Brake / Restart) */}
+          <button
+            onClick={() => triggerControl('brake', 'btn-cross')}
+            className="absolute bottom-0 left-1/3 w-1/3 h-1/3 cursor-pointer hover:bg-sky-400/25 active:scale-90 transition-all rounded-full"
+            title="Cross (Brake / Restart)"
+            aria-label="Cross Brake"
+          />
+          {/* Square ■ (Left - Steer Left) */}
+          <button
+            onClick={() => triggerControl('left', 'btn-square')}
+            className="absolute top-1/3 left-0 w-1/3 h-1/3 cursor-pointer hover:bg-yellow-400/25 active:scale-90 transition-all rounded-full"
+            title="Square (Steer Left)"
+            aria-label="Square Steer Left"
+          />
+          {/* Circle ● (Right - Steer Right) */}
+          <button
+            onClick={() => triggerControl('right', 'btn-circle')}
+            className="absolute top-1/3 right-0 w-1/3 h-1/3 cursor-pointer hover:bg-emerald-400/25 active:scale-90 transition-all rounded-full"
+            title="Circle (Steer Right)"
+            aria-label="Circle Steer Right"
+          />
+        </div>
 
       </div>
 

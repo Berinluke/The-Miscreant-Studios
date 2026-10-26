@@ -36,29 +36,48 @@ export default function PlayableRacingGame({ externalControl = null }) {
   // Handle external gamepad clicks (from the drawn controller below the monitor)
   useEffect(() => {
     if (!externalControl) return;
-    if (gRef.current.state === 'demo') {
+    const action = typeof externalControl === 'object' ? externalControl.action : externalControl;
+    if (gRef.current.state === 'demo' || gRef.current.state === 'crashed') {
       takeAccess();
     }
-    if (externalControl === 'left') {
+    if (action === 'left') {
       gRef.current.carLane = Math.max(0, gRef.current.carLane - 1);
-    } else if (externalControl === 'right') {
+    } else if (action === 'right') {
       gRef.current.carLane = Math.min(2, gRef.current.carLane + 1);
+    } else if (action === 'boost' || action === 'up') {
+      gRef.current.speed = Math.min(14, gRef.current.speed + 3);
+      setTimeout(() => { gRef.current.speed = Math.max(7.5, gRef.current.speed - 3); }, 800);
+    } else if (action === 'brake' || action === 'down') {
+      gRef.current.speed = Math.max(4, gRef.current.speed - 2.5);
+      setTimeout(() => { gRef.current.speed = Math.min(7.5, gRef.current.speed + 2.5); }, 800);
+    } else if (action === 'restart') {
+      takeAccess();
     }
   }, [externalControl]);
 
-  // Keyboard controls
+  // Keyboard controls (Arrow keys & WASD + Space)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (['ArrowLeft', 'KeyA'].includes(e.code)) {
-        if (gRef.current.state === 'demo') {
+        if (gRef.current.state === 'demo' || gRef.current.state === 'crashed') {
           takeAccess();
         }
         gRef.current.carLane = Math.max(0, gRef.current.carLane - 1);
       } else if (['ArrowRight', 'KeyD'].includes(e.code)) {
-        if (gRef.current.state === 'demo') {
+        if (gRef.current.state === 'demo' || gRef.current.state === 'crashed') {
           takeAccess();
         }
         gRef.current.carLane = Math.min(2, gRef.current.carLane + 1);
+      } else if (['ArrowUp', 'KeyW'].includes(e.code)) {
+        gRef.current.speed = Math.min(14, gRef.current.speed + 3);
+        setTimeout(() => { gRef.current.speed = Math.max(7.5, gRef.current.speed - 3); }, 800);
+      } else if (['ArrowDown', 'KeyS'].includes(e.code)) {
+        gRef.current.speed = Math.max(4, gRef.current.speed - 2.5);
+        setTimeout(() => { gRef.current.speed = Math.min(7.5, gRef.current.speed + 2.5); }, 800);
+      } else if (['Space', 'Enter'].includes(e.code)) {
+        if (gRef.current.state === 'crashed' || gRef.current.state === 'demo') {
+          takeAccess();
+        }
       }
     };
 
@@ -96,6 +115,44 @@ export default function PlayableRacingGame({ externalControl = null }) {
 
     const loop = (timestamp) => {
       const g = gRef.current;
+
+      // Hardware Gamepad API polling for real controllers (Xbox, PS4/PS5, Switch)
+      if (typeof navigator !== 'undefined' && navigator.getGamepads) {
+        const gamepads = navigator.getGamepads();
+        if (gamepads && gamepads[0]) {
+          const gp = gamepads[0];
+          const now = timestamp;
+          if (!g.lastGpInput || now - g.lastGpInput > 180) {
+            const stickX = Math.abs(gp.axes[0] || 0) > 0.35 ? gp.axes[0] : (Math.abs(gp.axes[2] || 0) > 0.35 ? gp.axes[2] : 0);
+            const stickY = Math.abs(gp.axes[1] || 0) > 0.35 ? gp.axes[1] : (Math.abs(gp.axes[3] || 0) > 0.35 ? gp.axes[3] : 0);
+            const btnLeft = gp.buttons[14]?.pressed || gp.buttons[2]?.pressed;
+            const btnRight = gp.buttons[15]?.pressed || gp.buttons[1]?.pressed;
+            const btnUp = gp.buttons[12]?.pressed || gp.buttons[3]?.pressed;
+            const btnDown = gp.buttons[13]?.pressed || gp.buttons[0]?.pressed;
+
+            if (stickX < -0.35 || btnLeft) {
+              if (g.state !== 'playing') takeAccess();
+              else g.carLane = Math.max(0, g.carLane - 1);
+              g.lastGpInput = now;
+            } else if (stickX > 0.35 || btnRight) {
+              if (g.state !== 'playing') takeAccess();
+              else g.carLane = Math.min(2, g.carLane + 1);
+              g.lastGpInput = now;
+            } else if (stickY < -0.35 || btnUp) {
+              g.speed = Math.min(14, g.speed + 3);
+              setTimeout(() => { g.speed = Math.max(7.5, g.speed - 3); }, 600);
+              g.lastGpInput = now;
+            } else if (stickY > 0.35 || btnDown) {
+              if (g.state === 'crashed') takeAccess();
+              else {
+                g.speed = Math.max(4.5, g.speed - 2.5);
+                setTimeout(() => { g.speed = Math.min(7.5, g.speed + 2.5); }, 600);
+              }
+              g.lastGpInput = now;
+            }
+          }
+        }
+      }
 
       // 1. CLEAR & FILL ENTIRE WIDESCREEN DISPLAY (CHALKBOARD ASPHALT ROAD)
       ctx.fillStyle = '#102217';
